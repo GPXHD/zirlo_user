@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}搜索{% endblock %}
+
+{% block main %}
+    <div>
+        <div>
+            <h1>搜索结果</h1>
+        </div>
+
+        {% if query %}
+            {% for result in page.object_list %}
+                <div>
+                    <a href="{{  result.object.get_absolute_url }}">
+                        {% if result.object.face %}
+                            <div class="media-left">
+                                <img src="/static/media/{{ result.object.face }}"
+                                     alt="avatar" style="max-width: 100px; border-radius: 20px">
+                            </div>
+                        {% endif %}
+
+                        <div>
+                            <table width="100%" border="0" cellspacing="1" cellpadding="4" bgcolor="#cccccc"
+                                   class="tabtop13" align="center">
+                                <tr>
+                                    <td width="8%" class="btbg font-center">用户名</td>
+                                    <td width="8%" class="btbg font-center">{{ result.object.username }}</td>
+                                </tr>
+                                <tr>
+                                    <td width="8%" class="btbg font-center">姓名</td>
+                                    <td width="8%" class="btbg font-center">{{ result.object.real_name }}</td>
+                                </tr>
+                                <tr>
+                                    <td width="8%" class="btbg font-center">邮箱</td>
+                                    <td width="8%" class="btbg font-center">{{ result.object.email }}</td>
+                                </tr>
+                                <tr>
+                                    <td width="8%" class="btbg font-center">性别</td>
+                                    <td width="8%" class="btbg font-center">{{ result.object.sex }}</td>
+                                </tr>
+                                <tr>
+                                    <td width="8%" class="btbg font-center">注册时间</td>
+                                    <td width="8%" class="btbg font-center">{{ result.object.c_time }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </a>
+                </div>
+            {% empty %}
+                <h3>没有找到该用户</h3>
+            {% endfor %}
+        {% endif %}
+        <div class="pagination">
+            <span class="step-links">
+                {% if page.has_previous %}
+                    <a href="?q={{ query }}&page={{ page.previous_page_number }}">上一页</a>
+                {% endif %}
+
+                <span class="current">
+                    Page{{ page.number }} of {{ page.paginator.num_pages }}
+                </span>
+
+                {% if page.has_next %}
+                    <a href="?q={{ query }}&page={{ page.next_page_number }}">下一页</a>
+                {% endif %}
+            </span>
+        </div>
+    </div>
+{% endblock %}

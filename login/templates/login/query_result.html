@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load static %}
+<link href="{% static 'login/css/query.css' %}" rel="stylesheet">
+{% block title %}查询结果{% endblock %}
+
+{% block main %}
+    <div class="container">
+        <div class="col">
+            <form class="form-register" action="{% url 'query_result' %}" method="post">
+
+
+                {% if message %}
+                    <div class="alert alert-warning">{{ message }}</div>
+                {% endif %}
+                {% csrf_token %}
+
+                <table width="100%" border="0" cellspacing="1" cellpadding="4" bgcolor="#cccccc"
+                       class="tabtop13" align="center">
+                    <tr>
+                        <th width="8%" class="btbg font-center">用户名</th>
+                        <th width="8%" class="btbg font-center">id</th>
+                        <th width="8%" class="btbg font-center">姓名</th>
+                        <th width="8%" class="btbg font-center">邮箱</th>
+                        <th width="8%" class="btbg font-center">性别</th>
+                        <th width="8%" class="btbg font-center">注册时间</th>
+                    </tr>
+                    <tr>
+                        <th width="8%" class="btbg font-center">{{ user.username }}</th>
+                        <th width="8%" class="btbg font-center">{{ user.id }}</th>
+                        <th width="8%" class="btbg font-center">{{ user.real_name }}</th>
+                        <th width="8%" class="btbg font-center">{{ user.email }}</th>
+                        <th width="8%" class="btbg font-center">{{ user.sex }}</th>
+                        <th width="10%" class="btbg font-center">{{ user.c_time }}</th>
+                    </tr>
+                </table>
+                <div>
+                    <a href="" class="text-success"><ins>完成</ins></a>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

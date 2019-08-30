@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}首页{% endblock %}
+
+{% block main %}
+    {% if is_login %}
+    <div class="jumbotron">
+        <h1>{{ request.session.user_username }}!  欢迎回来！</h1>
+    </div>
+
+    {% else %}
+    <div>
+        <h2>
+            <a href="{% url 'register' %}">请注册自己的账号！</a>
+        </h2>
+        <h2>
+            如果已经有账号，<a href="{% url 'login' %}">请登录！</a>查看更多内容。
+        </h2>
+    </div>
+    {% endif %}
+
+{% endblock %}
