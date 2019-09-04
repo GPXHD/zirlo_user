@@ -2,7 +2,7 @@ import os
 from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
 
-os.environ['DJANGO_SETTINGS_MODULE'] = 'zrilo_user.seetings'
+os.environ['DJANGO_SETTINGS_MODULE'] = 'zrilo_user.settings.develop'
 
 
 def send_mails(email, code):
