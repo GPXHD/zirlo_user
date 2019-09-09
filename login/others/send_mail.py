@@ -18,7 +18,7 @@ def send_mails(email, code):
                      这里是复仇者联盟!</p>
                      <p>请点击站点链接完成注册确认！</p>
                      <p>此链接有效期为{}天！</p>
-                   '''.format('127.0.0.1:8000', code, settings.CONFIRM_DAYS)
+                   '''.format(settings.IP_ADDRESS, code, settings.CONFIRM_DAYS)
 
     msg = EmailMultiAlternatives(subject, text_content, settings.EMAIL_HOST_USER, [email])
     msg.attach_alternative(html_content, 'text/html')
