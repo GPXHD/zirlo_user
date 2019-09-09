@@ -1,5 +1,4 @@
 {{object.username}}
-{{object.face}}
 {{object.real_name}}
 {{object.email}}
 {{object.sex}}
