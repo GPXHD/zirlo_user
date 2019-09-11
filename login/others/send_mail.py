@@ -12,11 +12,6 @@ from email.header import Header
 os.environ['DJANGO_SETTINGS_MODULE'] = 'zrilo_user.settings.develop'
 
 
-def _format_addr(param):
-    name, addr = email.utils.parseaddr(param)
-    return email.utils.formataddr((Header(name, "utf-8").encode(), addr))
-
-
 def send_mails(email_add, code):
 
     smtp_server = settings.EMAIL_HOST
@@ -41,9 +36,9 @@ def send_mails(email_add, code):
                    '''.format(settings.IP_ADDRESS, code, settings.CONFIRM_DAYS)
 
     msg = MIMEMultipart('alternative')
-    msg['Subject'] = Header(subject.encode('utf-8')).encode()
-    msg['From'] = _format_addr("Test <%s>" % sender)
-    msg['To'] = _format_addr("User <%s>" % receive)
+    msg['Subject'] = Header(subject).encode()
+    msg['From'] = "Test <%s>" % sender
+    msg['To'] = "User <%s>" % receive
     text_plain = MIMEText(text_content, _subtype='plain', _charset='UTF-8')
     msg.attach(text_plain)
     text_html = MIMEText(html_content, _subtype='html', _charset='UTF-8')
