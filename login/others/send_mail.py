@@ -12,11 +12,19 @@ from email.header import Header
 os.environ['DJANGO_SETTINGS_MODULE'] = 'zrilo_user.settings.develop'
 
 
+def _format_addr(param):
+    name, addr = email.utils.parseaddr(param)
+    return email.utils.formataddr((Header(name, "utf-8").encode(), addr))
+
+
 def send_mails(email_add, code):
 
     smtp_server = settings.EMAIL_HOST
     smtp_user = settings.EMAIL_HOST_USER
     smtp_pwd = settings.EMAIL_HOST_PASSWORD
+
+    sender = smtp_user
+    receive = email_add
 
     subject = '来自www.zr.com的注册确认邮件'
 
@@ -32,12 +40,37 @@ def send_mails(email_add, code):
                      <p>此链接有效期为{}天！</p>
                    '''.format(settings.IP_ADDRESS, code, settings.CONFIRM_DAYS)
 
-    server = smtplib.SMTP_SSL(smtp_server)
-    server.connect('smtpdm.aliyun.com', settings.EMAIL_PORT)
-    server.set_debuglevel(0)
-    server.ehlo(smtp_server)
-    server.login(smtp_user, smtp_pwd)
+    msg = MIMEMultipart('alternative')
+    msg['Subject'] = Header(subject.encode('utf-8')).encode()
+    msg['From'] = _format_addr("Test <%s>" % sender)
+    msg['To'] = _format_addr("User <%s>" % receive)
+    text_plain = MIMEText(text_content, _subtype='plain', _charset='UTF-8')
+    msg.attach(text_plain)
+    text_html = MIMEText(html_content, _subtype='html', _charset='UTF-8')
+    msg.attach(text_html)
 
-    msg = EmailMultiAlternatives(subject, text_content, settings.EMAIL_HOST_USER, [email_add])
-    msg.attach_alternative(html_content, 'text/html')
-    msg.send()
+    try:
+        server = smtplib.SMTP_SSL(smtp_server)
+        server.connect('smtpdm.aliyun.com', settings.EMAIL_PORT)
+        server.set_debuglevel(0)
+        server.ehlo(smtp_server)
+        server.login(smtp_user, smtp_pwd)
+        server.sendmail(sender, receive, msg.as_string())
+        print('邮件发送成功！')
+    except smtplib.SMTPConnectError as e:
+        print('邮件发送失败，连接失败:', e.smtp_code, e.smtp_error)
+    except smtplib.SMTPAuthenticationError as e:
+        print('邮件发送失败，认证错误:', e.smtp_code, e.smtp_error)
+    except smtplib.SMTPSenderRefused as e:
+        print('邮件发送失败，发件人被拒绝:', e.smtp_code, e.smtp_error)
+    except smtplib.SMTPRecipientsRefused as e:
+        print('邮件发送失败，收件人被拒绝:')
+    except smtplib.SMTPDataError as e:
+        print('邮件发送失败，数据接收拒绝:', e.smtp_code, e.smtp_error)
+    except smtplib.SMTPException:
+        print('邮件发送失败, ')
+    except Exception as e:
+        print('邮件发送异常, ', str(e))
+    # msg = EmailMultiAlternatives(subject, text_content, settings.EMAIL_HOST_USER, [email_add])
+    # msg.attach_alternative(html_content, 'text/html')
+    # msg.send()
