@@ -1,25 +1,43 @@
 import os
+import smtplib
+import email
 from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
-
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.image import MIMEImage
+from email.mime.base import MIMEBase
+from email.mime.application import MIMEApplication
+from email.header import Header
 os.environ['DJANGO_SETTINGS_MODULE'] = 'zrilo_user.settings.develop'
 
 
-def send_mails(email, code):
-    subject = '来自www.zirlo.com的注册确认邮件'
+def send_mails(email_add, code):
+
+    smtp_server = settings.EMAIL_HOST
+    smtp_user = settings.EMAIL_HOST_USER
+    smtp_pwd = settings.EMAIL_HOST_PASSWORD
+
+    subject = '来自www.zr.com的注册确认邮件'
 
     text_content = '''
-                    感谢注册www.zirlo.com，复仇者联盟！\
+                    感谢注册www.zr.com，复仇者联盟！\
                     如果你看到这条消息，说明你的邮箱服务器不提供HTML链接功能，请联系管理员！
                    '''
 
     html_content = '''
-                     <p>感谢注册<a href="http://{}/confirm/?code={}" target=blank>www.zirlo.com</a>，\
+                     <p>感谢注册<a href="http://{}/confirm/?code={}" target=blank>www.zr.com</a>，\
                      这里是复仇者联盟!</p>
                      <p>请点击站点链接完成注册确认！</p>
                      <p>此链接有效期为{}天！</p>
                    '''.format(settings.IP_ADDRESS, code, settings.CONFIRM_DAYS)
 
-    msg = EmailMultiAlternatives(subject, text_content, settings.EMAIL_HOST_USER, [email])
+    server = smtplib.SMTP_SSL(smtp_server)
+    server.connect('smtpdm.aliyun.com', settings.EMAIL_PORT)
+    server.set_debuglevel(0)
+    server.ehlo(smtp_server)
+    server.login(smtp_user, smtp_pwd)
+
+    msg = EmailMultiAlternatives(subject, text_content, settings.EMAIL_HOST_USER, [email_add])
     msg.attach_alternative(html_content, 'text/html')
     msg.send()
