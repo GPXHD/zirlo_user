@@ -16,7 +16,7 @@ def send_mails(email_add, code):
 
     smtp_server = settings.EMAIL_HOST
     smtp_user = settings.EMAIL_HOST_USER
-    smtp_pwd = settings.EMAIL_HOST_PASSWORD
+    smtp_pwd = 'gao2005'
 
     sender = smtp_user
     receive = email_add
