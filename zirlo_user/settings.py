@@ -147,7 +147,7 @@ EMAIL_FILE_PATH = '/conf/django_cache/email'
 EMAIL_HOST = 'smtp.163.com'
 EMAIL_HOST_PASSWORD = 'gao2005'
 EMAIL_HOST_USER = 'Gaopengxiang18@163.com'
-EMAIL_PORT = 25
+EMAIL_PORT = 465
 CONFIRM_DAYS = 7
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/media')
