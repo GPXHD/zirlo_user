@@ -51,6 +51,7 @@ def send_mails(email_add, code):
         server.ehlo(smtp_server)
         server.login(smtp_user, smtp_pwd)
         server.sendmail(sender, receive, msg.as_string())
+        server.quit()
         print('邮件发送成功！')
     except smtplib.SMTPConnectError as e:
         print('邮件发送失败，连接失败:', e.smtp_code, e.smtp_error)
