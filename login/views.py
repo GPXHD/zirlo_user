@@ -5,6 +5,7 @@ from . import forms
 import datetime
 from login.others import send_mail, confirms
 from django.contrib.auth.hashers import make_password, check_password
+from django.views.generic.base import View
 from haystack.views import SearchView
 from django.core.paginator import *
 # Create your views here.
@@ -60,10 +61,9 @@ def register(request):
     if request.session.get('is_login', None):
         return redirect('/')
 
-    message = "请检查填写内容！"
     if request.method == 'POST':
         register_form = forms.RegisterForm(request.POST)
-
+        message = "请检查填写内容！"
         if register_form.is_valid():
             username = register_form.cleaned_data.get('username')
             real_name = register_form.cleaned_data.get('real_name')
@@ -191,25 +191,33 @@ def user_center(request):
     return render(request, 'login/user_center.html', locals())
 
 
-# class MySearchView(SearchView):
+# class MySearchView(SearchView, View):
 #
-#     def extra_context(self):
-#         context = super(MySearchView, self).extra_context()
-#         paginator = Paginator(self.results, settings.HAYSTACK_SEARCH_RESULT_PER_PAGE)
-#         page_num = self.request.GET.get('page', 1)
-#         page_of_list = paginator.page(int(page_num))
-#         current_page_num = page_of_list.number
-#         page_range = list(range(max(current_page_num - 2, 1), current_page_num)) + \
-#                      list(range(current_page_num, min(current_page_num + 2, paginator.num_pages) + 1))
-#         if page_range[0] - 1 >= 2:
-#             page_range.insert(0, '...')
-#         if paginator.num_pages - page_range[-1] >= 2:
-#             page_range.append('...')
+#     @staticmethod
+#     def login_statue(self, request):
+#         self.is_login = request.session.get('is_login', None)
 #
-#         context = {
-#             'page_range': 'page_range',
-#             'random_recommend': 'random_recommend',
-#             'new_recommend': 'new_recommend',
-#             'all_hot_posts': 'all_hot_posts',
-#         }
-#         return context
+    # def extra_context(self):
+    #     context = super(MySearchView, self).extra_context()
+    #     statue = self.is_login
+    #     paginator = Paginator(self.results, settings.HAYSTACK_SEARCH_RESULT_PER_PAGE)
+    #     page_num = self.request.GET.get('page', 1)
+    #     page_of_list = paginator.page(int(page_num))
+    #     current_page_num = page_of_list.number
+    #     page_range = list(range(max(current_page_num - 2, 1), current_page_num)) + \
+    #                  list(range(current_page_num, min(current_page_num + 2, paginator.num_pages) + 1))
+    #     if page_range[0] - 1 >= 2:
+    #         page_range.insert(0, '...')
+    #     if paginator.num_pages - page_range[-1] >= 2:
+    #         page_range.append('...')
+    #
+    #     context = {
+    #         'page_range': 'page_range',
+    #         'random_recommend': 'random_recommend',
+    #         'new_recommend': 'new_recommend',
+    #         'all_hot_posts': 'all_hot_posts',
+    #     }
+    #     context1 = {
+    #         'context': statue
+    #     }
+    #     return context1

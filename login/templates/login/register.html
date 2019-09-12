@@ -10,12 +10,14 @@
         <form class="form-register" action="{% url 'register' %}" method="post">
         <br/>
 
-            {% if not register_form.captcha.errors %}
-                <div class="alert alert-warning">{{ register_form.captcha.errors }}</div>
-            {% elif message %}
-                <div class="alert alert-warning">{{ message }}</div>
-            {% endif %}
-
+            <div style="text-align: center">
+                {% if register_form.captcha.errors %}
+                    <div class="alert alert-warning">{{ register_form.captcha.errors }}</div>
+                {% elif message %}
+                    <div class="alert alert-warning">{{ message }}</div>
+                {% endif %}
+            </div>
+        
             {% csrf_token %}
             <h3 class="text-center">欢迎注册！</h3>
 

@@ -7,12 +7,15 @@
     <div class="container">
         <div class="col">
             <form class="form-login" action="{% url 'login' %}" method="post">
+            <br/>
 
-                {% if login_form.captcha.errors %}
-                    <div class="alert alert-warning">{{ login_form.captcha.errors }}</div>
-                {% elif message %}
-                    <div class="alert alert-warning">{{ message }}</div>
-                {% endif %}
+                <div style="text-align: center">
+                    {% if login_form.captcha.errors %}
+                        <div class="alert alert-warning">{{ login_form.captcha.errors }}</div>
+                    {% elif message %}
+                        <div class="alert alert-warning">{{ message }}</div>
+                    {% endif %}
+                 </div>
 
                 {% csrf_token %}
                 <h3 class="text-center">欢迎登录！</h3>
