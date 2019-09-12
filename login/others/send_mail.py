@@ -9,7 +9,7 @@ from email.mime.image import MIMEImage
 from email.mime.base import MIMEBase
 from email.mime.application import MIMEApplication
 from email.header import Header
-os.environ['DJANGO_SETTINGS_MODULE'] = 'zrilo_user.settings.develop'
+os.environ['DJANGO_SETTINGS_MODULE'] = 'zrilo_user.settings'
 
 
 def send_mails(email_add, code):
