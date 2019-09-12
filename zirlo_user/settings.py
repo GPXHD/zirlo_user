@@ -166,5 +166,5 @@ HAYSTACK_CONNECTIONS = {
 HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 HAYSTACK_SEARCH_RESULT_PER_PAGE = 5
 
-SESSION_COOKIE_AGE = 12*60*60
-SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+# SESSION_COOKIE_AGE = 12*60*60
+# SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
