@@ -91,10 +91,10 @@ DATABASES = {
         'PASSWORD': 'gao20050203',
         'HOST': '127.0.0.1',
         'PORT': '3306',
-        'OPTIONS': {
-            'init_command': 'SET sql_mode="STRICT_TRANS_TABLES"',
-            'charset': 'utf8mb4'
-        }
+        # 'OPTIONS': {
+        #     'init_command': 'SET sql_mode="STRICT_TRANS_TABLES"',
+        #     'charset': 'utf8mb4'
+        # }
 
     }
 }
@@ -155,15 +155,16 @@ MEDIA_URL = 'static/media/'
 ADMIN_MEDIA_PREFIX = '/media/'
 DEFAULT_FACE = '/static/images/face%d.png'
 
-
+# 需要设置PATH到你的Whoosh索引的文件系统位置
 HAYSTACK_CONNECTIONS = {
     'default': {
         'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
         'PATH': os.path.join(BASE_DIR, 'whoosh_index'),
     },
 }
+# 自动更新索引
 HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 HAYSTACK_SEARCH_RESULT_PER_PAGE = 5
 
-# SESSION_COOKIE_AGE = 12*60*60
-# SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+SESSION_COOKIE_AGE = 12*60*60
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
