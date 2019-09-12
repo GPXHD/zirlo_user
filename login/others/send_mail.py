@@ -19,7 +19,7 @@ def send_mails(email_add, code):
     smtp_pwd = settings.EMAIL_HOST_PASSWORD
 
     sender = smtp_user
-    receive = [email_add]
+    receive = email_add
 
     subject = '来自www.zr.com的注册确认邮件'
 
@@ -45,7 +45,7 @@ def send_mails(email_add, code):
     msg.attach(text_html)
 
     try:
-        server = smtplib.SMTP_SSL(smtp_server, settings.EMAIL_PORT)
+        server = smtplib.SMTP_SSL(smtp_server)
         # server.connect('smtpdm.aliyun.com', settings.EMAIL_PORT)
         server.set_debuglevel(1)
         server.ehlo(smtp_server)
