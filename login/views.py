@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, render_to_response
 from django.conf import settings
 from .models import User, ConfirmString
 from . import forms
@@ -191,6 +191,53 @@ def user_center(request):
     return render(request, 'login/user_center.html', locals())
 
 
+def pass_reset(request):
+
+    is_login = request.session.get('is_login', None)
+    if is_login:
+        if request.method == 'POST':
+            pass_form = forms.PassForm(request.POST)
+            message = "请检查填写内容！"
+            if pass_form.is_valid():
+                old_pass = pass_form.cleaned_data.get('old_pass')
+                password1 = pass_form.cleaned_data.get('password')
+                password2 = pass_form.cleaned_data.get('confirm_pass')
+
+                user_id = request.session.get('user_id')
+                user = User.objects.get(id=user_id)
+
+                if not check_password(old_pass, user.password):
+                    massage = '输入的旧密码是错误的，请重新输入！'
+                    return render(request, 'login/password_reset.html', locals())
+                if password1 != password2:
+                    message = '两次输入的密码不相同！'
+                    return render(request, 'login/password_reset.html', locals())
+                else:
+                    user.password = make_password(password1, None, 'pbkdf2_sha1')
+                    user.save()
+                    return render(request, 'login/password_reset.html', locals())
+            else:
+                return render(request, 'login/password_reset.html', locals())
+        pass_form = forms.PassForm()
+        return render(request, 'login/password_reset.html', locals())
+    else:
+        if request.method == 'POST':
+            find_form = forms.FindPassForm(request.POST)
+            if find_form.is_valid():
+                username = find_form.cleaned_data.get('username')
+
+                user = User.objects.filter(username=username)
+                email_add = user.email
+# 这里改为发送数字
+                code = confirms.make_confirm_string(user)
+                send_mail.send_mails(email_add, code)
+                message = '请前往邮箱获取验证码！'
+                return render(request, 'login/password_find.html', locals())
+
+
+            else:
+                return render(request, 'login/password_find.html', locals())
+
 # class MySearchView(SearchView, View):
 #
 #     @staticmethod
@@ -221,3 +268,19 @@ def user_center(request):
     #         'context': statue
     #     }
     #     return context1
+
+
+def page_not_found(request, exception):
+    response = render_to_response('404.html', {})
+    response.status_code = 404
+    return response
+
+
+def page_error(request):
+    return render(request, '500.html')
+
+
+def page_permission_denied(request, exception):
+    response = render_to_response('403.html', {})
+    response.status_code = 403
+    return response

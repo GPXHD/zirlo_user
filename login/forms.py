@@ -60,3 +60,31 @@ class QueryForm(forms.Form):
 
 class FaceForm(forms.Form):
     face = forms.ImageField(label="头像")
+
+
+class PassForm(forms.Form):
+    old_pass = forms.CharField(label="密码",
+                               max_length=256,
+                               widget=forms.PasswordInput(
+                                   attrs={'class': 'form-control', 'placeholder': "6-20位非中文字符"}
+                               ))
+    password = forms.CharField(label="密码",
+                               max_length=256,
+                               widget=forms.PasswordInput(
+                                   attrs={'class': 'form-control', 'placeholder': "6-20位非中文字符"}
+                               ))
+    confirm_pass = forms.CharField(label="密码",
+                                   max_length=256,
+                                   widget=forms.PasswordInput(
+                                       attrs={'class': 'form-control', 'placeholder': "6-20位非中文字符"}
+                                   ))
+    captcha = CaptchaField(label="验证码")
+
+
+class FindPassForm(forms.Form):
+    username = forms.CharField(label="用户名",
+                               max_length=128,
+                               widget=forms.TextInput(
+                                   attrs={'class': 'form-control', 'placeholder': "Username", 'autofocus': ''}
+                               ))
+    captcha = CaptchaField(label="验证码")

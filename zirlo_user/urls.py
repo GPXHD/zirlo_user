@@ -19,7 +19,7 @@ from django.urls import path, include, re_path
 from django.conf.urls.static import static
 from django.conf import settings
 import login.views
-
+# from django.views import static
 xadmin.autodiscover()
 xversion.register_models()
 
@@ -33,8 +33,14 @@ urlpatterns = [
     path('query/', login.views.query, name='query'),
     path('query_result/', login.views.query_result, name='query_result'),
     path('user_center/', login.views.user_center, name='user_center'),
+    path('pass_reset/', login.views.pass_reset, name='pass_reset'),
+    path('pass_find/', login.views.pass_reset, name='pass_find'),
     path('search/', include('haystack.urls')),
     path('captcha/', include('captcha.urls')),
+    ]
+# ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) \
+#   + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) \
-  + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+handler403 = login.views.page_permission_denied
+handler404 = login.views.page_not_found
+handler500 = login.views.page_error
