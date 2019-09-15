@@ -227,16 +227,19 @@ def pass_reset(request):
                 username = find_form.cleaned_data.get('username')
 
                 user = User.objects.filter(username=username)
+                if not user:
+                    message = '用户不存在！'
+                    return render(request, 'login/password_find.html', locals())
                 email_add = user.email
 # 这里改为发送数字
-                code = confirms.make_confirm_string(user)
-                send_mail.send_mails(email_add, code)
+                number = confirms.make_confirm_number(user)
+                send_mail.send_mails(email_add, number)
                 message = '请前往邮箱获取验证码！'
                 return render(request, 'login/password_find.html', locals())
-
-
             else:
                 return render(request, 'login/password_find.html', locals())
+        find_form = forms.FindPassForm()
+        return render(request, 'login/password_find.html', locals())
 
 # class MySearchView(SearchView, View):
 #

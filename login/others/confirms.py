@@ -16,3 +16,10 @@ def make_confirm_string(user):
     code = hash_code(user.username, now)
     models.ConfirmString.objects.create(code=code, user=user)
     return code
+
+
+def make_confirm_number(user):
+    now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    number = hash_code(user.username, now)
+    models.ConfirmNumber.objects.create(number=number, user=user)
+    return number
