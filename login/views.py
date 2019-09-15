@@ -197,7 +197,7 @@ def pass_reset(request):
     if is_login:
         if request.method == 'POST':
             pass_form = forms.PassForm(request.POST)
-            message = "请检查填写内容！"
+            message = "已经通过验证，请设置新密码"
             if pass_form.is_valid():
                 old_pass = pass_form.cleaned_data.get('old_pass')
                 password1 = pass_form.cleaned_data.get('password')

@@ -17,7 +17,6 @@ def send_mails(email_add, code):
     smtp_server = settings.EMAIL_HOST
     smtp_user = settings.EMAIL_HOST_USER
     smtp_pwd = settings.EMAIL_HOST_PASSWORD
-    email_port = 465
 
     sender = smtp_user
     receive = email_add
@@ -46,7 +45,8 @@ def send_mails(email_add, code):
     msg.attach(text_html)
 
     try:
-        server = smtplib.SMTP(smtp_server, email_port)
+        server = smtplib.SMTP(smtp_server, settings.EMAIL_PORT)
+        server.ehlo()
         server.starttls()
         # server.connect('smtpdm.aliyun.com', settings.EMAIL_PORT)
         server.set_debuglevel(1)
