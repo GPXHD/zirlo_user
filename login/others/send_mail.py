@@ -14,9 +14,9 @@ os.environ['DJANGO_SETTINGS_MODULE'] = 'zrilo_user.settings'
 
 def send_mails(email_add, code):
 
-    smtp_server = 'smtp.qq.com'
-    smtp_user = '1433428978@qq.com'
-    smtp_pwd = 'qnlikixzimuefiid'
+    smtp_server = settings.EMAIL_HOST
+    smtp_user = settings.EMAIL_HOST_USER
+    smtp_pwd = settings.EMAIL_HOST_PASSWORD
 
     sender = smtp_user
     receive = email_add
@@ -45,12 +45,8 @@ def send_mails(email_add, code):
     msg.attach(text_html)
 
     try:
-        server = smtplib.SMTP_SSL('smtp.qq.com', 465)
+        server = smtplib.SMTP_SSL(smtp_server, settings.EMAIL_PORT)
         server.ehlo()
-        # server.starttls()
-        # server.connect('smtp.qq.com', 465)
-        # server.set_debuglevel(1)
-        # server.ehlo(smtp_server)
         server.login(smtp_user, smtp_pwd)
         server.sendmail(sender, receive, msg.as_string())
         server.close()
@@ -69,6 +65,3 @@ def send_mails(email_add, code):
         print('邮件发送失败, ')
     except Exception as e:
         print('邮件发送异常, ', str(e))
-    # msg = EmailMultiAlternatives(subject, text_content, settings.EMAIL_HOST_USER, [email_add])
-    # msg.attach_alternative(html_content, 'text/html')
-    # msg.send()
