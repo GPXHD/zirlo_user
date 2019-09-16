@@ -46,10 +46,10 @@ def send_mails(email_add, code):
 
     try:
         server = smtplib.SMTP(smtp_server, 80)
-        server.ehlo()
-        server.starttls()
+        # server.ehlo()
+        # server.starttls()
         # server.connect('smtpdm.aliyun.com', settings.EMAIL_PORT)
-        server.set_debuglevel(1)
+        server.set_debuglevel(0)
         server.login(smtp_user, smtp_pwd)
         server.sendmail(sender, receive, msg.as_string())
         server.quit()
