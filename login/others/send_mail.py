@@ -14,9 +14,9 @@ os.environ['DJANGO_SETTINGS_MODULE'] = 'zrilo_user.settings'
 
 def send_mails(email_add, code):
 
-    smtp_server = settings.EMAIL_HOST
-    smtp_user = settings.EMAIL_HOST_USER
-    smtp_pwd = settings.EMAIL_HOST_PASSWORD
+    smtp_server = 'smtp.aliyun.com'
+    smtp_user = 'Gaopengxiang18@aliyun.com'
+    smtp_pwd = 'gao20050203'
 
     sender = smtp_user
     receive = email_add
@@ -45,9 +45,9 @@ def send_mails(email_add, code):
     msg.attach(text_html)
 
     try:
-        server = smtplib.SMTP(smtp_server, 80)
-        # server.ehlo()
-        # server.starttls()
+        server = smtplib.SMTP_SSL(smtp_server, 465)
+        server.ehlo()
+        server.starttls()
         # server.connect('smtpdm.aliyun.com', settings.EMAIL_PORT)
         server.set_debuglevel(0)
         server.login(smtp_user, smtp_pwd)
