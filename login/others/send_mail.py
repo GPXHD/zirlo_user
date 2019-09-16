@@ -46,8 +46,8 @@ def send_mails(email_add, code):
 
     try:
         server = smtplib.SMTP_SSL(smtp_server)
-        # server.ehlo()
-        # server.starttls()
+        server.ehlo()
+        server.starttls()
         server.connect('smtpdm.aliyun.com', 465)
         server.set_debuglevel(1)
         server.ehlo(smtp_server)
