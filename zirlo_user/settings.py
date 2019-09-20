@@ -169,5 +169,20 @@ HAYSTACK_CONNECTIONS = {
 HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 HAYSTACK_SEARCH_RESULT_PER_PAGE = 5
 
-# SESSION_COOKIE_AGE = 12*60*60
+# 会话cookie可以在用户浏览器中保持有效期, True：关闭浏览器，则Cookie失效.
+# SESSION_SAVE_EVERY_REQUEST = True
+# SESSION_COOKIE_AGE=60*30  # 30分钟
+# SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 # SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+
+CAPTCHA_OUTPUT_FORMAT = u'%(text_field)s %(hidden_field)s %(image)s'
+CAPTCHA_NOISE_FUNCTIONS = (  # 'captcha.helpers.noise_null',  # 没有样式
+                           # 'captcha.helpers.noise_arcs',  # 线
+                           'captcha.helpers.noise_dots',  # 点
+                           )
+CAPTCHA_IMAGE_SIZE = (100, 30)
+CAPTCHA_BACKGROUND_COLOR = '#ffffff'
+# CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.random_char_challenge'  # 图片中的文字为随机英文字母，如soft
+CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.math_challenge'    # 图片中的文字为数字表达式，如1+2=</span>
+CAPTCHA_LENGTH = 4  # 字符个数
+CAPTCHA_TIMEOUT = 10  # 超时(分钟）

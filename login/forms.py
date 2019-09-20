@@ -1,5 +1,6 @@
 from django import forms
 from captcha.fields import CaptchaField
+from login.models import Files
 
 
 class UserForm(forms.Form):
@@ -13,8 +14,6 @@ class UserForm(forms.Form):
                                widget=forms.PasswordInput(
                                    attrs={'class': 'form-control', 'placeholder': "Password"}
                                ))
-
-    captcha = CaptchaField(label="验证码")
 
 
 class RegisterForm(forms.Form):
@@ -63,17 +62,17 @@ class FaceForm(forms.Form):
 
 
 class PassForm(forms.Form):
-    old_pass = forms.CharField(label="密码",
+    old_pass = forms.CharField(label="旧密码",
                                max_length=256,
                                widget=forms.PasswordInput(
                                    attrs={'class': 'form-control', 'placeholder': "6-20位非中文字符"}
                                ))
-    password = forms.CharField(label="密码",
+    password = forms.CharField(label="新密码",
                                max_length=256,
                                widget=forms.PasswordInput(
                                    attrs={'class': 'form-control', 'placeholder': "6-20位非中文字符"}
                                ))
-    confirm_pass = forms.CharField(label="密码",
+    confirm_pass = forms.CharField(label="确认密码",
                                    max_length=256,
                                    widget=forms.PasswordInput(
                                        attrs={'class': 'form-control', 'placeholder': "6-20位非中文字符"}
@@ -81,10 +80,39 @@ class PassForm(forms.Form):
     captcha = CaptchaField(label="验证码")
 
 
-class FindPassForm(forms.Form):
+class FindForm(forms.Form):
     username = forms.CharField(label="用户名",
                                max_length=128,
                                widget=forms.TextInput(
                                    attrs={'class': 'form-control', 'placeholder': "Username", 'autofocus': ''}
                                ))
     captcha = CaptchaField(label="验证码")
+
+
+class VerifyForm(forms.Form):
+    number = forms.CharField(label="邮箱验证码",
+                             max_length=128,
+                             widget=forms.TextInput(
+                                attrs={'class': 'form-control', 'placeholder': "请输入邮箱验证码", 'autofocus': ''}
+                             ))
+    captcha = CaptchaField(label="验证码")
+
+
+class NewPassForm(forms.Form):
+    password = forms.CharField(label="新密码",
+                               max_length=256,
+                               widget=forms.PasswordInput(
+                                   attrs={'class': 'form-control', 'placeholder': "6-20位非中文字符"}
+                               ))
+    confirm_pass = forms.CharField(label="确认密码",
+                                   max_length=256,
+                                   widget=forms.PasswordInput(
+                                       attrs={'class': 'form-control', 'placeholder': "6-20位非中文字符"}
+                                   ))
+    captcha = CaptchaField(label="验证码")
+
+
+class FileForm(forms.ModelForm):
+    class Meta:
+        model = Files
+        exclude = ['c_time', 'filename']

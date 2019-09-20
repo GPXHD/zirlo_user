@@ -1,6 +1,8 @@
 import hashlib
 import datetime
-from login import models
+from django.shortcuts import render, redirect
+from login.models import ConfirmNumber, ConfirmString
+import random
 
 
 def hash_code(s, salt='zirlo_user'):
@@ -10,16 +12,23 @@ def hash_code(s, salt='zirlo_user'):
     return h.hexdigest
 
 
+def random_number():
+    str_number = ""
+    for i in range(6):
+        ch = chr(random.randrange(ord('0'), ord('9') + 1))
+        str_number += ch
+    return str_number
+
+
 def make_confirm_string(user):
 
     now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     code = hash_code(user.username, now)
-    models.ConfirmString.objects.create(code=code, user=user)
+    ConfirmString.objects.create(code=code, user=user)
     return code
 
 
 def make_confirm_number(user):
-    now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    number = hash_code(user.username, now)
-    models.ConfirmNumber.objects.create(number=number, user=user)
+    number = random_number()
+    ConfirmNumber.objects.create(number=number, user=user)
     return number

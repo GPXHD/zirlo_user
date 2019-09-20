@@ -1,19 +1,21 @@
 from django.shortcuts import render, redirect, render_to_response
 from django.conf import settings
-from .models import User, ConfirmString
+from .models import User, ConfirmString, ConfirmNumber, Files
 from . import forms
 import datetime
-from login.others import send_mail, confirms
+import json
+from login.others import send_mail, confirms, encryption
 from django.contrib.auth.hashers import make_password, check_password
-from django.views.generic.base import View
+from captcha.models import CaptchaStore
+from captcha.helpers import captcha_image_url
+from django.http import JsonResponse, HttpResponse
+from django.utils import timezone
+from django.views.generic import TemplateView, View
 from haystack.views import SearchView
 from django.core.paginator import *
-# Create your views here.
 
 
 def index(request):
-    # if not request.session.get('is_login', None):
-        # return redirect('login')
     is_login = request.session.get('is_login', None)
 
     return render(request, 'login/index.html', locals())
@@ -179,20 +181,30 @@ def user_center(request):
     user_id = request.session.get('user_id')
     user = User.objects.get(id=user_id)
     if request.method == "POST":
+        upload_form = forms.FileForm(request.POST, request.FILES)
+        if upload_form.is_valid():
+            filename = upload_form.cleaned_data['file'].name
+            file = upload_form.cleaned_data['file']
+            new_file = Files(filename=filename, file=file)
+            new_file.save()
+
         user_form = forms.FaceForm(request.POST, request.FILES)
         if user_form.is_valid():
-            # user.face = user_form.FILES.get('face')
             user.face = user_form.cleaned_data['face']
-
             user.save()
-    else:
-        user_form = forms.FaceForm()
 
     return render(request, 'login/user_center.html', locals())
 
 
-def pass_reset(request):
+def upload_file_show(request):
+    is_login = request.session.get('is_login', None)
+    if not is_login:
+        return redirect('login')
+    upload_files = Files.objects.all()
+    return render(request, 'login/upload_file_show.html', locals())
 
+
+def pass_reset(request):
     is_login = request.session.get('is_login', None)
     if is_login:
         if request.method == 'POST':
@@ -202,45 +214,122 @@ def pass_reset(request):
                 old_pass = pass_form.cleaned_data.get('old_pass')
                 password1 = pass_form.cleaned_data.get('password')
                 password2 = pass_form.cleaned_data.get('confirm_pass')
-
+                # encryption.creat_captcha()
                 user_id = request.session.get('user_id')
                 user = User.objects.get(id=user_id)
-
                 if not check_password(old_pass, user.password):
                     massage = '输入的旧密码是错误的，请重新输入！'
                     return render(request, 'login/password_reset.html', locals())
                 if password1 != password2:
-                    message = '两次输入的密码不相同！'
+                    message = '两次输入的新密码不相同！'
                     return render(request, 'login/password_reset.html', locals())
-                else:
-                    user.password = make_password(password1, None, 'pbkdf2_sha1')
-                    user.save()
-                    return render(request, 'login/password_reset.html', locals())
+                user.password = make_password(password1, None, 'pbkdf2_sha1')
+                user.save()
+                return render(request, 'login/password_reset.html', locals())
             else:
                 return render(request, 'login/password_reset.html', locals())
         pass_form = forms.PassForm()
         return render(request, 'login/password_reset.html', locals())
-    else:
-        if request.method == 'POST':
-            find_form = forms.FindPassForm(request.POST)
-            if find_form.is_valid():
-                username = find_form.cleaned_data.get('username')
 
-                user = User.objects.filter(username=username)
-                if not user:
-                    message = '用户不存在！'
+
+new_pwd = {}
+
+
+def pass_find(request):
+    if request.method == 'POST':
+        find_form = forms.FindForm(request.POST)
+        if find_form.is_valid():
+            username = find_form.cleaned_data.get('username')
+            user = User.objects.get(username=username)
+            new_pwd['user'] = user
+            if not user:
+                message = '用户不存在！'
+                return render(request, 'login/password_find.html', locals())
+            email_add = user.email
+            test = ConfirmNumber.objects.filter(user_id=user.id)
+            if test:
+                confirm = ConfirmNumber.objects.get(user_id=user.id)
+                c_time = confirm.c_time
+                now = datetime.datetime.now()
+                if now > c_time + datetime.timedelta(seconds=120):
+                    confirm.delete()
+                    number = confirms.make_confirm_number(user)
+                    confirm = ConfirmNumber.objects.get(user_id=user.id)
+                    new_pwd['confirm'] = confirm
+                    send_mail.sendmail_number(email_add, number)
+                    return redirect(verify)
+                else:
+                    message = '过于频繁获取邮箱验证码！'
                     return render(request, 'login/password_find.html', locals())
-                email_add = user.email
-# 这里改为发送数字
-                number = confirms.make_confirm_number(user)
-                send_mail.send_mails(email_add, number)
-                message = '请前往邮箱获取验证码！'
-                return render(request, 'login/password_find.html', locals())
-            else:
-                return render(request, 'login/password_find.html', locals())
-        find_form = forms.FindPassForm()
+            number = confirms.make_confirm_number(user)
+            confirm = ConfirmNumber.objects.get(user_id=user.id)
+            new_pwd['confirm'] = confirm
+            send_mail.sendmail_number(email_add, number)
+            return redirect(verify)
         return render(request, 'login/password_find.html', locals())
+    find_form = forms.FindForm()
+    return render(request, 'login/password_find.html', locals())
 
+
+def verify(request):
+    message = '请前往邮箱获取验证码！'
+    if request.method == 'POST':
+        verify_form = forms.VerifyForm(request.POST)
+        if verify_form.is_valid():
+            number = verify_form.cleaned_data.get('number')
+            confirm = new_pwd['confirm']
+            c_time = confirm.c_time
+            now = datetime.datetime.now()
+            if now > c_time + datetime.timedelta(seconds=600):
+                confirm.delete()
+                message = '您的验证码已经过期,请重新获取邮箱验证码！'
+                return render(request, 'login/verification code.html', locals())
+            if confirm.number == number:
+                message = '请输入新的密码！'
+                return redirect(new_password)
+            message = '邮箱验证码错误！'
+            return render(request, 'login/verification code.html', locals())
+        return render(request, 'login/verification code.html', locals())
+    verify_form = forms.VerifyForm()
+    return render(request, 'login/verification code.html', locals())
+
+
+def new_password(request):
+    if request.method == 'POST':
+        new_pass_form = forms.NewPassForm(request.POST)
+        if new_pass_form.is_valid():
+            password = new_pass_form.cleaned_data.get('password')
+            password1 = new_pass_form.cleaned_data.get('confirm_pass')
+            if password != password1:
+                message = '两次输入的新密码不相同！'
+                return render(request, 'login/new_password.html', locals())
+            confirm = new_pwd['confirm']
+            confirm.user.password = make_password(password1, None, 'pbkdf2_sha1')
+            confirm.user.save()
+            confirm.delete()
+            new_pwd.clear()
+            return redirect(login)
+        return render(request, 'login/new_password.html', locals())
+    new_pass_form = forms.NewPassForm()
+    return render(request, 'login/new_password.html', locals())
+
+
+def refresh_captcha(request):
+    return HttpResponse(json.dumps(encryption.create_captcha()), content_type='application/json')
+
+
+def ajax_val(request):
+    if request.is_ajax():
+        cs = CaptchaStore.objects.filter(response=request.GET['response'], hashkey=request.GET['hashkey'])
+        if cs:
+            json_data = {'status': 1}
+        else:
+            json_data = {'status': 0}
+        return JsonResponse(json_data)
+    else:
+        # raise Http404
+        json_data = {'status': 0}
+        return JsonResponse(json_data)
 # class MySearchView(SearchView, View):
 #
 #     @staticmethod
@@ -287,3 +376,26 @@ def page_permission_denied(request, exception):
     response = render_to_response('403.html', {})
     response.status_code = 403
     return response
+
+
+class VerifyCaptcha(View):
+
+    @classmethod
+    def get_captcha(cls):
+        captcha_id = CaptchaStore.generate_key()
+        return JsonResponse({
+            'captcha_id': captcha_id,
+            'image_src': captcha_image_url(captcha_id),
+        })
+
+    @classmethod
+    def post_captcha(cls, request):
+        captcha_id = request.POST.get('captcha_id')
+        captcha = request.POST.get('captcha')
+        captcha = captcha.lower()
+
+        try:
+            CaptchaStore.objects.get(response=captcha, hashkey=captcha_id, expiration__gt=timezone.now()).delete()
+        except CaptchaStore.DoesNotExist:
+            return JsonResponse({'msg': '验证码错误'}, status=400)
+        return JsonResponse({})

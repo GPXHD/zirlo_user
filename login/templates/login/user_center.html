@@ -43,6 +43,13 @@
                         <td width="10%" class="btbg font-center">{{ user.c_time }}</td>
                     </tr>
                     <tr>
+                        <td width="8%" class="btbg font-center"><label for="file">文件上传</label></td>
+                        <td width="8%" class="btbg font-center"><input type="file" name="file"
+                                                                       class="form-control-file" id="file" /></td>
+                        <td width="8%" class="btbg font-center"><a href="{% url 'upload_file_show' %}">查看</a></td>
+                        <td><button type="submit">上传</button></td>
+                    </tr>
+                    <tr>
                         <td width="8%" class="btbg font-center">修改密码</td>
                         <td width="10%" class="btbg font-center"><a href="{% url 'pass_reset' %}">请点击修改！</a></td>
                     </tr>

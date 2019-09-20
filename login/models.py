@@ -61,3 +61,17 @@ class ConfirmNumber(models.Model):
         ordering = ['-c_time']
         verbose_name = '验证码'
         verbose_name_plural = verbose_name
+
+
+class Files(models.Model):
+    filename = models.CharField('文件名', max_length=128, default='')
+    file = models.FileField(upload_to='file/%Y/%m/%d', blank=True, default='')
+    c_time = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.filename
+
+    class Meta:
+        ordering = ['-c_time']
+        verbose_name = '用户上传文件'
+        verbose_name_plural = verbose_name
