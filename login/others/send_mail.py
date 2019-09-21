@@ -44,11 +44,12 @@ def send_mails(email_add, code):
     msg.attach(text_html)
 
     try:
-        server = smtplib.SMTP_SSL(smtp_server, settings.EMAIL_PORT)
+        server = smtplib.SMTP_SSL(smtp_server, 465)
         server.ehlo()
         server.login(smtp_user, smtp_pwd)
         server.sendmail(sender, receive, msg.as_string())
-        server.close()
+        server.quit()
+        # server.close()
         print('邮件发送成功！')
     except smtplib.SMTPConnectError as e:
         print('邮件发送失败，连接失败:', e.smtp_code, e.smtp_error)
