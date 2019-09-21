@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'pb%#n90vc5%(r(=&+5i#9plo1ou@c)4$1%g8t+5(s=i1q^!==o'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 IP_ADDRESS = '120.24.171.173'
 # '120.24.171.173', '192.168.52.131', '192.168.52.130'
 ALLOWED_HOSTS = ['*']
@@ -144,13 +144,13 @@ STATICFILES_DIRS = [
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_FILE_PATH = '/conf/django_cache/email'
-EMAIL_HOST = 'smtp.163.com'
-EMAIL_HOST_PASSWORD = 'gao2005'
-EMAIL_HOST_USER = 'Gaopengxiang18@163.com'
+EMAIL_HOST = 'smtp.qq.com'
+EMAIL_HOST_PASSWORD = 'qnlikixzimuefiid'
+EMAIL_HOST_USER = '1433428978@qq.com'
 EMAIL_PORT = 465
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
-DEFAULT_FROM_EMAIL = 'Gaopengxiang18@163.com'
+DEFAULT_FROM_EMAIL = '14334289782qq.com'
 CONFIRM_DAYS = 7
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/media')

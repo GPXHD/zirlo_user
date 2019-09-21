@@ -11,11 +11,12 @@ from email.mime.application import MIMEApplication
 from email.header import Header
 os.environ['DJANGO_SETTINGS_MODULE'] = 'zrilo_user.settings'
 
+smtp_server = settings.EMAIL_HOST
+smtp_user = settings.EMAIL_HOST_USER
+smtp_pwd = settings.EMAIL_HOST_PASSWORD
+
 
 def send_mails(email_add, code):
-    smtp_server = 'smtp.qq.com'
-    smtp_user = '1433428978@qq.com'
-    smtp_pwd = 'qnlikixzimuefiid'
 
     sender = smtp_user
     receive = email_add
@@ -44,7 +45,7 @@ def send_mails(email_add, code):
     msg.attach(text_html)
 
     try:
-        server = smtplib.SMTP_SSL(smtp_server, 465)
+        server = smtplib.SMTP_SSL(smtp_server, settings.EMAIL_PORT)
         server.ehlo()
         server.login(smtp_user, smtp_pwd)
         server.ehlo()
@@ -69,9 +70,9 @@ def send_mails(email_add, code):
 
 
 def sendmail_number(email_add, number):
-    smtp_server = 'smtp.qq.com'
-    smtp_user = '1433428978@qq.com'
-    smtp_pwd = 'qnlikixzimuefiid'
+    # smtp_server = 'smtp.qq.com'
+    # smtp_user = '1433428978@qq.com'
+    # smtp_pwd = 'qnlikixzimuefiid'
 
     sender = smtp_user
     receive = email_add
@@ -97,7 +98,7 @@ def sendmail_number(email_add, number):
     msg.attach(text_html)
 
     try:
-        server = smtplib.SMTP_SSL(smtp_server, 465)
+        server = smtplib.SMTP_SSL(smtp_server, settings.EMAIL_PORT)
         server.ehlo()
         server.login(smtp_user, smtp_pwd)
         server.ehlo()
