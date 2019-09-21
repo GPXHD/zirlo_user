@@ -4,7 +4,7 @@ from .models import User, ConfirmString, ConfirmNumber, Files
 from . import forms
 import datetime
 import json
-from login.others import send_mail, confirms, encryption
+from login.others import send_mail, confirms, encryption, send_number
 from django.contrib.auth.hashers import make_password, check_password
 from captcha.models import CaptchaStore
 from captcha.helpers import captcha_image_url
@@ -255,7 +255,7 @@ def pass_find(request):
                     number = confirms.make_confirm_number(user)
                     confirm = ConfirmNumber.objects.get(user_id=user.id)
                     new_pwd['confirm'] = confirm
-                    send_mail.sendmail_number(email_add, number)
+                    send_number.sendmail_number(email_add, number)
                     return redirect(verify)
                 else:
                     message = '过于频繁获取邮箱验证码！'
@@ -263,7 +263,7 @@ def pass_find(request):
             number = confirms.make_confirm_number(user)
             confirm = ConfirmNumber.objects.get(user_id=user.id)
             new_pwd['confirm'] = confirm
-            send_mail.sendmail_number(email_add, number)
+            send_number.sendmail_number(email_add, number)
             return redirect(verify)
         return render(request, 'login/password_find.html', locals())
     find_form = forms.FindForm()
