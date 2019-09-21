@@ -12,27 +12,24 @@ from email.header import Header
 os.environ['DJANGO_SETTINGS_MODULE'] = 'zrilo_user.settings'
 
 
-def send_mails(email_add, code):
-    smtp_server = 'smtp.163.com'
-    smtp_user = 'Gaopengxiang18@163.com'
-    smtp_pwd = 'gao2005'
+def sendmail_number(email_add, number):
+    smtp_server = settings.EMAIL_HOST
+    smtp_user = settings.EMAIL_HOST_USER
+    smtp_pwd = settings.EMAIL_HOST_PASSWORD
 
     sender = smtp_user
     receive = email_add
 
-    subject = '来自www.zr.com的注册确认邮件'
+    subject = '来自www.zr.com的验证码邮件'
 
     text_content = '''
-                    感谢注册www.zr.com，复仇者联盟！\
                     如果你看到这条消息，说明你的邮箱服务器不提供HTML链接功能，请联系管理员！
-                   '''
+                    '''
 
     html_content = '''
-                     <p>感谢注册<a href="http://{}/confirm/?code={}" target=blank>www.zr.com</a>，\
-                     这里是复仇者联盟!</p>
-                     <p>请点击站点链接完成注册确认！</p>
-                     <p>此链接有效期为{}天！</p>
-                   '''.format(settings.IP_ADDRESS, code, settings.CONFIRM_DAYS)
+                    <p>您的账号验证码是{}
+                    <p>此验证码有效期为{}！</p>
+                    '''.format(number, '10分钟')
 
     msg = MIMEMultipart('alternative')
     msg['Subject'] = Header(subject).encode()

@@ -97,7 +97,6 @@ def register(request):
 
             code = confirms.make_confirm_string(new_user)
             send_mail.send_mails(email, code)
-
             message = '请前往邮箱进行确认！'
             return render(request, 'login/confirm.html', locals())
         else:
@@ -378,24 +377,24 @@ def page_permission_denied(request, exception):
     return response
 
 
-class VerifyCaptcha(View):
-
-    @classmethod
-    def get_captcha(cls):
-        captcha_id = CaptchaStore.generate_key()
-        return JsonResponse({
-            'captcha_id': captcha_id,
-            'image_src': captcha_image_url(captcha_id),
-        })
-
-    @classmethod
-    def post_captcha(cls, request):
-        captcha_id = request.POST.get('captcha_id')
-        captcha = request.POST.get('captcha')
-        captcha = captcha.lower()
-
-        try:
-            CaptchaStore.objects.get(response=captcha, hashkey=captcha_id, expiration__gt=timezone.now()).delete()
-        except CaptchaStore.DoesNotExist:
-            return JsonResponse({'msg': '验证码错误'}, status=400)
-        return JsonResponse({})
+# class VerifyCaptcha(View):
+#
+#     @classmethod
+#     def get_captcha(cls):
+#         captcha_id = CaptchaStore.generate_key()
+#         return JsonResponse({
+#             'captcha_id': captcha_id,
+#             'image_src': captcha_image_url(captcha_id),
+#         })
+#
+#     @classmethod
+#     def post_captcha(cls, request):
+#         captcha_id = request.POST.get('captcha_id')
+#         captcha = request.POST.get('captcha')
+#         captcha = captcha.lower()
+#
+#         try:
+#             CaptchaStore.objects.get(response=captcha, hashkey=captcha_id, expiration__gt=timezone.now()).delete()
+#         except CaptchaStore.DoesNotExist:
+#             return JsonResponse({'msg': '验证码错误'}, status=400)
+#         return JsonResponse({})
