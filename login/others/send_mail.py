@@ -13,9 +13,9 @@ os.environ['DJANGO_SETTINGS_MODULE'] = 'zrilo_user.settings'
 
 
 def send_mails(email_add, code):
-    smtp_server = 'smtp.163.com'
-    smtp_user = 'Gaopengxiang18@163.com'
-    smtp_pwd = 'gao2005'
+    smtp_server = 'smtp.qq.com'
+    smtp_user = '1433428978@qq.com'
+    smtp_pwd = 'qnlikixzimuefiid'
 
     sender = smtp_user
     receive = email_add
