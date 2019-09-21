@@ -47,6 +47,7 @@ def send_mails(email_add, code):
         server = smtplib.SMTP_SSL(smtp_server, 465)
         server.ehlo()
         server.login(smtp_user, smtp_pwd)
+        server.ehlo()
         server.sendmail(sender, receive, msg.as_string())
         server.quit()
         # server.close()
