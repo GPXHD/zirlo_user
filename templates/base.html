@@ -4,89 +4,63 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width initial-scale=1">
-    <!--base href="127.0.0.1:8000" /-->
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,shrink-to-fit=no">
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
-    <script src="{% static 'js/jquery.min.js' %} }}"></script>
-    <script src="{% static 'js/popper.js' %}/"></script>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    <link href="{% static 'css/default.css' %}" rel="stylesheet">
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/popper.js"></script>
+    <script src="/static/js/bootstrap.min.js/"></script>
+    <link href="/static/css/default.css" rel="stylesheet">
     <title>ZIRLO - {% block title %}{% endblock %}</title>
 </head>
 
 
 <body>
-    <!--导航栏-->
-    <nav class="navbar navbar-expand-sm bg-dark fixed-top">
-        <a class="navbar-brand" href="/"><h1>Zirlo</h1></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-{#        <div class="collapse navbar-collapse" id="collapsibleNavbar">#}
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="/">首页</a>
-                </li>
-                {% if not is_login %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'login' %}">登录</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'register' %}">注册</a>
-                </li>
-                {% else %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'user_center' %}">{{ request.session.user_username }}</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'logout' %}">退出</a>
-                </li>
-                {% endif %}
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                       aria-expanded="true">Dropdown <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">首页</a></li>
-                        <li><a href="#">登录</a></li>
-                        <li><a href="#">注册</a></li>
-                        <li><a href="{% url 'query' %}">查询</a></li>
-                    </ul>
-                </li>
-
-                <li class="navbar navbar-expand-sm bg navbar">
-                    <form class="navbar-form" role="search" action="{% url 'haystack_search' %}" method="get">
-                        <div class="input-group">
-                            <input name="q" id='search_keywords' type="text" class="form-control" placeholder="输入关键字"/>
-                            <input type="submit" id="search" value="搜索">
-                        </div>
-                    </form>
-                </li>
-            </ul>
-{#        </div>#}
-    </nav>
-
-    <br/><br/><br/>
-    <div class="container" style="margin-top: 80px;">
-
-        <div class="col" style="height: 750px;">
-            {% block main %}{% endblock %}
-        </div>
-
-        <div>
-            {% block content %}{% endblock %}
-        </div>
-
-        <footer>
-            <div class="row">
-                <div class="col-sm-12" style="text-align: center;">
-                   <p>
-                       Powered by <a href="http://www.zrilo.com.cn">Gao Px</a>.
-                   </p>
-                </div>
+    <div>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default">
+            <a class="navbar-brand" href="/"><h1>Zirlo</h1></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
+                    aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                    <li class="nav-item active"><a class="nav-link" href="/">首页<span class="sr-only">(current)</span></a></li>
+                    {% if not is_login %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">登录</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">注册</a></li>
+                    {% else %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'user_center' %}">
+                            {{ request.session.user_username }}</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">退出</a></li>
+                    {% endif %}
+                    <li class="dropdown disabled">
+                        <button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-toggle="dropdown">
+                            Dropdown<span class="caret"></span></button>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-item"><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Separated link</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">One more separated link</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <form class="form-inline my-2 my-lg-0" role="search" action="{% url 'haystack_search' %}" method="get">
+                    <input  name="q" id='search_keywords' type="text" class="form-control mr-sm-2" placeholder="输入关键字">
+                    <button class="btn btn-outline-success" type="submit">搜索</button>
+                </form>
             </div>
-        </footer>
+        </nav>
     </div>
 
+{% block main %}{% endblock %}
 
+    <footer class="footer col-10">
+        <div class="container power" style="text-align: center;">
+            <span class="text-muted">Power by Hunan University</span>
+        </div>
+    </footer>
 </body>
 </html>

@@ -4,62 +4,79 @@
 {% block title %}首页{% endblock %}
 
 {% block main %}
-    <div class="welcome">
-        {% if is_login %}
-            <div class="jumbotron">
-                <h1>{{ request.session.user_username }}!  欢迎回来！</h1>
-            </div>
-        {% else %}
-            <div class="not-login">
-                <h2><a href="{% url 'register' %}">请注册自己的账号！</a></h2>
-                <h2>如果已经有账号，<a href="{% url 'login' %}">请登录！</a>查看更多内容。</h2>
-            </div>
-        {% endif %}
+    <div class="container head">
+        <div class="jumbotron">
+            <h1 class="display-4">Zirlo</h1>
+            <p class="lead">基于Django的Web项目</p>
+
+        </div>
+        <div class="welcome">
+            {% if is_login %}
+                <div class="jumbotron">
+                    <h1>{{ request.session.user_username }}!  欢迎回来！</h1>
+                </div>
+            {% else %}
+                <div class="not-login">
+                    <h2><a href="{% url 'register' %}">请注册自己的账号！</a></h2>
+                    <h2>如果已经有账号，<a href="{% url 'login' %}">请登录！</a>查看更多内容。</h2>
+                </div>
+            {% endif %}
+        </div>
     </div>
 
-    <div class="row">
-        <div class="left-column">
-            <div class="card">
-                <h2 style="text-align: center">留言板</h2>
-                <h5 id="datetime" style="text-align: right">
-                    <script>
-   		                setInterval("document.getElementById('datetime').innerHTML=new Date().toLocaleString();");
-                    </script>
-                </h5>
-                <div class="fakeimg" style="height:200px;">
-                    <a href="https://pvp.qq.com/"><img src="/static/image/" alt=""></a>
+    <div class="container main">
+        <div class="row">
+            <div class="col-9 post-list">
+                <div class="card post">
+                    <div class="card-body">
+                        <h5 class="card-title" id="datetime"></h5>
+                        <script>
+                            setInterval("document.getElementById('datetime').innerHTML=new Date().toLocaleString();");
+                        </script>
+                        <p class="card-text">我就在想啊?<a href="#">完整内容</a></p>
+                    </div>
                 </div>
-                <p style="text-align: right"></p>
-                <p></p>
+                <div class="card post">
+                    <div class="card-body">
+                        <h5 class="card-title"><a href="#">标题</a></h5>
+                        <span class="card-link">发布人：<a href="#">高鹏翔</a></span>
+                        <span class="card-link">分类：<a href="#">未知</a></span>
+                        <span class="card-link">标签：
+                            <a href="#">1</a>
+                            <a href="#">2</a>
+                            <a href="#">3</a>
+                        </span>
+                        <p class="card-text">我就在想啊?<a href="#">完整内容</a></p>
+                    </div>
+                </div>
+                <div class="card post">
+                    <div class="card-body">
+                        <h5 class="card-title"><a href="#">标题</a></h5>
+                        <span class="card-link">发布人：<a href="#">高鹏翔</a></span>
+                        <span class="card-link">分类：<a href="#">未知</a></span>
+                        <span class="card-link">标签：
+                            <a href="#">1</a>
+                            <a href="#">2</a>
+                            <a href="#">3</a>
+                        </span>
+                        <p class="card-text">我就在想啊?<a href="#">完整内容</a></p>
+                    </div>
+                </div>
+                <div class="page-item" style="text-align: center">
+                    <a href="?page={{ page_obj.previous_page_number }}">上一页</a>
+                    Page 1 of 1.
+                    <a href="?page={{ page_obj.next_page_number }}">下一页</a>
+                </div>
             </div>
-            <div class="card">
-                <h2 style="text-align: center"></h2>
-                <h5></h5>
-                <div class="fakeimg" style="height:200px;">
-                    <a href="https://www.bilibili.com/"><img src="/static/image/" alt=""></a>
+            <div class="col-3">
+                <div class="card sidebar">
+                    <div class="card-body">
+                        <h4 class="card-title">关于我</h4>
+                        <p>用户名：凌音琴师</p>
+                        <p>现在是湖南大学机械与运载工程学院硕士研究生</p>
+                    </div>
                 </div>
-                <div class="desc"></div>
-                <p></p>
-                <p></p>
             </div>
         </div>
     </div>
-{#     <div class="rightcolumn">#}
-{#    <div class="card">#}
-{#      <h2>关于我</h2>#}
-{#      <div class="fakeimg" style="height:100px;">图片</div>#}
-{#      <p>关于我的一些信息..</p>#}
-{#    </div>#}
-{#    <div class="card">#}
-{#      <h3>热门文章</h3>#}
-{#      <div class="fakeimg"><p>图片</p></div>#}
-{#      <div class="fakeimg"><p>图片</p></div>#}
-{#      <div class="fakeimg"><p>图片</p></div>#}
-{#    </div>#}
-{#    <div class="card">#}
-{#      <h3>关注我</h3>#}
-{#      <p>一些文本...</p>#}
-{#    </div>#}
-  </div>
-</div>
 {% endblock %}
