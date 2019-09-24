@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
-<link href="{% static 'login/css/query.css' %}" rel="stylesheet">
+<link href="/login/static/login/css/user_center.css" rel="stylesheet">
+<link href="/static/css/style.css" rel="stylesheet">
 {% block title %}个人中心{% endblock %}
 
 {% block main %}
@@ -33,10 +34,14 @@
                     </tr>
                     <tr>
                         <td width="8%" class="btbg font-center"><label for="face">头像</label></td>
-                        <td width="8%" class="btbg font-center"><img src="/static/media/{{ user.face }}"
-                                                                     class="col-md-4" alt="My face" /></td>
-                        <td width="8%" class="btbg font-center"><input type="file" name="face"
-                                                                       class="form-control-file" id="face" /></td>
+                        <td width="8%" class="btbg font-center">
+                            <label for="img-up">
+                                <img src="/static/media/{{ user.face }}" width="100" height="100" id="img-circle" alt="My face"/>
+                                <input type="file" name="img-up" id="img-up" style="opacity: 0;"/>
+                                <span class="button btn-green btn-w100" id="jsAvatarBtn">修改头像</span>
+                            </label></td>
+{#                        <td width="8%" class="btbg font-center"><input type="file" name="face"#}
+{#                                                                       class="form-control-file" id="face" /></td>#}
                     </tr>
                     <tr>
                         <td width="8%" class="btbg font-center">注册时间</td>
@@ -44,8 +49,8 @@
                     </tr>
                     <tr>
                         <td width="8%" class="btbg font-center"><label for="file">文件上传</label></td>
-                        <td width="8%" class="btbg font-center"><input type="file" name="file"
-                                                                       class="form-control-file" id="file" /></td>
+                        <td width="8%" class="btbg font-center"><input type="file" name="file" class="form-control-file"
+                                                                       id="file" /></td>
                         <td width="8%" class="btbg font-center"><a href="{% url 'upload_file_show' %}">查看</a></td>
                         <td><button type="submit">上传</button></td>
                     </tr>

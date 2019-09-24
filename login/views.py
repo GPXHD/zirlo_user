@@ -8,11 +8,27 @@ from login.others import send_mail, confirms, encryption
 from django.contrib.auth.hashers import make_password, check_password
 from captcha.models import CaptchaStore
 from captcha.helpers import captcha_image_url
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse, HttpResponse, Http404
 from django.utils import timezone
 from django.views.generic import TemplateView, View
 from haystack.views import SearchView
 from django.core.paginator import *
+
+
+def page_not_found(request, exception):
+    response = render_to_response('404.html', {})
+    response.status_code = 404
+    return response
+
+
+def page_error(request):
+    return render(request, '500.html')
+
+
+def page_permission_denied(request, exception):
+    response = render_to_response('403.html', {})
+    response.status_code = 403
+    return response
 
 
 def index(request):
@@ -148,18 +164,16 @@ def query(request):
     message = '请输入查询内容！'
     if request.method == 'POST':
         query_form = forms.QueryForm(request.POST)
-
         if query_form.is_valid():
             username = query_form.cleaned_data.get('username')
             # email = query_form.cleaned_data.get('email')
-            user = User.objects.filter(username=username)
+            user = User.objects.get(username=username)
             # user_json = json.dumps(user)
             message = '查询成功！'
             return render(request, 'login/query.html', locals())
         else:
             message = '查询失败！'
             return render(request, 'login/query.html', locals())
-
     query_form = forms.QueryForm()
     return render(request, 'login/query.html', locals())
 
@@ -205,30 +219,32 @@ def upload_file_show(request):
 
 def pass_reset(request):
     is_login = request.session.get('is_login', None)
-    if is_login:
-        if request.method == 'POST':
-            pass_form = forms.PassForm(request.POST)
-            message = "已经通过验证，请设置新密码"
-            if pass_form.is_valid():
-                old_pass = pass_form.cleaned_data.get('old_pass')
-                password1 = pass_form.cleaned_data.get('password')
-                password2 = pass_form.cleaned_data.get('confirm_pass')
-                # encryption.creat_captcha()
-                user_id = request.session.get('user_id')
-                user = User.objects.get(id=user_id)
-                if not check_password(old_pass, user.password):
-                    massage = '输入的旧密码是错误的，请重新输入！'
-                    return render(request, 'login/password_reset.html', locals())
-                if password1 != password2:
-                    message = '两次输入的新密码不相同！'
-                    return render(request, 'login/password_reset.html', locals())
-                user.password = make_password(password1, None, 'pbkdf2_sha1')
-                user.save()
+    if not is_login:
+        return redirect('login')
+
+    if request.method == 'POST':
+        pass_form = forms.PassForm(request.POST)
+        message = "已经通过验证，请设置新密码"
+        if pass_form.is_valid():
+            old_pass = pass_form.cleaned_data.get('old_pass')
+            password1 = pass_form.cleaned_data.get('password')
+            password2 = pass_form.cleaned_data.get('confirm_pass')
+            # encryption.creat_captcha()
+            user_id = request.session.get('user_id')
+            user = User.objects.get(id=user_id)
+            if not check_password(old_pass, user.password):
+                massage = '输入的旧密码是错误的，请重新输入！'
                 return render(request, 'login/password_reset.html', locals())
-            else:
+            if password1 != password2:
+                message = '两次输入的新密码不相同！'
                 return render(request, 'login/password_reset.html', locals())
-        pass_form = forms.PassForm()
-        return render(request, 'login/password_reset.html', locals())
+            user.password = make_password(password1, None, 'pbkdf2_sha1')
+            user.save()
+            return render(request, 'login/password_reset.html', locals())
+        else:
+            return render(request, 'login/password_reset.html', locals())
+    pass_form = forms.PassForm()
+    return render(request, 'login/password_reset.html', locals())
 
 
 new_pwd = {}
@@ -313,10 +329,6 @@ def new_password(request):
     return render(request, 'login/new_password.html', locals())
 
 
-def refresh_captcha(request):
-    return HttpResponse(json.dumps(encryption.create_captcha()), content_type='application/json')
-
-
 def ajax_val(request):
     if request.is_ajax():
         cs = CaptchaStore.objects.filter(response=request.GET['response'], hashkey=request.GET['hashkey'])
@@ -329,6 +341,8 @@ def ajax_val(request):
         # raise Http404
         json_data = {'status': 0}
         return JsonResponse(json_data)
+
+
 # class MySearchView(SearchView, View):
 #
 #     @staticmethod
@@ -359,42 +373,3 @@ def ajax_val(request):
     #         'context': statue
     #     }
     #     return context1
-
-
-def page_not_found(request, exception):
-    response = render_to_response('404.html', {})
-    response.status_code = 404
-    return response
-
-
-def page_error(request):
-    return render(request, '500.html')
-
-
-def page_permission_denied(request, exception):
-    response = render_to_response('403.html', {})
-    response.status_code = 403
-    return response
-
-
-# class VerifyCaptcha(View):
-#
-#     @classmethod
-#     def get_captcha(cls):
-#         captcha_id = CaptchaStore.generate_key()
-#         return JsonResponse({
-#             'captcha_id': captcha_id,
-#             'image_src': captcha_image_url(captcha_id),
-#         })
-#
-#     @classmethod
-#     def post_captcha(cls, request):
-#         captcha_id = request.POST.get('captcha_id')
-#         captcha = request.POST.get('captcha')
-#         captcha = captcha.lower()
-#
-#         try:
-#             CaptchaStore.objects.get(response=captcha, hashkey=captcha_id, expiration__gt=timezone.now()).delete()
-#         except CaptchaStore.DoesNotExist:
-#             return JsonResponse({'msg': '验证码错误'}, status=400)
-#         return JsonResponse({})

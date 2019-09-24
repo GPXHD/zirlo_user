@@ -37,7 +37,6 @@
                         <th width="10%" class="btbg font-center" id="_c_time"></th>
                     </tr>
                 </table>
-            <div>
                 <script type="text/javascript">
                     function myQuery(){
                         let x = document.getElementById("username").value;
@@ -47,7 +46,7 @@
                         document.getElementById("email").innerHTML="邮箱";
                         document.getElementById("sex").innerHTML="性别";
                         document.getElementById("c_time").innerHTML="注册时间";
-                        document.getElementById("_username").innerHTML= x;
+                        document.getElementById("_username").innerHTML= {{ user.username|safe }};
                         document.getElementById("_id").innerHTML= 2;
                         document.getElementById("_real_name").innerHTML= 2;
                         document.getElementById("_email").innerHTML= 4;
@@ -55,6 +54,7 @@
                         document.getElementById("_c_time").innerHTML=6;
                     }
                 </script>
+            <div>
                 <input class="btn float-right" type="submit" onclick="myQuery()" value="确定"/>
             </div>
         </form>

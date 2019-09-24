@@ -9,6 +9,7 @@
     <script src="/static/js/jquery.min.js"></script>
     <script src="/static/js/popper.js"></script>
     <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/captcha.js"></script>
     <link href="/static/css/default.css" rel="stylesheet">
     <title>ZIRLO - {% block title %}{% endblock %}</title>
 </head>
@@ -31,13 +32,17 @@
                     {% else %}
                         <li class="nav-item"><a class="nav-link" href="{% url 'user_center' %}">
                             {{ request.session.user_username }}</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'user_center' %}">
+                            <img id="img-circle" data-toggle="tooltip" title="{{ request.session.user_username }}"
+                                 width="30" height="30" src="/static/media/{{ user.face }}" alt="My face"/>
+                        </a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">退出</a></li>
                     {% endif %}
                     <li class="dropdown disabled">
                         <button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-toggle="dropdown">
                             Dropdown<span class="caret"></span></button>
                         <ul class="dropdown-menu">
-                            <li class="dropdown-item"><a href="#">Action</a></li>
+                            <li class="dropdown-item"><a href="{% url 'query' %}">搜索</a></li>
                             <li><a href="#">Another action</a></li>
                             <li><a href="#">Something else here</a></li>
                             <li role="separator" class="divider"></li>
@@ -57,8 +62,8 @@
 
 {% block main %}{% endblock %}
 
-    <footer class="footer col-10">
-        <div class="container power" style="text-align: center;">
+    <footer id="base_footer">
+        <div class="container power">
             <span class="text-muted">Power by Hunan University</span>
         </div>
     </footer>

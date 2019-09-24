@@ -38,9 +38,7 @@ urlpatterns = [
     path('find_pass/', login.views.pass_find, name='find_pass'),
     path('verify/', login.views.verify, name='verify'),
     path('new_pwd/', login.views.new_password, name='new_pwd'),
-    # path('ajax_val/', login.views.ajax_val, name='ajax_val'),
-    # path('refresh_captcha/', login.views.refresh_captcha, name='refresh-captcha'),
-    # path('verify_captcha/', login.views.VerifyCaptcha.as_view(), name='verify_captcha'),
+    path('ajax_val/', login.views.ajax_val, name='ajax_val'),
     path('search/', include('haystack.urls')),
     path('captcha/', include('captcha.urls')),
     ]
