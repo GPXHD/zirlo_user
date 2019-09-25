@@ -34,8 +34,11 @@
                             {{ request.session.user_username }}</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'user_center' %}">
                             <img id="img-circle" data-toggle="tooltip" title="{{ request.session.user_username }}"
-                                 width="30" height="30" src="/static/media/{{ user.face }}" alt="My face"/>
+                                 width="30" height="30" src="" alt="My face"/>
                         </a></li>
+                        <script>
+                            document.getElementById("img-circle").src = localStorage.getItem('face');
+                        </script>
                         <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">退出</a></li>
                     {% endif %}
                     <li class="dropdown disabled">

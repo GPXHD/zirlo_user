@@ -341,8 +341,6 @@ def ajax_val(request):
         # raise Http404
         json_data = {'status': 0}
         return JsonResponse(json_data)
-
-
 # class MySearchView(SearchView, View):
 #
 #     @staticmethod

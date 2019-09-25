@@ -13,7 +13,6 @@
                     <div class="alert alert-warning">{{ message }}</div>
                 {% endif %}
                 {% csrf_token %}
-
                 <table width="100%" border="0" cellspacing="1" cellpadding="4" bgcolor="#cccccc"
                        class="tabtop13" align="center">
                     <tr>
@@ -40,6 +39,12 @@
                                 <input type="file" name="img-up" id="img-up" style="opacity: 0;"/>
                                 <span class="button btn-green btn-w100" id="jsAvatarBtn">修改头像</span>
                             </label></td>
+                        <script type="text/javascript">
+                            let str = document.getElementById("img-circle").src;
+                            let a = str.indexOf("/sta");
+                            let src = str.substring(a);
+                            localStorage.setItem("face", src);
+                        </script>
 {#                        <td width="8%" class="btbg font-center"><input type="file" name="face"#}
 {#                                                                       class="form-control-file" id="face" /></td>#}
                     </tr>
