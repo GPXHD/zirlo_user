@@ -71,6 +71,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.static',
+                'django.template.context_processors.media',
             ],
         },
     },
@@ -154,7 +156,7 @@ DEFAULT_FROM_EMAIL = '14334289782qq.com'
 CONFIRM_DAYS = 7
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = 'media/'
+MEDIA_URL = '/media/'
 ADMIN_MEDIA_PREFIX = '/media/'
 # DEFAULT_FACE = '/static/images/face%d.png'
 
