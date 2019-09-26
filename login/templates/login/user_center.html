@@ -35,7 +35,7 @@
                         <td width="8%" class="btbg font-center"><label for="face">头像</label></td>
                         <td width="8%" class="btbg font-center">
                             <label for="img-up">
-                                <img src="/static/media/{{ user.face }}" width="100" height="100" id="img-circle" alt="My face"/>
+                                <img src="/media/{{ user.face }}" width="100" height="100" id="img-circle" alt="My face"/>
                                 <input type="file" name="img-up" id="img-up" style="opacity: 0;"/><br/>
                                 <span class="button btn-green btn-w100" id="jsAvatarBtn">修改头像</span>
                             </label></td>
@@ -62,7 +62,7 @@
     <div class="javaScript">
         <script type="text/javascript">
             let str = document.getElementById('1').innerText;
-            let str_0 = '/static/media/';
+            let str_0 = '/media/';
             localStorage.setItem("face", str_0+str);
         </script>
     </div>

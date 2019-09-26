@@ -41,9 +41,8 @@ urlpatterns = [
     path('ajax_val/', login.views.ajax_val, name='ajax_val'),
     path('search/', include('haystack.urls')),
     path('captcha/', include('captcha.urls')),
-    ]
-# ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) \
-#   + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) \
+      + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 handler403 = login.views.page_permission_denied
 handler404 = login.views.page_not_found
