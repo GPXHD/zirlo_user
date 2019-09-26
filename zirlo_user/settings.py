@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'pb%#n90vc5%(r(=&+5i#9plo1ou@c)4$1%g8t+5(s=i1q^!==o'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 IP_ADDRESS = '120.24.171.173'
 # '120.24.171.173', '192.168.52.131', '192.168.52.130'
 ALLOWED_HOSTS = ['*']
@@ -139,7 +139,7 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = '/srv/zirlo_user/statics/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'statics')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
