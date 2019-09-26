@@ -3,40 +3,69 @@ from django.conf import settings
 from .models import User, ConfirmString, ConfirmNumber, Files
 from . import forms
 import datetime
-import json
+from django.urls import reverse
 from login.others import send_mail, confirms, encryption
 from django.contrib.auth.hashers import make_password, check_password
 from captcha.models import CaptchaStore
 from captcha.helpers import captcha_image_url
-from django.http import JsonResponse, HttpResponse, Http404
+from django.http import JsonResponse, HttpResponseRedirect, Http404
 from django.utils import timezone
 from django.views.generic import TemplateView, View
 from haystack.views import SearchView
 from django.core.paginator import *
 
 
-def page_not_found(request, exception):
-    response = render_to_response('404.html', {})
-    response.status_code = 404
-    return response
-
-
-def page_error(request):
-    return render(request, '500.html')
-
-
+# 403错误
 def page_permission_denied(request, exception):
     response = render_to_response('403.html', {})
     response.status_code = 403
     return response
 
 
+# 404错误
+def page_not_found(request, exception):
+    response = render_to_response('404.html', {})
+    response.status_code = 404
+    return response
+
+
+# 500错误
+def page_error(request):
+    return render(request, '500.html')
+
+
+# 上传文件展示
+def upload_file_show(request):
+    is_login = request.session.get('is_login', None)
+    if not is_login:
+        return redirect('login')
+    upload_files = Files.objects.all()
+    return render(request, 'login/upload_file_show.html', locals())
+
+
+# 首页
 def index(request):
     is_login = request.session.get('is_login', None)
 
+    if is_login:
+        user_id = request.session.get('user_id')
+        user = User.objects.get(id=user_id)
+        if request.method == "POST":
+            upload_form = forms.FileForm(request.POST, request.FILES)
+            if upload_form.is_valid():
+                filename = upload_form.cleaned_data['file'].name
+                file = upload_form.cleaned_data['file']
+                new_file = Files(filename=filename, file=file)
+                new_file.save()
+                return redirect('/')
+            message = '上传文件失败！'
+            return render(request, 'login/index.html', locals())
+        upload_form = forms.FileForm()
+        return render(request, 'login/index.html', locals())
     return render(request, 'login/index.html', locals())
 
 
+# 用户登录
 def login(request):
     if request.session.get('is_login', None):
         return redirect('/')
@@ -67,14 +96,13 @@ def login(request):
             else:
                 message = '密码不正确！'
                 return render(request, 'login/login.html', locals())
-
         else:
             return render(request, 'login/login.html', locals())
-
     login_form = forms.UserForm()
     return render(request, 'login/login.html', locals())
 
 
+# 用户注册
 def register(request):
     if request.session.get('is_login', None):
         return redirect('/')
@@ -98,6 +126,7 @@ def register(request):
                 if same_username_user:
                     message = '用户名已经存在'
                     return render(request, 'login/register.html', locals())
+
                 same_email_user = User.objects.filter(email=email)
                 if same_email_user:
                     message = '该邮箱已经注册过了，请更换邮箱！'
@@ -121,6 +150,7 @@ def register(request):
     return render(request, 'login/register.html', locals())
 
 
+# 用户登出
 def logout(request):
     if not request.session.get('is_login', None):
         return redirect('login')
@@ -129,6 +159,7 @@ def logout(request):
     return redirect('login')
 
 
+# 用户认证
 def user_confirm(request):
     code = request.GET.get('code', None)
     message = ''
@@ -152,6 +183,7 @@ def user_confirm(request):
         return render(request, 'login/confirm.html', locals())
 
 
+# 自定义查询方法
 def query(request):
     is_login = request.session.get('is_login', None)
     if not is_login:
@@ -186,6 +218,7 @@ def permission(request):
     pass
 
 
+# 个人中心
 def user_center(request):
     is_login = request.session.get('is_login', None)
     if not is_login:
@@ -194,44 +227,32 @@ def user_center(request):
     user_id = request.session.get('user_id')
     user = User.objects.get(id=user_id)
     if request.method == "POST":
-        upload_form = forms.FileForm(request.POST, request.FILES)
-        if upload_form.is_valid():
-            filename = upload_form.cleaned_data['file'].name
-            file = upload_form.cleaned_data['file']
-            new_file = Files(filename=filename, file=file)
-            new_file.save()
-
         user_form = forms.FaceForm(request.POST, request.FILES)
         if user_form.is_valid():
             user.face = user_form.cleaned_data['face']
             user.save()
-
+            return HttpResponseRedirect(reverse('user_center'))
+        return render(request, 'login/user_center.html', locals())
+    user_form = forms.FaceForm()
     return render(request, 'login/user_center.html', locals())
 
 
-def upload_file_show(request):
-    is_login = request.session.get('is_login', None)
-    if not is_login:
-        return redirect('login')
-    upload_files = Files.objects.all()
-    return render(request, 'login/upload_file_show.html', locals())
-
-
+# 密码重置
 def pass_reset(request):
     is_login = request.session.get('is_login', None)
     if not is_login:
         return redirect('login')
 
+    message = "请设置新的密码！"
     if request.method == 'POST':
         pass_form = forms.PassForm(request.POST)
-        message = "已经通过验证，请设置新密码"
         if pass_form.is_valid():
             old_pass = pass_form.cleaned_data.get('old_pass')
             password1 = pass_form.cleaned_data.get('password')
             password2 = pass_form.cleaned_data.get('confirm_pass')
-            # encryption.creat_captcha()
             user_id = request.session.get('user_id')
             user = User.objects.get(id=user_id)
+
             if not check_password(old_pass, user.password):
                 massage = '输入的旧密码是错误的，请重新输入！'
                 return render(request, 'login/password_reset.html', locals())
@@ -240,7 +261,7 @@ def pass_reset(request):
                 return render(request, 'login/password_reset.html', locals())
             user.password = make_password(password1, None, 'pbkdf2_sha1')
             user.save()
-            return render(request, 'login/password_reset.html', locals())
+            return redirect(logout)
         else:
             return render(request, 'login/password_reset.html', locals())
     pass_form = forms.PassForm()
@@ -250,6 +271,7 @@ def pass_reset(request):
 new_pwd = {}
 
 
+# 找回密码
 def pass_find(request):
     if request.method == 'POST':
         find_form = forms.FindForm(request.POST)
@@ -286,6 +308,7 @@ def pass_find(request):
     return render(request, 'login/password_find.html', locals())
 
 
+# 密码找回——验证
 def verify(request):
     message = '请前往邮箱获取验证码！'
     if request.method == 'POST':
@@ -309,6 +332,7 @@ def verify(request):
     return render(request, 'login/verification code.html', locals())
 
 
+# 密码找回——设置新密码
 def new_password(request):
     if request.method == 'POST':
         new_pass_form = forms.NewPassForm(request.POST)
@@ -329,6 +353,7 @@ def new_password(request):
     return render(request, 'login/new_password.html', locals())
 
 
+# ajax动态验证验证码
 def ajax_val(request):
     if request.is_ajax():
         cs = CaptchaStore.objects.filter(response=request.GET['response'], hashkey=request.GET['hashkey'])

@@ -33,7 +33,16 @@
                         <script>
                             setInterval("document.getElementById('datetime').innerHTML=new Date().toLocaleString();");
                         </script>
-                        <p class="card-text">我就在想啊?<a href="#">完整内容</a></p>
+                        <form class="form-register" action="/" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+{#                                <h4 class="card-title">文件上传</h4>#}
+                            <span>
+                                <label for="file" class="card-text">文件上传</label>
+                                <input type="file" name="file" class="form-control-file" id="file" />
+                                <a href="{% url 'upload_file_show' %}">查看</a>
+                                <button type="submit">上传</button>
+                            </span>
+                        </form>
                     </div>
                 </div>
                 <div class="card post">

@@ -1,18 +1,18 @@
 {% extends "base.html" %}
 {% load static %}
 <link href="/login/static/login/css/user_center.css" rel="stylesheet">
-<link href="/static/css/style.css" rel="stylesheet">
+{#<script src="/login/static/login/js/user_center.js"></script>#}
 {% block title %}个人中心{% endblock %}
 
 {% block main %}
     <div class="container">
         <div class="col">
-            <form class="form-register" action="{% url 'user_center' %}" method="post" enctype="multipart/form-data">
-
+            <form id='form' class="form-register" action="{% url 'user_center' %}" method="post" enctype="multipart/form-data">
                 {% if message %}
                     <div class="alert alert-warning">{{ message }}</div>
                 {% endif %}
                 {% csrf_token %}
+                <p id="1" style="display: none">{{ user.face }}</p>
                 <table width="100%" border="0" cellspacing="1" cellpadding="4" bgcolor="#cccccc"
                        class="tabtop13" align="center">
                     <tr>
@@ -36,28 +36,15 @@
                         <td width="8%" class="btbg font-center">
                             <label for="img-up">
                                 <img src="/static/media/{{ user.face }}" width="100" height="100" id="img-circle" alt="My face"/>
-                                <input type="file" name="img-up" id="img-up" style="opacity: 0;"/>
+                                <input type="file" name="img-up" id="img-up" style="opacity: 0;"/><br/>
                                 <span class="button btn-green btn-w100" id="jsAvatarBtn">修改头像</span>
                             </label></td>
-                        <script type="text/javascript">
-                            let str = document.getElementById("img-circle").src;
-                            let a = str.indexOf("/sta");
-                            let src = str.substring(a);
-                            localStorage.setItem("face", src);
-                        </script>
-{#                        <td width="8%" class="btbg font-center"><input type="file" name="face"#}
-{#                                                                       class="form-control-file" id="face" /></td>#}
+                        <td width="8%" class="btbg font-center">
+                            <input type="file" name="face" class="form-control-file" id="face" /></td>
                     </tr>
                     <tr>
                         <td width="8%" class="btbg font-center">注册时间</td>
                         <td width="10%" class="btbg font-center">{{ user.c_time }}</td>
-                    </tr>
-                    <tr>
-                        <td width="8%" class="btbg font-center"><label for="file">文件上传</label></td>
-                        <td width="8%" class="btbg font-center"><input type="file" name="file" class="form-control-file"
-                                                                       id="file" /></td>
-                        <td width="8%" class="btbg font-center"><a href="{% url 'upload_file_show' %}">查看</a></td>
-                        <td><button type="submit">上传</button></td>
                     </tr>
                     <tr>
                         <td width="8%" class="btbg font-center">修改密码</td>
@@ -66,9 +53,17 @@
                 </table>
                 <div>
                     <a href="/" class="text-success"><ins>返回</ins></a>
-                    <button class="btn btn-primary float-right" type="submit">保存</button>
+                    <p id="13" ></p>
+                    <button id="save" class="btn btn-primary float-right" type="submit">保存</button>
                 </div>
             </form>
         </div>
+    </div>
+    <div class="javaScript">
+        <script type="text/javascript">
+            let str = document.getElementById('1').innerText;
+            let str_0 = '/static/media/';
+            localStorage.setItem("face", str_0+str);
+        </script>
     </div>
 {% endblock %}
