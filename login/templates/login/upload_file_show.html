@@ -32,7 +32,7 @@
                         <td colspan="1" class="btbg font-center titfont" rowspan="1">1</td>
                         <td colspan="1" class="btbg font-center titfont" rowspan="1">{{ upload_file.c_time }}</td>
                         <td colspan="1" class="btbg font-center titfont" rowspan="1">
-                            <a href="/static/media/{{upload_file.file}}">下载</a>
+                            <a href="{{ MEDIA_URL }}{{upload_file.file}}">下载</a>
                         </td>
                     </tr>
                     {% endfor %}
