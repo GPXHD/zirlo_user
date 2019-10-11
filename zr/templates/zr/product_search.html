@@ -1,0 +1,39 @@
+{% extends "zr_base.html" %}
+{% load static %}
+{% block title %}产品查询{% endblock %}
+
+
+{% block main %}
+{#<div class="container">#}
+{#    <div class="col">#}
+{#        <form class="form-register" action="{% url 'zr:product_search' %}" method="post">#}
+{##}
+{#            {% if message %}#}
+{#                <div class="alert alert-warning" style="text-align: center">{{ message }}</div>#}
+{#            {% endif %}#}
+{#            {% csrf_token %}#}
+{##}
+{#            <div class="form-group">#}
+{#                {{ search_form.product_name.label_tag }}#}
+{#                {{ search_form.product_name }}#}
+{#            </div>#}
+{#            <div>#}
+{#                <br/>#}
+{#                <button class="btn btn-primary btn-block" type="submit">确定</button>#}
+{#            </div>#}
+{#        </form>#}
+{#    </div>#}
+{#</div>#}
+    <div id="product_main" class="product_main">
+        <div class="w1150">
+                <ul>
+                    <li class="col-xs-6 col-md-3">
+                        <a href="{% url 'zr:product_detail' product.product_name %}">
+                            <img src="{{ MEDIA_URL }}{{ product.product_img }}" alt=""/>
+                            <p style="color: #1b1e21">{{ product.product_name }}</p>
+                        </a>
+                    </li>
+                </ul>
+        </div>
+    </div>
+{% endblock %}

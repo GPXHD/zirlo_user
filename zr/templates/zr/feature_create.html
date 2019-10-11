@@ -1,0 +1,52 @@
+{% extends "zr_base.html" %}
+{% load static %}
+<link href="" rel="stylesheet">
+{#<script src="/login/static/login/js/user_center.js"></script>#}
+{% block title %}创建特征{% endblock %}
+
+{% block main %}
+    <div class="container">
+        <div class="col">
+            <form class="form-register" action="{% url 'zr:create_feature' %}" method="post" enctype="multipart/form-data">
+                <br/>
+                <div style="text-align: center">
+                    {% if message %}
+                        <div class="alert alert-warning">{{ message }}</div>
+                    {% endif %}
+                </div>
+
+                {% csrf_token %}
+                <h3 class="text-center">创建特征！</h3>
+
+                <div class="form-group">
+                    {{ feature_form.feature_name.label_tag }}
+                    {{ feature_form.feature_name }}
+                </div>
+                <div class="form-group">
+                    {{ feature_form.feature_number.label_tag }}
+                    {{ feature_form.feature_number }}
+                </div>
+                <div class="form-group">
+                    {{ feature_form.feature_type.label_tag }}
+                    {{ feature_form.feature_type }}
+                </div>
+                <div class="form-group">
+                    {{ feature_form.part.label_tag }}
+                    {{ feature_form.part }}
+                </div>
+                <div class="form-group">
+                    {{ feature_form.appearance.label_tag }}
+                    {{ feature_form.appearance }}
+                </div>
+                <div class="form-group">
+                    {{ feature_form.scene.label_tag }}
+                    {{ feature_form.scene }}
+                </div><br/>
+                <div>
+                    <a href="{% url 'zr:product_show' %}" class="text-success"><ins>产品目录</ins></a>
+                    <button class="btn btn-primary float-right" type="submit">提交</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

@@ -6,7 +6,7 @@
 
 {% block main %}
     <div class="container">
-        <div class="col">
+        <div class="col"><br/>
             <form id='form' class="form-register" action="{% url 'user_center' %}" method="post" enctype="multipart/form-data">
                 {% if message %}
                     <div class="alert alert-warning">{{ message }}</div>

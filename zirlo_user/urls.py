@@ -31,7 +31,7 @@ urlpatterns = [
     path('logout', login.views.logout, name='logout'),
     path('confirm/', login.views.user_confirm, name='confirm'),
     path('query/', login.views.query, name='query'),
-    path('query_result/', login.views.query_result, name='query_result'),
+    # path('query_result/', login.views.query_result, name='query_result'),
     path('user_center/', login.views.user_center, name='user_center'),
     path('upload_file_show/', login.views.upload_file_show, name='upload_file_show'),
     path('reset_pass/', login.views.pass_reset, name='pass_reset'),
@@ -39,10 +39,12 @@ urlpatterns = [
     path('verify/', login.views.verify, name='verify'),
     path('new_pwd/', login.views.new_password, name='new_pwd'),
     path('ajax_val/', login.views.ajax_val, name='ajax_val'),
+    path('product/', include('zr.urls', namespace='zr')),
     path('search/', include('haystack.urls')),
     path('captcha/', include('captcha.urls')),
-     ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-# + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) \
+     ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)\
+       + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
 handler403 = login.views.page_permission_denied
 handler404 = login.views.page_not_found
 handler500 = login.views.page_error

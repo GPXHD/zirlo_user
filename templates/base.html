@@ -40,6 +40,7 @@
                             document.getElementById("img-circle").src = localStorage.getItem('face');
                         </script>
                         <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">退出</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'zr:product_list' %}">产品</a></li>
                     {% endif %}
                     <li class="dropdown disabled">
                         <button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-hover="dropdown" data-toggle="dropdown">

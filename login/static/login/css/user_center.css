@@ -36,7 +36,7 @@ q:before, q:after { content: ''; }
 /* 重置表单元素 */
 legend { color: #000; } /* for ie6 */
 fieldset,abbr, img,a img, :link img, :visited img {
-       border:0px; /* img 搭车：让链接里的 img 无边框 */
+       border:0; /* img 搭车：让链接里的 img 无边框 */
 }
 /* 注：optgroup 无法扶正 */
 button, input, select, textarea {

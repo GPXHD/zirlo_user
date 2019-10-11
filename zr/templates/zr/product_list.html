@@ -1,0 +1,275 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+		<!-- 避免IE使用兼容模式 -->
+		<meta name="renderer" content="webkit|ie-comp|ie-stand"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
+{#		<link href="/static/css/bootstrap.min.css" rel="stylesheet">#}
+        <link href="/static/css/default.css" rel="stylesheet">
+{#		<link href="/static/css/index.css" rel="stylesheet">#}
+		<link rel="stylesheet" href="/static/css/media.css">
+		<script type="text/javascript" src="/static/js/jquery.min.js"></script>
+		<script type="text/javascript" src="/static/js/loading.js" ></script>
+		<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+        <link href="/static/css/reset.css" rel="stylesheet">
+        <link href="/static/css/style.css" rel="stylesheet">
+        {% block js %}{% endblock %}
+		<title>ZR-{% block title %}实体目录{% endblock %}</title>
+	</head>
+
+<body>
+    <div>
+        <nav class="daohang">
+            <a class="a" href="/"><h1>Zirlo</h1></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
+                    aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+{#            <div class="navbar-collapse" id="navbarTogglerDemo02">#}
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item active"><a class="nav-link" href="/">首页<span class="sr-only"></span></a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'zr:product_list' %}">产品</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'zr:create_feature' %}">创建特征</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'zr:create_product' %}">创建产品</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'zr:product_show' %}">产品目录</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'zr:feature_show' %}">特征目录</a></li>
+            </ul>
+
+            <form class="form-inline my-2 my-lg-0" role="search" action="{% url 'zr:index' %}" method="POST">
+                {% csrf_token %}
+                {{ search_form.product_name.label_tag }}
+                {{ search_form.product_name }}
+{#                <input name="q" id='product_name' type="text" class="form-control mr-sm-2" placeholder="输入关键字">#}
+                <button class="btn btn-outline-success" type="submit">搜索</button>
+            </form>
+{#                </div>#}
+        </nav>
+    </div>
+{#    <div>#}
+{#        <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default">#}
+{#            <a class="navbar-brand" href="/"><h1>Zirlo</h1></a>#}
+{#            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"#}
+{#                    aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">#}
+{#                <span class="navbar-toggler-icon"></span>#}
+{#            </button>#}
+{##}
+{#            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">#}
+{#                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">#}
+{#                    <li class="nav-item active"><a class="nav-link" href="/">首页<span class="sr-only">(current)</span></a></li>#}
+{#                    <li class="nav-item"><a class="nav-link" href="{% url 'zr:product_list' %}">产品</a></li>#}
+{#                    <li class="nav-item"><a class="nav-link" href="{% url 'zr:create_feature' %}">创建特征</a></li>#}
+{#                    <li class="nav-item"><a class="nav-link" href="{% url 'zr:create_product' %}">创建产品</a></li>#}
+{#                    <li class="nav-item"><a class="nav-link" href="{% url 'zr:product_show' %}">产品目录</a></li>#}
+{#                    <li class="nav-item"><a class="nav-link" href="{% url 'zr:feature_show' %}">特征目录</a></li>#}
+{#                </ul>#}
+{#                <form class="form-inline my-2 my-lg-0" role="search" action="{% url 'zr:index' %}" method="POST">#}
+{#                    {% csrf_token %}#}
+{#                    {{ search_form.product_name.label_tag }}#}
+{#                    {{ search_form.product_name }}#}
+{#                   <input name="q" id='product_name' type="text" class="form-control mr-sm-2" placeholder="输入关键字">#}
+{#                    <button class="btn btn-outline-success" type="submit">搜索</button>#}
+{#                </form>#}
+{#            </div>#}
+{#        </nav>#}
+{#    </div>#}
+
+    <section>
+        <div class="wp">
+            <ul  class="crumbs">
+                <li><a href="{% url 'zr:index' %}">首页</a>></li>
+                <li>产品目录</li>
+            </ul>
+        </div>
+    </section>
+
+    <section>
+        <div class="wp butler_list_box list">
+        <div class='left'>
+            <div class="listoptions">
+                <ul>
+                    <li>
+                        <h2>实体类别</h2>
+                        <div class="cont">
+                            <a href="?mate={{ material_id }}"><span class="{% ifequal category '' %}active2{% endifequal %}">全部</span></a>
+                                <a href="?ct=第一种&mate={{ material_id }}">
+                                    <span class="{% ifequal category '第一种' %}active2{% endifequal %}">
+                                        第一种
+                                    </span>
+                                </a>
+                                <a href="?ct=第二种&mate={{ material_id }}">
+                                    <span class="{% ifequal category '第二种' %}active2{% endifequal %}">
+                                        第二种
+                                    </span>
+                                </a>
+                                <a href="?ct=第三种&mate={{ material_id }}">
+                                    <span class="{% ifequal category '第三种' %}active2{% endifequal %}">
+                                        第三种
+                                    </span>
+                                </a>
+                        </div>
+                    </li>
+                    <li>
+                        <h2>材料类别</h2>
+                        <div class="more">更多</div>
+                        <div class="cont">
+                            <a href="?ct={{ category }}"><span class="{% ifequal material_id '' %}active2{% endifequal %}">全部</span></a>
+                            {% for material in all_materials %}
+                                <a href="?mate={{ material.id }}&ct={{ category }}">
+                                    <span class="{% ifequal material_id material.id|stringformat:'i' %}active2{% endifequal %}">
+                                        {{ material.material }}
+                                    </span>
+                                </a>
+                            {% endfor %}
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="all">共<span class="key">{{ product_nums }}</span>个</div>
+
+            <div class="butler_list company list">
+                <div class="layout">
+                    <div class="head">
+                        <ul class="tab_header">
+                            <li class="active"><a href="">全部</a> </li>
+{#                            <li class="{% if sort == '' %}active{% endif %}">#}
+{#                                <a href="?ct={{ category }}&mate={{ material_id }}">#}
+{#                                    全部#}
+{#                                </a> #}
+{#                            </li>#}
+{#                            <li class="{% if sort == 'students' %}active{% endif %}">#}
+{#                                <a href="?sort=students&ct={{ category }}&mate={{ material_id }}">#}
+{#                                    学习人数 &#8595;#}
+{#                                </a>#}
+{#                            </li>#}
+{#                            <li class="{% if sort == 'courses' %}active{% endif %}">#}
+{#                                <a href="?sort=courses&ct={{ category }}&mate={{ material_id }}">#}
+{#                                    课程数 &#8595;#}
+{#                                </a>#}
+{#                            </li>#}
+                        </ul>
+                    </div>
+                <div></div>
+                    {% for product in all_products.object_list %}
+                         <dl class="des difdes">
+                            <dt>
+                                <a href="{% url 'zr:product_detail' product.product_name %}">
+                                    <img alt="" width="200" height="120" class="scrollLoading"
+                                         src="{{ MEDIA_URL }}{{ product.product_img }}"/>
+                                </a>
+                            </dt>
+                            <dd>
+                                <div class="clearfix">
+                                     <a href="{% url 'zr:product_detail' product.product_name %}">
+                                         <h1>{{ product.product_name }}</h1>
+                                         <div class="pic fl">
+                                                 <img src="" alt=""/>
+                                                 <img src="" alt=""/>
+                                         </div>
+                                     </a>
+                                </div>
+                                <ul class="cont">
+                                    <li class="first">
+                                        <p class="pic9">特征数：<span></span></p>
+                                        <p class="c7"><span></span></p>
+                                    </li>
+                                    <li class="c8" style="padding-left:18px;">湖南大学</li>
+                                    <li class="pic10" style="padding-left:18px;">
+                                            <a href=""></a>
+                                            <a href=""></a>
+                                    </li>
+                                </ul>
+                            </dd>
+                            <div class="buy start_groupbuy jsShowPerfect2" data-id="22"><br/>联系<br/>服务</div>
+                        </dl>
+                    {% endfor %}
+                </div>
+                <div class="pageturn">
+                    <ul class="pagelist">
+                        {% if all_products.has_previous %}
+                            <li class="long"><a href="?{{ all_products.previous_page_number.querystring }}">上一页</a></li>
+                        {% endif %}
+                        {% for page in all_products.pages %}
+                            {% if page %}
+                                {% ifequal page all_products.number %}
+                                    <li class="active"><a href="?{{ page.querystring }}">{{ page }}</a></li>
+                                {% else %}
+                                    <li><a href="?{{ page.querystring }}" class="page">{{ page }}</a></li>
+                                {% endifequal %}
+                            {% else %}
+                               <li class="none"><a href="">...</a> </li>
+                            {% endif %}
+                        {% endfor %}
+                        {% if all_products.has_next %}
+                            <li class="long"><a href="?{{ all_products.previous_page_number.querystring }}">下一页</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+{#        <div class="right companyright">#}
+{#                <div class="head">简单检索</div>#}
+{#                <form class="rightform" id="jsStayForm">#}
+{#                    <div>#}
+{#                        <img src="" alt=""/>#}
+{#                        <input type="text" name="name" id="companyName" placeholder="名字" maxlength="25" />#}
+{#                    </div>#}
+{#                    <div>#}
+{#                        <img src="" alt=""/>#}
+{#                        <input type="text" name="mobile" id="companyMobile" placeholder="联系电话"/>#}
+{#                    </div>#}
+{#                    <div>#}
+{#                        <img src="" alt=""/>#}
+{#                        <input type="text" name="course_name" id="companyAddress" placeholder="课程名" maxlength="50" />#}
+{#                    </div>#}
+{#                    <p class="error company-tips" id="jsCompanyTips"></p>#}
+{#                    <button class="btn" type="submit" id="jsStayBtn">立即检索 ></button>#}
+{#                    <input type='hidden' name='csrfmiddlewaretoken' value='5I2SlleZJOMUX9QbwYLUIAOshdrdpRcy' />#}
+{#                </form>#}
+{#            </div>#}
+        </div>
+    </section>
+
+    <section>
+        <ul class="sidebar">
+            <li class="qq"><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=2023525077&site=qq&menu=yes"></a></li>
+            <li class="totop"></li>
+        </ul>
+    </section>
+
+    <script src="/static/js/selectUi.js" type='text/javascript'></script>
+    <script src="/static/js/deco-common.js" type='text/javascript'></script>
+    <script type="text/javascript" src="/static/js/laydate/laydate.js"></script>
+    <script src="/static/js/layer/layer.js"></script>
+{#    <script src="/static/js/public.js" type="text/javascript"></script>#}
+    <script src="/static/js/unslider.js" type="text/javascript"></script>
+    <script src="/static/js/jquery.scrollLoading.js" type="text/javascript"></script>
+    <script>
+        $(function(){
+            $('#jsStayBtn').on('click', function(){
+                $.ajax({
+                    cache: false,
+                    type: "POST",
+                    url:"/org/add_ask/",
+                    data:$('#jsStayForm').serialize(),
+                    async: true,
+                    success: function(data) {
+                        if(data.status == 'success'){
+                            $('#jsStayForm')[0].reset();
+                            alert("提交成功")
+                        }else if(data.status == 'fail'){
+                            $('#jsCompanyTips').html(data.msg)
+                        }
+                    },
+                });
+            });
+        })
+    </script>
+</body>
+
+
+

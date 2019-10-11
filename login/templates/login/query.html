@@ -10,7 +10,7 @@
         <form class="form-register" action="{% url 'query' %}" method="post">
 
             {% if message %}
-                <div class="alert alert-warning">{{ message }}</div>
+                <div class="alert alert-warning" style="text-align: center">{{ message }}</div>
             {% endif %}
             {% csrf_token %}
 
@@ -18,44 +18,9 @@
                 <label for="username">用户名</label>
                 <input id="username" type="text" name="username" class="form-control"/>
             </div>
-            <table width="100%" border="0" cellspacing="1" cellpadding="4" bgcolor="#cccccc"
-                       class="tabtop13" align="center">
-                    <tr>
-                        <th width="8%" class="btbg font-center" id="user_name"></th>
-                        <th width="8%" class="btbg font-center" id="id"></th>
-                        <th width="8%" class="btbg font-center" id="real_name"></th>
-                        <th width="8%" class="btbg font-center" id="email"></th>
-                        <th width="8%" class="btbg font-center" id="sex"></th>
-                        <th width="8%" class="btbg font-center" id="c_time"></th>
-                    </tr>
-                    <tr>
-                        <th width="8%" class="btbg font-center" id="_username"></th>
-                        <th width="8%" class="btbg font-center" id="_id"></th>
-                        <th width="8%" class="btbg font-center" id="_real_name"></th>
-                        <th width="8%" class="btbg font-center" id="_email"></th>
-                        <th width="8%" class="btbg font-center" id="_sex"></th>
-                        <th width="10%" class="btbg font-center" id="_c_time"></th>
-                    </tr>
-                </table>
-                <script type="text/javascript">
-                    function myQuery(){
-                        let x = document.getElementById("username").value;
-                        document.getElementById("user_name").innerHTML="用户名";
-                        document.getElementById("id").innerHTML="ID";
-                        document.getElementById("real_name").innerHTML="姓名";
-                        document.getElementById("email").innerHTML="邮箱";
-                        document.getElementById("sex").innerHTML="性别";
-                        document.getElementById("c_time").innerHTML="注册时间";
-                        document.getElementById("_username").innerHTML= {{ user.username|safe }};
-                        document.getElementById("_id").innerHTML= 2;
-                        document.getElementById("_real_name").innerHTML= 2;
-                        document.getElementById("_email").innerHTML= 4;
-                        document.getElementById("_sex").innerHTML= 5;
-                        document.getElementById("_c_time").innerHTML=6;
-                    }
-                </script>
             <div>
-                <input class="btn float-right" type="submit" onclick="myQuery()" value="确定"/>
+                <br/>
+                <button class="btn btn-primary btn-block" type="submit">确定</button>
             </div>
         </form>
     </div>

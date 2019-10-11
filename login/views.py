@@ -192,20 +192,22 @@ def query(request):
     if request.session.get('user_permission') != '1':
         return redirect('/')
 
-    query_keywords = request.GET.get('kw', '')
+    # query_keywords = request.GET.get('kw', '')
     message = '请输入查询内容！'
     if request.method == 'POST':
         query_form = forms.QueryForm(request.POST)
         if query_form.is_valid():
             username = query_form.cleaned_data.get('username')
             # email = query_form.cleaned_data.get('email')
-            user = User.objects.get(username=username)
-            # user_json = json.dumps(user)
-            message = '查询成功！'
-            return render(request, 'login/query.html', locals())
+            try:
+                users = User.objects.get(username=username)
+                message = '查询成功！'
+            except:
+                message = '查询失败！'
+            return render(request, 'login/query_result.html', locals())
         else:
             message = '查询失败！'
-            return render(request, 'login/query.html', locals())
+            return redirect('query', locals())
     query_form = forms.QueryForm()
     return render(request, 'login/query.html', locals())
 
