@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'pb%#n90vc5%(r(=&+5i#9plo1ou@c)4$1%g8t+5(s=i1q^!==o'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 IP_ADDRESS = '120.24.171.173'
 # '120.24.171.173', '192.168.52.131', '192.168.52.130'
 ALLOWED_HOSTS = ['*']
@@ -165,7 +165,7 @@ ADMIN_MEDIA_PREFIX = '/media/'
 # 需要设置PATH到你的Whoosh索引的文件系统位置
 HAYSTACK_CONNECTIONS = {
     'default': {
-        'ENGINE': 'haystack.backends.whoosh_cn_backend.WhooshEngine',
+        'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
         'PATH': os.path.join(BASE_DIR, 'whoosh_index'),
         'INCLUDE_SPELLING ': True,
     },
