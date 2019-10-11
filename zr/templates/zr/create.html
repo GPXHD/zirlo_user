@@ -49,6 +49,14 @@
                 <div class="form-group">
                     {{ product_form.feature5.label_tag }}
                     {{ product_form.feature5 }}
+                </div>
+                <div class="form-group">
+                    {{ product_form.category.label_tag }}
+                    {{ product_form.category }}
+                </div>
+                <div class="form-group">
+                    {{ product_form.material.label_tag }}
+                    {{ product_form.material }}
                 </div><br/>
                 <div>
                     <a href="{% url 'zr:product_show' %}" class="text-success"><ins>产品目录</ins></a>

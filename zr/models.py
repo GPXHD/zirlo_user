@@ -29,7 +29,7 @@ class Product(models.Model):
     feature_4 = models.CharField(max_length=32, verbose_name='特征4')
     feature_5 = models.CharField(max_length=32, verbose_name='特征5')
     category = models.CharField(max_length=32, verbose_name='类别', default='第一类')
-    material = models.ForeignKey('Material', on_delete=models.CASCADE)
+    material = models.CharField(max_length=32, verbose_name='材料')
     c_time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

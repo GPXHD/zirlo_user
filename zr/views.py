@@ -9,6 +9,31 @@ from django.views.generic import TemplateView, View
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
 
 
+def create_material(request):
+    if not request.session.get('is_login', None):
+        return redirect('/')
+    if request.method == 'POST':
+        material_form = forms.MaterialForm(request.POST)
+        message = "请检查填写内容！"
+        if material_form.is_valid():
+            material = material_form.cleaned_data.get('material')
+            same_material = Material.objects.filter(material=material)
+            if same_material:
+                message = '材料已经存在！'
+                return render(request, 'zr/material.html', locals())
+
+            new_material = Material()
+            new_material.material = material
+            new_material.save()
+
+            message = '已经创建材料！'
+            return render(request, 'zr/material.html', locals())
+        else:
+            return render(request, 'zr/material.html', locals())
+    material_form = forms.MaterialForm()
+    return render(request, 'zr/material.html', locals())
+
+
 def create_product(request):
     if not request.session.get('is_login', None):
         return redirect('/')
@@ -25,6 +50,8 @@ def create_product(request):
             feature3 = product_form.cleaned_data.get('feature3')
             feature4 = product_form.cleaned_data.get('feature4')
             feature5 = product_form.cleaned_data.get('feature5')
+            category = product_form.cleaned_data.get('category')
+            material = product_form.cleaned_data.get('material')
 
             same_product = Product.objects.filter(product_name=product_name)
             if same_product:
@@ -40,6 +67,8 @@ def create_product(request):
             new_product.feature_3 = feature3
             new_product.feature_4 = feature4
             new_product.feature_5 = feature5
+            new_product.category = category
+            new_product.material = material
             new_product.save()
 
             message = '已经创建实体！'

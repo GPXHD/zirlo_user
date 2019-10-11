@@ -1,22 +1,17 @@
 from django import forms
-from .models import Product, Feature
+from .models import Product, Feature, Material
 
 
-class UserForm(forms.Form):
-    username = forms.CharField(label="用户名",
+class MaterialForm(forms.Form):
+    material = forms.CharField(label="材料名称",
                                max_length=128,
                                widget=forms.TextInput(
-                                   attrs={'class': 'form-control', 'placeholder': "Username", 'autofocus': ''}
-                               ))
-    password = forms.CharField(label="密码",
-                               max_length=256,
-                               widget=forms.PasswordInput(
-                                   attrs={'class': 'form-control', 'placeholder': "Password"}
+                                   attrs={'class': 'form-control', 'placeholder': "材料名称", 'autofocus': ''}
                                ))
 
 
 class ProductForm(forms.Form):
-    choices = (('1', '是'), ('0', '否'))
+    choices = (('第一种', '第一种'), ('第二种', '第二种'), ('第三种', '第三种'))
     product_name = forms.CharField(label="产品名称",
                                    max_length=128,
                                    widget=forms.TextInput(
@@ -33,6 +28,8 @@ class ProductForm(forms.Form):
     feature3 = forms.ChoiceField(label='产品特征3')
     feature4 = forms.ChoiceField(label='产品特征4')
     feature5 = forms.ChoiceField(label='产品特征5')
+    category = forms.ChoiceField(label="产品类别", choices=choices)
+    material = forms.ChoiceField(label='材料类别')
 
     # 将数据库中的值返回给页面，作为choices的值，生成下拉框
     # class ServerForm(forms.Form):
@@ -46,7 +43,7 @@ class ProductForm(forms.Form):
         super(ProductForm, self).__init__(*args, **kwargs)
         for i in list1:
             self.fields[i].choices = ((x.feature_number, x.feature_name) for x in Feature.objects.all())
-
+        self.fields['material'].choices = ((x.id, x.material) for x in Material.objects.all())
 
 class FeatureForm(forms.Form):
     choices = (('1', '是'), ('0', '否'))
