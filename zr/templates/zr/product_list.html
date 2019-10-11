@@ -50,33 +50,6 @@
 {#                </div>#}
         </nav>
     </div>
-{#    <div>#}
-{#        <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default">#}
-{#            <a class="navbar-brand" href="/"><h1>Zirlo</h1></a>#}
-{#            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"#}
-{#                    aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">#}
-{#                <span class="navbar-toggler-icon"></span>#}
-{#            </button>#}
-{##}
-{#            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">#}
-{#                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">#}
-{#                    <li class="nav-item active"><a class="nav-link" href="/">首页<span class="sr-only">(current)</span></a></li>#}
-{#                    <li class="nav-item"><a class="nav-link" href="{% url 'zr:product_list' %}">产品</a></li>#}
-{#                    <li class="nav-item"><a class="nav-link" href="{% url 'zr:create_feature' %}">创建特征</a></li>#}
-{#                    <li class="nav-item"><a class="nav-link" href="{% url 'zr:create_product' %}">创建产品</a></li>#}
-{#                    <li class="nav-item"><a class="nav-link" href="{% url 'zr:product_show' %}">产品目录</a></li>#}
-{#                    <li class="nav-item"><a class="nav-link" href="{% url 'zr:feature_show' %}">特征目录</a></li>#}
-{#                </ul>#}
-{#                <form class="form-inline my-2 my-lg-0" role="search" action="{% url 'zr:index' %}" method="POST">#}
-{#                    {% csrf_token %}#}
-{#                    {{ search_form.product_name.label_tag }}#}
-{#                    {{ search_form.product_name }}#}
-{#                   <input name="q" id='product_name' type="text" class="form-control mr-sm-2" placeholder="输入关键字">#}
-{#                    <button class="btn btn-outline-success" type="submit">搜索</button>#}
-{#                </form>#}
-{#            </div>#}
-{#        </nav>#}
-{#    </div>#}
 
     <section>
         <div class="wp">
@@ -206,7 +179,7 @@
                             {% endif %}
                         {% endfor %}
                         {% if all_products.has_next %}
-                            <li class="long"><a href="?{{ all_products.previous_page_number.querystring }}">下一页</a></li>
+                            <li class="long"><a href="?{{ all_products.next_page_number.querystring }}">下一页</a></li>
                         {% endif %}
                     </ul>
                 </div>
