@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     'xadmin',
     'crispy_forms',
     'reversion',
-    # 'bootstrap4',
     'captcha',
     'pure_pagination',
 ]

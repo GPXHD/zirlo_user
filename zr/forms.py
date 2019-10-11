@@ -29,8 +29,23 @@ class ProductForm(forms.Form):
     feature4 = forms.ChoiceField(label='产品特征4')
     feature5 = forms.ChoiceField(label='产品特征5')
     category = forms.ChoiceField(label="产品类别", choices=choices)
-    material = forms.ChoiceField(label='材料类别')
+    material = forms.ModelChoiceField(label='材料类别', queryset=Material.objects.all())
 
+    # class Meta:
+    #     model = Product
+    #     exclude = ['c_time']
+    #     widgets = {
+    #         'product_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': "产品名称", 'autofocus': ''}),
+    #         'type_number': forms.TextInput(attrs={'class': 'form-control', 'placeholder': "产品型号", 'autofocus': ''}),
+    #         'product_img': forms.ImageField(),
+    #         'feature1': forms.ChoiceField(),
+    #         'feature2': forms.ChoiceField(),
+    #         'feature3': forms.ChoiceField(),
+    #         'feature4': forms.ChoiceField(),
+    #         'feature5': forms.ChoiceField(),
+    #         'category': forms.ChoiceField(),
+    #         'material': forms.ChoiceField(),
+    #     }
     # 将数据库中的值返回给页面，作为choices的值，生成下拉框
     # class ServerForm(forms.Form):
     #     queue = forms.ChoiceField(label=u'队列')
@@ -43,7 +58,8 @@ class ProductForm(forms.Form):
         super(ProductForm, self).__init__(*args, **kwargs)
         for i in list1:
             self.fields[i].choices = ((x.feature_number, x.feature_name) for x in Feature.objects.all())
-        self.fields['material'].choices = ((x.id, x.material) for x in Material.objects.all())
+        # self.fields['material'].choices = ((x.id, x.material) for x in Material.objects.all())
+
 
 class FeatureForm(forms.Form):
     choices = (('1', '是'), ('0', '否'))
@@ -68,7 +84,7 @@ class FeatureForm(forms.Form):
                             attrs={'class': 'form-control', 'placeholder': "所属部件", 'autofocus': ''}
                             ))
     appearance = forms.ImageField(label="特征外观")
-    scene = forms.ImageField(label="情景图")
+    scene = forms.ImageField(label="应用情景")
 
 
 class SearchForm(forms.Form):
