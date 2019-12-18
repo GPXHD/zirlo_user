@@ -16,48 +16,70 @@
                 </div>
 
                 {% csrf_token %}
-                <h3 class="text-center">创建实体！</h3>
+                <h3 class="text-center">创建产品！</h3>
+                <table class="table table-bordered product_table1" style=" text-align: center; vertical-align: middle">
 
-                <div class="form-group">
-                    {{ product_form.product_name.label_tag }}
-                    {{ product_form.product_name }}
-                </div>
-                <div class="form-group">
-                    {{ product_form.type_number.label_tag }}
-                    {{ product_form.type_number }}
-                </div><br/>
-                <div class="form-group">
-                    {{ product_form.product_img.label_tag }}
-                    {{ product_form.product_img }}
-                </div>
-                <div class="form-group">
-                    {{ product_form.feature1.label_tag }}
-                    {{ product_form.feature1 }}
-                </div>
-                <div class="form-group">
-                    {{ product_form.feature2.label_tag }}
-                    {{ product_form.feature2 }}
-                </div>
-                <div class="form-group">
-                    {{ product_form.feature3.label_tag }}
-                    {{ product_form.feature3 }}
-                </div>
-                <div class="form-group">
-                    {{ product_form.feature4.label_tag }}
-                    {{ product_form.feature4 }}
-                </div>
-                <div class="form-group">
-                    {{ product_form.feature5.label_tag }}
-                    {{ product_form.feature5 }}
-                </div>
-                <div class="form-group">
-                    {{ product_form.category.label_tag }}
-                    {{ product_form.category }}
-                </div>
-                <div class="form-group">
-                    {{ product_form.material.label_tag }}
-                    {{ product_form.material }}
-                </div><br/>
+                    <tr>
+                        <td><label for="id_product_name">产品名称</label></td>
+                        <td>{{ product_form.product_name }}</td>
+                    </tr>
+                    <tr>
+                        <td><label for="id_type_number">产品型号</label></td>
+                        <td>{{ product_form.type_number }}</td>
+                    </tr>
+                    <tr>
+                        <td><label for="id_product_img">产品外观</label></td>
+                        <td style="text-align: left">{{ product_form.product_img }}</td>
+                    </tr>
+{#                </table>#}
+{#                <table style=" text-align: center; vertical-align: middle">#}
+{#                    <tr>#}
+{#                        <td><label for="id_feature1">产品特征1</label></td>#}
+{#                        <td><label for="id_feature2">产品特征2</label></td>#}
+{#                        <td><label for="id_feature3">产品特征3</label></td>#}
+{#                        <td><label for="id_feature4">产品特征4</label></td>#}
+{#                        <td><label for="id_feature5">产品特征5</label></td>#}
+{#                        <td><label for="id_material">材料类别</label></td>#}
+{#                        <td><label for="id_category">产品类别</label></td>#}
+{#                    </tr>#}
+{#                    <tr>#}
+{#                        <td style="text-align: left">{{ product_form.feature1 }}</td>#}
+{#                        <td style="text-align: left">{{ product_form.feature2 }}</td>#}
+{#                        <td style="text-align: left">{{ product_form.feature3 }}</td>#}
+{#                        <td style="text-align: left">{{ product_form.feature4 }}</td>#}
+{#                        <td style=" text-align: left">{{ product_form.feature5 }}</td>#}
+{#                        <td style="text-align: left">{{ product_form.material }}</td>#}
+{#                        <td style="text-align: left">{{ product_form.category }}</td>#}
+{#                    </tr>#}
+                    <tr>
+                        <td><label for="id_feature1">产品特征1</label></td>
+                        <td style="text-align: left">{{ product_form.feature1 }}</td>
+                    </tr>
+                    <tr>
+                        <td><label for="id_feature2">产品特征2</label></td>
+                        <td style="text-align: left">{{ product_form.feature2 }}</td>
+                    </tr>
+                    <tr>
+                        <td><label for="id_feature3">产品特征3</label></td>
+                        <td style="text-align: left">{{ product_form.feature3 }}</td>
+                    </tr>
+                    <tr>
+                        <td><label for="id_feature4">产品特征4</label></td>
+                        <td style="text-align: left">{{ product_form.feature4 }}</td>
+                    </tr>
+                    <tr>
+                        <td><label for="id_feature5">产品特征5</label></td>
+                        <td style=" text-align: left">{{ product_form.feature5 }}</td>
+                    </tr>
+                    <tr>
+                        <td><label for="id_material">材料类别</label></td>
+                        <td style="text-align: left">{{ product_form.material }}</td>
+                    </tr>
+                    <tr>
+                        <td><label for="id_category">产品类别</label></td>
+                        <td style="text-align: left">{{ product_form.category }}</td>
+                    </tr>
+                </table>
                 <div>
                     <a href="{% url 'zr:product_show' %}" class="text-success"><ins>产品目录</ins></a>
                     <button class="btn btn-primary float-right" type="submit">提交</button>

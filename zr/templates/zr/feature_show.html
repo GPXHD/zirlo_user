@@ -1,16 +1,13 @@
 {% extends "zr_base.html" %}
 {% load static %}
-<link href="" rel="stylesheet">
-{#<script src="/login/static/login/js/user_center.js"></script>#}
+{% block css %}<link href="/static/css/zr/css/feature_show.css" rel="stylesheet">{% endblock %}
 {% block title %}特征目录{% endblock %}
 
 {% block main %}
      <div class="container">
         <div class="col">
+            <br/><h2 align="center" id="tittle">特征目录</h2>
             <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
-                <tr>
-                    <td align="center" id="tittle" height="60">特征中心</td>
-                </tr>
                 <tr>
                     <td align="right" height="25" id="datetime">
                     <script>
@@ -19,20 +16,27 @@
                     </td>
                  </tr>
             </table>
-            <table width="100%" border="0" cellspacing="1" cellpadding="4" bgcolor="#e9faff" class="main_table"
-                   align="center">
-                <tr>
+            <table class="table table-bordered product_table1" style=" text-align: center; vertical-align: middle">
+                <tr style="text-align: center; height: 40px">
                     <td colspan="1" class="btbg font-center titfont" rowspan="1">特征名称</td>
                     <td colspan="1" class="btbg font-center titfont" rowspan="1">特征编号</td>
                     <td colspan="1" class="btbg font-center titfont" rowspan="1">特征类型</td>
                     <td colspan="1" class="btbg font-center titfont" rowspan="1">所属部件</td>
+                    <td colspan="1" class="btbg font-center titfont" rowspan="1">删除特征</td>
+                    <td colspan="1" class="btbg font-center titfont" rowspan="1">修改特征</td>
                 </tr>
                 {% for feature in features %}
-                    <tr>
+                    <tr style="text-align: center; height: 40px">
                         <td colspan="1" class="btbg font-center titfont" rowspan="1">{{ feature.feature_name }}</td>
                         <td colspan="1" class="btbg font-center titfont" rowspan="1">{{ feature.feature_number }}</td>
                         <td colspan="1" class="btbg font-center titfont" rowspan="1">{{ feature.feature_type }}</td>
                         <td colspan="1" class="btbg font-center titfont" rowspan="1">{{ feature.part }}</td>
+                        <td colspan="1" class="btbg font-center titfont" rowspan="1">
+                            <a href="{% url 'zr:delete_data' feature.feature_name %}">点击删除</a>
+                        </td>
+                        <td colspan="1" class="btbg font-center titfont" rowspan="1">
+                            <a href="{% url 'zr:modify_feature' feature.feature_name %}">点击修改</a>
+                        </td>
                     </tr>
                 {% endfor %}
             </table>

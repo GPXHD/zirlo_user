@@ -12,14 +12,14 @@
     <script src="/static/js/captcha.js"></script>
     <link href="/static/css/default.css" rel="stylesheet">
     <link href="/static/image/favicon.ico" rel="shortcut icon">
-    <title>ZIRLO - {% block title %}{% endblock %}</title>
+    <title>ZR- {% block title %}{% endblock %}</title>
 </head>
 
 
 <body>
     <div>
         <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default">
-            <a class="navbar-brand" href="/"><h1>Zirlo</h1></a>
+            <a class="navbar-brand" href="/"><h1>ZR</h1></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
                     aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -31,8 +31,8 @@
                         <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">登录</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">注册</a></li>
                     {% else %}
-                        <li class="nav-item"><a class="nav-link" href="{% url 'user_center' %}">
-                            {{ request.session.user_username }}</a></li>
+{#                        <li class="nav-item"><a class="nav-link" href="{% url 'user_center' %}">#}
+{#                            {{ request.session.user_username }}</a></li>#}
                         <li class="nav-item"><a class="nav-link" href="{% url 'user_center' %}">
                             <img id="img-circle" data-toggle="tooltip" title="{{ request.session.user_username }}" src=""
                                  width="30" height="30" alt="My face"/></a></li>
@@ -41,25 +41,28 @@
                         </script>
                         <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">退出</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'zr:product_list' %}">产品</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'upload_file_show' %}">文件中心</a></li>
                     {% endif %}
-                    <li class="dropdown disabled">
-                        <button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-hover="dropdown" data-toggle="dropdown">
-                            Dropdown<span class="caret"></span></button>
-                        <ul class="dropdown-menu">
-                            <li class="dropdown-item"><a href="{% url 'query' %}">搜索</a></li>
-                            <li><a href="#">Another action</a></li>
-                            <li><a href="#">Something else here</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#">Separated link</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#">One more separated link</a></li>
-                        </ul>
-                    </li>
+{#                    <li class="dropdown disabled">#}
+{#                        <button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-hover="dropdown" data-toggle="dropdown">#}
+{#                            Dropdown<span class="caret"></span></button>#}
+{#                        <ul class="dropdown-menu">#}
+{#                            <li class="dropdown-item"><a href="{% url 'query' %}">搜索</a></li>#}
+{#                            <li><a href="#">Another action</a></li>#}
+{#                            <li><a href="#">Something else here</a></li>#}
+{#                            <li role="separator" class="divider"></li>#}
+{#                            <li><a href="#">Separated link</a></li>#}
+{#                            <li role="separator" class="divider"></li>#}
+{#                            <li><a href="#">One more separated link</a></li>#}
+{#                        </ul>#}
+{#                    </li>#}
                 </ul>
-                <form class="form-inline my-2 my-lg-0" role="search" action="{% url 'haystack_search' %}" method="get">
-                    <input  name="q" id='search_keywords' type="text" class="form-control mr-sm-2" placeholder="输入关键字">
-                    <button class="btn btn-outline-success" type="submit">搜索</button>
-                </form>
+                {% if is_login %}
+                    <form class="form-inline my-2 my-lg-0" role="search" action="{% url 'haystack_search' %}" method="get">
+                        <input  name="q" id='search_keywords' type="text" class="form-control mr-sm-2" placeholder="输入关键字">
+                        <button class="btn btn-outline-success" type="submit">搜索</button>
+                    </form>
+                {% endif %}
             </div>
         </nav>
     </div>

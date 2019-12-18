@@ -40,6 +40,8 @@ urlpatterns = [
     path('new_pwd/', login.views.new_password, name='new_pwd'),
     path('ajax_val/', login.views.ajax_val, name='ajax_val'),
     path('product/', include('zr.urls', namespace='zr')),
+    path('delete_data/<data_id>', login.views.delete_data, name='delete_data'),
+    path('download_file/<filename>', login.views.download_file, name='download_file'),
     path('search/', include('haystack.urls')),
     path('captcha/', include('captcha.urls')),
      ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)\

@@ -211,3 +211,44 @@ class ProductListView(View):
             'material_id': material_id,
         })
 
+
+def delete_data(request, data_id):
+    feature_name = data_id
+    Feature.objects.filter(feature_name=feature_name).delete()
+    return redirect('feature_show')
+
+
+def modify_feature(request, name):
+    feature = Feature.objects.get(feature_name=name)
+    feature_dict = {
+        'feature_name': feature.feature_name,
+        'feature_number': feature.feature_number,
+        'feature_type': feature.feature_type,
+        'part': feature.part,
+        'appearance': feature.appearance,
+        'scene': feature.scene,
+    }
+    # feature_modify_form = forms.FeatureModifyForm(initial=feature_dict)
+    if request.method == 'POST':
+        feature_modify_form = forms.FeatureModifyForm(request.POST, request.FILES)
+        message = "更新失败，请检查填写内容！"
+        feature_list = ['feature_name', 'feature_number', 'feature_type', 'part', 'appearance', 'scene']
+        for i in feature_list:
+            if feature_modify_form[i].value():
+                feature_dict[i] = feature_modify_form[i].value()
+
+        # feature_name = feature_modify_form['feature_name'].value()
+
+        Feature.objects.filter(feature_name=name).update(
+            feature_name=feature_dict['feature_name'],
+            feature_number=feature_dict['feature_number'],
+            feature_type=feature_dict['feature_type'],
+            part=feature_dict['part'],
+            appearance=feature_dict['appearance'],
+            scene=feature_dict['scene']
+        )
+        message = '此特征已经更新成功！'
+        return HttpResponseRedirect(reverse('zr:feature_show'))
+    feature_modify_form = forms.FeatureModifyForm(request.GET)
+    return render(request, 'zr/feature_modify.html', locals())
+

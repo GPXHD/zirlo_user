@@ -1,0 +1,79 @@
+{% extends "zr_base.html" %}
+{% load static %}
+{% block css %}<link href="/static/css/zr/css/feature_modify.css" rel="stylesheet">{% endblock %}
+{% block title %}创建特征{% endblock %}
+
+{% block main %}
+    <div class="container">
+        <div class="col">
+                <br/>
+                <div style="text-align: center">
+                    {% if message %}
+                        <div class="alert alert-warning">{{ message }}</div>
+                    {% endif %}
+                </div>
+            <h3 class="text-center">修改特征！</h3><br/>
+            <form class="form-register" action="{% url 'zr:modify_feature' feature.feature_name %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <table class="table table-bordered product_table1" style=" text-align: center; vertical-align: middle">
+                    <tr>
+                        <td><label for="id_feature_name">属性名称</label></td>
+                        <td>当前值</td>
+                        <td>更新值(选填)</td>
+                    </tr>
+                    <tr>
+                        <td><label for="id_feature_name">特征名称</label></td>
+                        <td>{{ feature.feature_name }}</td>
+                        <td>{{ feature_modify_form.feature_name }}</td>
+                    </tr>
+                    <tr>
+                        <td><label for="id_feature_number">特征编号</label></td>
+                        <td>{{ feature.feature_number }}</td>
+                        <td>{{ feature_modify_form.feature_number }}</td>
+                    </tr>
+                    <tr>
+                        <td><label for="id_feature_type">特征类型</label></td>
+                        <td>{{ feature.feature_type }}</td>
+                        <td>{{ feature_modify_form.feature_type }}</td>
+                    </tr>
+                    <tr>
+                        <td><label for="id_part">所属部件</label></td>
+                        <td>{{ feature.part }}</td>
+                        <td>{{ feature_modify_form.part }}</td>
+                    </tr>
+                    <tr>
+                        <td><label for="id_appearance">特征外观</label></td>
+                        <td>
+                            <img src="{{ MEDIA_URL }}{{ feature.appearance }}" onclick="showImg(this.src)" data-toggle="tooltip"
+                                 title="点击可观看大图" width="50" height="50" alt="无"/>
+                        </td>
+                        <td>{{ feature_modify_form.appearance }}</td>
+                    </tr>
+                    <tr>
+                        <td><label for="id_scene">应用情景</label></td>
+                        <td><img src="{{ MEDIA_URL }}{{ feature.scene }}" onclick="showImg(this.src)" data-toggle="tooltip"
+                                 title="点击可观看大图" width="50" height="50" alt="无"/></td>
+                        <td>{{ feature_modify_form.scene }}</td>
+                    </tr>
+                </table>
+                <div class="img_content" id="imgContent">
+                    <div style="margin: 10px 0 10px 0"><img src="" width="320px" height="320px" id="imgCon" alt=""></div>
+                    <div  class="colse_btn" onclick="col()">关闭</div>
+                </div>
+                <div>
+                    <a href="{% url 'zr:feature_show' %}" class="text-success"><ins>特征目录</ins></a>
+                    <button class="btn btn-primary float-right" type="submit">保存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        function col() {
+           document.getElementById('imgContent').style.display='none';
+        }
+        function showImg(url) {
+           document.getElementById('imgCon').src = url;
+           document.getElementById('imgContent').style.display='block';
+        }
+    </script>
+{% endblock %}

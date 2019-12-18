@@ -1,12 +1,13 @@
 {% extends "base.html" %}
 {% load static %}
 <link href="/login/static/login/css/index.css" rel="stylesheet"/>
+<link href="/static/css/style.css" rel="stylesheet"/>
 {% block title %}首页{% endblock %}
 
 {% block main %}
     <div class="container head">
         <div class="jumbotron">
-            <h1 class="display-4">Zirlo</h1>
+            <h2 class="display-4" style="text-align: center">合金材料数据库</h2>
             <p class="lead">基于Django的Web项目</p>
 
         </div>
@@ -37,11 +38,15 @@
                             {% csrf_token %}
 {#                                <h4 class="card-title">文件上传</h4>#}
                             <span>
-                                <label for="file" class="card-text">文件上传</label>
+                                <label for="file" class="card-text">文件上传：</label>
                                 <input type="file" name="file" class="form-control-file" id="file" />
-                                <a href="{% url 'upload_file_show' %}">查看</a>
-                                <button type="submit">上传</button>
+                                <button class="btn btn-primary btn-sm " type="submit">
+{#                                        <i class="fa fa-folder-open" id="browse">&nbsp;&nbsp;上传</i>#}
+                                    上传
+                                </button>
+                                <a class="btn btn-primary btn-sm " href="{% url 'upload_file_show' %}">查看</a>
                             </span>
+
                         </form>
                     </div>
                 </div>
@@ -72,8 +77,8 @@
                     </div>
                 </div>
                 <div class="page-item" style="text-align: center">
-                    <a href="?page={{ page_obj.previous_page_number }}">上一页</a>
-                    Page 1 of 1.
+                    <a href="?page={{ page_obj.previous_page_number }}"> </a>
+                    - 1 -
                     <a href="?page={{ page_obj.next_page_number }}">下一页</a>
                 </div>
             </div>

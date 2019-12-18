@@ -21,11 +21,11 @@
             <div class="form-group">
                 {{ verify_form.number.label_tag }}
                 {{ verify_form.number }}
-            </div>
+            </div><br/>
             <div class="form-group">
                 {{ verify_form.captcha.label_tag }}
                 {{ verify_form.captcha }}
-            </div>
+            </div><br/>
             <div>
                 <a href="{% url 'find_pass' %}" class="text-success"><ins>重新获取</ins></a>
                 <button class="btn btn-primary float-right" type="submit">提交</button>

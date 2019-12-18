@@ -1,7 +1,6 @@
 {% extends "zr_base.html" %}
 {% load static %}
 <link href="" rel="stylesheet">
-{#<script src="/login/static/login/js/user_center.js"></script>#}
 {% block title %}实体详细信息{% endblock %}
 
 {% block main %}
@@ -130,7 +129,7 @@
                         <div class="row">
                             <div class="pro_leftimg">
                                 {% for feature_ in features %}
-                                    <img src="/media/{{ feature_.appearance }}" alt=""/>
+{#                                    <img src="/media/{{ feature_.appearance }}" alt=""/>#}
                                     <p>{{ feature_.feature_name }}</p>
                                 {% endfor %}
                             </div>

@@ -17,33 +17,35 @@
 
                 {% csrf_token %}
                 <h3 class="text-center">创建特征！</h3>
+                <table class="table table-bordered product_table1" style=" text-align: center; vertical-align: middle">
 
-                <div class="form-group">
-                    {{ feature_form.feature_name.label_tag }}
-                    {{ feature_form.feature_name }}
-                </div>
-                <div class="form-group">
-                    {{ feature_form.feature_number.label_tag }}
-                    {{ feature_form.feature_number }}
-                </div>
-                <div class="form-group">
-                    {{ feature_form.feature_type.label_tag }}
-                    {{ feature_form.feature_type }}
-                </div>
-                <div class="form-group">
-                    {{ feature_form.part.label_tag }}
-                    {{ feature_form.part }}
-                </div><br/>
-                <div class="form-group">
-                    {{ feature_form.appearance.label_tag }}
-                    {{ feature_form.appearance }}
-                </div>
-                <div class="form-group">
-                    {{ feature_form.scene.label_tag }}
-                    {{ feature_form.scene }}
-                </div><br/>
+                    <tr>
+                        <td><label for="id_feature_name">特征名称</label></td>
+                        <td>{{ feature_form.feature_name }}</td>
+                    </tr>
+                    <tr>
+                        <td><label for="id_feature_number">特征编号</label></td>
+                        <td>{{ feature_form.feature_number }}</td>
+                    </tr>
+                    <tr>
+                        <td><label for="id_feature_type">特征类型</label></td>
+                        <td>{{ feature_form.feature_type }}</td>
+                    </tr>
+                    <tr>
+                        <td><label for="id_part">所属部件</label></td>
+                        <td>{{ feature_form.part }}</td>
+                    </tr>
+                    <tr>
+                        <td><label for="id_appearance">特征外观</label></td>
+                        <td style=" text-align: left">{{ feature_form.appearance }}</td>
+                    </tr>
+                    <tr>
+                        <td><label for="id_scene">应用情景</label></td>
+                        <td style=" text-align: left">{{ feature_form.scene }}</td>
+                    </tr>
+                </table>
                 <div>
-                    <a href="{% url 'zr:product_show' %}" class="text-success"><ins>产品目录</ins></a>
+                    <a href="{% url 'zr:feature_show' %}" class="text-success"><ins>特征目录</ins></a>
                     <button class="btn btn-primary float-right" type="submit">提交</button>
                 </div>
             </form>

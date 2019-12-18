@@ -121,3 +121,11 @@ class FileForm(forms.ModelForm):
     class Meta:
         model = Files
         exclude = ['c_time', 'filename']
+
+
+class DeleteForm(forms.Form):
+    data_id = forms.CharField(label="新密码",
+                              max_length=256,
+                              widget=forms.PasswordInput(
+                                   attrs={'class': 'form-control', 'placeholder': "6-20位非中文字符"}
+                               ))

@@ -8,7 +8,7 @@ from login.others import send_mail, confirms, encryption
 from django.contrib.auth.hashers import make_password, check_password
 from captcha.models import CaptchaStore
 from captcha.helpers import captcha_image_url
-from django.http import JsonResponse, HttpResponseRedirect, Http404
+from django.http import JsonResponse, HttpResponseRedirect, Http404, FileResponse
 from django.utils import timezone
 from django.views.generic import TemplateView, View
 from haystack.views import SearchView
@@ -41,6 +41,24 @@ def upload_file_show(request):
         return redirect('login')
     upload_files = Files.objects.all()
     return render(request, 'login/upload_file_show.html', locals())
+
+
+def download_file(request, filename):
+    print(filename)
+    filepath = '/media' + filename
+    file_name = filename.split('/')[-1]
+    file = open(filepath, 'rb')
+    response = FileResponse(file)
+    response['Content-Type'] = 'application/octet-stream'
+    response['Content-Disposition'] = 'attachment;filename="{}"'.format(file_name)
+    return response
+
+
+def delete_data(request, data_id):
+
+    filename = data_id
+    Files.objects.filter(filename=filename).delete()
+    return redirect('upload_file_show')
 
 
 # 首页

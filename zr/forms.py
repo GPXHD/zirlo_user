@@ -104,3 +104,32 @@ class SearchForm(forms.Form):
 #         model = Feature
 #         # fields = ['product_name']
 #         exclude = ['c_time']
+
+
+class FeatureModifyForm(forms.Form):
+    feature_name = forms.CharField(label="特征名称",
+                                   required=False,
+                                   max_length=128,
+                                   widget=forms.TextInput(
+                                       attrs={'class': 'form-control', 'autofocus': ''}
+                                   ))
+    feature_number = forms.CharField(label="特征编号",
+                                     required=False,
+                                     max_length=128,
+                                     widget=forms.TextInput(
+                                         attrs={'class': 'form-control', 'autofocus': ''}
+                                     ))
+    feature_type = forms.CharField(label="特征类型",
+                                   required=False,
+                                   max_length=128,
+                                   widget=forms.TextInput(
+                                       attrs={'class': 'form-control', 'autofocus': ''}
+                                   ))
+    part = forms.CharField(label="所属部件",
+                           required=False,
+                           max_length=128,
+                           widget=forms.TextInput(
+                               attrs={'class': 'form-control', 'autofocus': ''}
+                           ))
+    appearance = forms.ImageField(label="特征外观", required=False)
+    scene = forms.ImageField(label="应用情景", required=False)

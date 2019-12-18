@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
 <link href="/login/static/login/css/user_center.css" rel="stylesheet">
-{#<script src="/login/static/login/js/user_center.js"></script>#}
 {% block title %}个人中心{% endblock %}
 
 {% block main %}
@@ -12,49 +11,60 @@
                     <div class="alert alert-warning">{{ message }}</div>
                 {% endif %}
                 {% csrf_token %}
+
                 <p id="1" style="display: none">{{ user.face }}</p>
-                <table width="100%" border="0" cellspacing="1" cellpadding="4" bgcolor="#cccccc"
-                       class="tabtop13" align="center">
-                    <tr>
-                        <td width="8%" class="btbg font-center">用户名</td>
-                        <td width="8%" class="btbg font-center">{{ user.username }}</td>
-                    </tr>
-                    <tr>
-                        <td width="8%" class="btbg font-center">姓名</td>
-                        <td width="8%" class="btbg font-center">{{ user.real_name }}</td>
-                    </tr>
-                    <tr>
-                        <td width="8%" class="btbg font-center">邮箱</td>
-                        <td width="8%" class="btbg font-center">{{ user.email }}</td>
-                    </tr>
-                    <tr>
-                        <td width="8%" class="btbg font-center">性别</td>
-                        <td width="8%" class="btbg font-center">{{ user.sex }}</td>
-                    </tr>
-                    <tr>
-                        <td width="8%" class="btbg font-center"><label for="face">头像</label></td>
-                        <td width="8%" class="btbg font-center">
-                            <label for="img-up">
-                                <img src="{{ MEDIA_URL }}{{ user.face }}" width="100" height="100" id="img-circle" alt="My face"/>
-                                <input type="file" name="img-up" id="img-up" style="opacity: 0;"/><br/>
-                                <span class="button btn-green btn-w100" id="jsAvatarBtn">修改头像</span>
-                            </label></td>
-                        <td width="8%" class="btbg font-center">
-                            <input type="file" name="face" class="form-control-file" id="face" /></td>
-                    </tr>
-                    <tr>
-                        <td width="8%" class="btbg font-center">注册时间</td>
-                        <td width="10%" class="btbg font-center">{{ user.c_time }}</td>
-                    </tr>
-                    <tr>
-                        <td width="8%" class="btbg font-center">修改密码</td>
-                        <td width="10%" class="btbg font-center"><a href="{% url 'pass_reset' %}">请点击修改！</a></td>
-                    </tr>
-                </table>
+                <div id="product_result" class="product_result">
+                    <div class="flag1">
+                        <div class="row">
+                            <table class="table table-bordered product_table1">
+                                <tr>
+                                    <td>用户名</td>
+                                    <td>{{ user.username }}</td>
+                                </tr>
+                                <tr>
+                                    <td>姓名</td>
+                                    <td>{{ user.real_name }}</td>
+                                </tr>
+                                <tr>
+                                    <td>邮箱地址</td>
+                                    <td>{{ user.email }}</td>
+                                </tr>
+                                <tr>
+                                    <td>性别</td>
+                                    <td>{{ user.sex }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="padding8">
+                                        <label for="face">头像</label>
+                                    </td>
+                                    <td class="padding8">
+{#                                        <label for="img-up">#}
+{#                                            <img src="{{ MEDIA_URL }}{{ user.face }}" width="100" height="100" id="img-circle" alt="My face"/>#}
+{#                                            <input type="file" name="img-up" id="img-up" style="opacity: 0;"/><br/>#}
+                                            <span class="button btn-green btn-w100" id="jsAvatarBtn">修改头像</span>
+{#                                        </label>#}
+{#                                        <input type="image" name="face" class="form-control-file" id="face" />#}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>注册时间</td>
+                                    <td>{{ user.c_time }}</td>
+                                </tr>
+                                <tr>
+                                    <td>修改密码</td>
+                                    <td><a href="{% url 'pass_reset' %}">请点击修改！</a></td>
+                                </tr>
+                                <tr>
+
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
                 <div>
-                    <a href="/" class="text-success"><ins>返回</ins></a>
-                    <p id="13" ></p>
+                    <a href="/" class="text-success"><ins>返回首页</ins></a>
                     <button id="save" class="btn btn-primary float-right" type="submit">保存</button>
+                    <p id="13" ></p>
                 </div>
             </form>
         </div>
@@ -66,4 +76,48 @@
             localStorage.setItem("face", str_0+str);
         </script>
     </div>
+{#    <div id="product_btns" class="product_btns">#}
+{#                <a class="active">基本参数</a>#}
+{#                <a>可选配件</a>#}
+{#            </div>#}
+
 {% endblock %}
+
+{#<table width="100%" border="0" cellspacing="1" cellpadding="4" bgcolor="#cccccc"#}
+{#                       class="tabtop13" align="center">#}
+{#                    <tr>#}
+{#                        <td width="8%" class="btbg font-center">用户名</td>#}
+{#                        <td width="8%" class="btbg font-center">{{ user.username }}</td>#}
+{#                    </tr>#}
+{#                    <tr>#}
+{#                        <td width="8%" class="btbg font-center">姓名</td>#}
+{#                        <td width="8%" class="btbg font-center">{{ user.real_name }}</td>#}
+{#                    </tr>#}
+{#                    <tr>#}
+{#                        <td width="8%" class="btbg font-center">邮箱</td>#}
+{#                        <td width="8%" class="btbg font-center">{{ user.email }}</td>#}
+{#                    </tr>#}
+{#                    <tr>#}
+{#                        <td width="8%" class="btbg font-center">性别</td>#}
+{#                        <td width="8%" class="btbg font-center">{{ user.sex }}</td>#}
+{#                    </tr>#}
+{#                    <tr>#}
+{#                        <td width="8%" class="btbg font-center"><label for="face">头像</label></td>#}
+{#                        <td width="8%" class="btbg font-center">#}
+{#                            <label for="img-up">#}
+{#                                <img src="{{ MEDIA_URL }}{{ user.face }}" width="100" height="100" id="img-circle" alt="My face"/>#}
+{#                                <input type="file" name="img-up" id="img-up" style="opacity: 0;"/><br/>#}
+{#                                <span class="button btn-green btn-w100" id="jsAvatarBtn">修改头像</span>#}
+{#                            </label></td>#}
+{#                        <td width="8%" class="btbg font-center">#}
+{#                            <input type="file" name="face" class="form-control-file" id="face" /></td>#}
+{#                    </tr>#}
+{#                    <tr>#}
+{#                        <td width="8%" class="btbg font-center">注册时间</td>#}
+{#                        <td width="10%" class="btbg font-center">{{ user.c_time }}</td>#}
+{#                    </tr>#}
+{#                    <tr>#}
+{#                        <td width="8%" class="btbg font-center">修改密码</td>#}
+{#                        <td width="10%" class="btbg font-center"><a href="{% url 'pass_reset' %}">请点击修改！</a></td>#}
+{#                    </tr>#}
+{#                </table>#}
