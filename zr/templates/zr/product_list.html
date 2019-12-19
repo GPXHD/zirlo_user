@@ -18,13 +18,13 @@
         <link href="/static/css/reset.css" rel="stylesheet">
         <link href="/static/css/style.css" rel="stylesheet">
         {% block js %}{% endblock %}
-		<title>ZR-{% block title %}实体目录{% endblock %}</title>
+		<title>国核锆业-{% block title %}实体目录{% endblock %}</title>
 	</head>
 
 <body>
     <div>
         <nav class="daohang">
-            <a class="a" href="/"><h1>ZR</h1></a>
+            <a class="a" href="/"><img src="/static/image/国核锆业logo.png" alt=""></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
                     aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -105,7 +105,7 @@
 
             <div class="all">共<span class="key">{{ product_nums }}</span>个</div>
 
-            <div class="butler_list company list">
+            <div class="butler_list  company list">
                 <div class="layout">
                     <div class="head">
                         <ul class="tab_header">
@@ -243,7 +243,12 @@
             });
         })
     </script>
+{#    <footer id="base_footer">#}
+{#        <div class="container power">#}
+{#            <span class="text-muted">@国核宝钛锆业股份公司</span>#}
+{#        </div>#}
+{#    </footer>#}
 </body>
-
+</html>
 
 

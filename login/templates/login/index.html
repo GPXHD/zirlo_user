@@ -5,16 +5,19 @@
 {% block title %}首页{% endblock %}
 
 {% block main %}
+    <br/><br/>
     <div class="container head">
         <div class="jumbotron">
-            <h2 class="display-4" style="text-align: center">合金材料数据库</h2>
-            <p class="lead">基于Django的Web项目</p>
-
+{#            <img class="col-12" src="/static/image/background.png" alt="">#}
+            <h2 class="display-4" style="text-align: center">锆合金工艺知识库</h2>
+            <p class="lead"></p>
+<br><br><br><br>
         </div>
+
         <div class="welcome">
             {% if is_login %}
                 <div class="jumbotron">
-                    <h1>{{ request.session.user_username }}!  欢迎回来！</h1>
+{#                    <h1>{{ request.session.user_username }}!  欢迎回来！</h1>#}
                 </div>
             {% else %}
                 <div class="not-login">
@@ -27,7 +30,7 @@
 
     <div class="container main">
         <div class="row">
-            <div class="col-9 post-list">
+            <div class="col-12 post-list">
                 <div class="card post">
                     <div class="card-body">
                         <h5 class="card-title" id="datetime"></h5>
@@ -52,7 +55,7 @@
                 </div>
                 <div class="card post">
                     <div class="card-body">
-                        <h5 class="card-title"><a href="#">标题</a></h5>
+                        <h5 class="card-title"><a href="#">公告</a></h5>
                         <span class="card-link">发布人：<a href="#">高鹏翔</a></span>
                         <span class="card-link">分类：<a href="#">未知</a></span>
                         <span class="card-link">标签：
@@ -60,12 +63,12 @@
                             <a href="#">2</a>
                             <a href="#">3</a>
                         </span>
-                        <p class="card-text">我就在想啊?<a href="#">完整内容</a></p>
+                        <p class="card-text">锆合金工艺知识库<a href="#">完整内容</a></p>
                     </div>
                 </div>
                 <div class="card post">
                     <div class="card-body">
-                        <h5 class="card-title"><a href="#">标题</a></h5>
+                        <h5 class="card-title"><a href="#">公告</a></h5>
                         <span class="card-link">发布人：<a href="#">高鹏翔</a></span>
                         <span class="card-link">分类：<a href="#">未知</a></span>
                         <span class="card-link">标签：
@@ -73,24 +76,24 @@
                             <a href="#">2</a>
                             <a href="#">3</a>
                         </span>
-                        <p class="card-text">我就在想啊?<a href="#">完整内容</a></p>
+                        <p class="card-text">锆合金工艺知识库<a href="#">完整内容</a></p>
                     </div>
                 </div>
-                <div class="page-item" style="text-align: center">
-                    <a href="?page={{ page_obj.previous_page_number }}"> </a>
-                    - 1 -
-                    <a href="?page={{ page_obj.next_page_number }}">下一页</a>
-                </div>
+{#                <div class="page-item" style="text-align: center">#}
+{#                    <a href="?page={{ page_obj.previous_page_number }}"> </a>#}
+{#                    - 1 -#}
+{#                    <a href="?page={{ page_obj.next_page_number }}">下一页</a>#}
+{#                </div>#}
             </div>
-            <div class="col-3">
-                <div class="card sidebar">
-                    <div class="card-body">
-                        <h4 class="card-title">关于我</h4>
-                        <p>用户名：凌音琴师</p>
-                        <p>现在是湖南大学机械与运载工程学院硕士研究生</p>
-                    </div>
-                </div>
-            </div>
+{#            <div class="col-3">#}
+{#                <div class="card sidebar">#}
+{#                    <div class="card-body">#}
+{#                        <h4 class="card-title">关于我</h4>#}
+{#                        <p>用户名：凌音琴师</p>#}
+{#                        <p>现在是湖南大学机械与运载工程学院硕士研究生</p>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
         </div>
     </div>
 {% endblock %}

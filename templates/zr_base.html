@@ -17,13 +17,13 @@
 		<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
         {% block css %}{% endblock %}
         {% block js %}{% endblock %}
-		<title>ZR-{% block title %}产品{% endblock %}</title>
+		<title>国核锆业-{% block title %}产品{% endblock %}</title>
 	</head>
 
 	<body>
         <div>
             <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default">
-                <a class="navbar-brand" href="/"><h1>ZR</h1></a>
+                <a class="navbar-brand" href="/"><img src="/static/image/国核锆业logo.png" alt=""></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
                     aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -41,13 +41,18 @@
                     <form class="form-inline my-2 my-lg-0" role="search" action="{% url 'zr:index' %}" method="POST">
                         {% csrf_token %}
                         {{ search_form.product_name.label_tag }}
-                        {{ search_form.product_name }}
-{#                        <input name="q" id='product_name' type="text" class="form-control mr-sm-2" placeholder="输入关键字">#}
+{#                        {{ search_form.product_name }}#}
+                        <input name="product_name" id='id_product_name' type="text" class="form-control mr-sm-2" placeholder="输入关键字">
                         <button class="btn btn-outline-success" type="submit">搜索</button>
                     </form>
                 </div>
             </nav>
         </div>
         {% block main %}{% endblock %}
+        <footer id="base_footer">
+            <div class="container power">
+                <span class="text-muted">@国核宝钛锆业股份公司</span>
+            </div>
+        </footer>
     </body>
 </html>

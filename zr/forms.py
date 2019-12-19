@@ -57,7 +57,7 @@ class ProductForm(forms.Form):
         list1 = ['feature1', 'feature2', 'feature3', 'feature4', 'feature5']
         super(ProductForm, self).__init__(*args, **kwargs)
         for i in list1:
-            self.fields[i].choices = ((x.feature_number, x.feature_name) for x in Feature.objects.all())
+            self.fields[i].choices = ((x.feature_name, x.feature_name) for x in Feature.objects.all())
         # self.fields['material'].choices = ((x.id, x.material) for x in Material.objects.all())
 
 

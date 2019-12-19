@@ -19,7 +19,6 @@ from django.urls import path, include, re_path
 from django.conf.urls.static import static
 from django.conf import settings
 import zr.views
-# from django.views import static
 xadmin.autodiscover()
 xversion.register_models()
 app_name = 'zr'
@@ -35,6 +34,6 @@ urlpatterns = [
     path('feature_show/', zr.views.feature_show, name='feature_show'),
     path('delete_data/<data_id>', zr.views.delete_data, name='delete_data'),
     path('modify_feature/<name>', zr.views.modify_feature, name='modify_feature'),
-    # path('search/', zr.views.product_search, name='product_search'),
+    path('search/', zr.views.product_search, name='product_search'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)\
   + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
