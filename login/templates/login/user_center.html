@@ -16,7 +16,7 @@
                 <div id="product_result" class="product_result">
                     <div class="flag1">
                         <div class="row">
-                            <table class="table table-bordered product_table1">
+                            <table class="table table-bordered product_table1"  style="vertical-align: middle">
                                 <tr>
                                     <td>用户名</td>
                                     <td>{{ user.username }}</td>
@@ -38,11 +38,11 @@
                                         <label for="face">头像</label>
                                     </td>
                                     <td class="padding8">
-{#                                        <label for="img-up">#}
-{#                                            <img src="{{ MEDIA_URL }}{{ user.face }}" width="100" height="100" id="img-circle" alt="My face"/>#}
-{#                                            <input type="file" name="img-up" id="img-up" style="opacity: 0;"/><br/>#}
-                                            <span class="button btn-green btn-w100" id="jsAvatarBtn">修改头像</span>
-{#                                        </label>#}
+                                        <label for="img-up">
+                                            <img src="{{ MEDIA_URL }}{{ user.face }}" width="100" height="100" id="img-circle" alt="My face"/>
+{#                                            <input type="file" name="img-up" id="img-up"/><br/>#}
+{#                                            <span class="button btn-green btn-w100 btn btn-primary" id="jsAvatarBtn">修改头像</span>#}
+                                        </label>
 {#                                        <input type="image" name="face" class="form-control-file" id="face" />#}
                                     </td>
                                 </tr>
