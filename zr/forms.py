@@ -4,10 +4,36 @@ from .models import Product, Feature, Material
 
 class MaterialForm(forms.Form):
     material = forms.CharField(label="材料名称",
+                           required=False,
                                max_length=128,
                                widget=forms.TextInput(
                                    attrs={'class': 'form-control', 'placeholder': "材料名称", 'autofocus': ''}
                                ))
+    e = forms.CharField(label="弹性模量",required=False,
+                               max_length=128,
+                               widget=forms.TextInput(
+                                   attrs={'class': 'form-control', 'placeholder': "弹性模量", 'autofocus': ''}
+                               ))
+    p = forms.CharField(label="泊松比",required=False,
+                               max_length=128,
+                               widget=forms.TextInput(
+                                   attrs={'class': 'form-control', 'placeholder': "泊松比", 'autofocus': ''}
+                               ))
+    midu = forms.CharField(label="密度",required=False,
+                               max_length=128,
+                               widget=forms.TextInput(
+                                   attrs={'class': 'form-control', 'placeholder': "密度", 'autofocus': ''}
+                               ))
+    hot = forms.CharField(label="导热系数",required=False,
+                               max_length=128,
+                               widget=forms.TextInput(
+                                   attrs={'class': 'form-control', 'placeholder': "导热系数", 'autofocus': ''}
+                               ))
+    moca = forms.CharField(label="摩擦系数",required=False,
+                          max_length=128,
+                          widget=forms.TextInput(
+                              attrs={'class': 'form-control', 'placeholder': "摩擦系数", 'autofocus': ''}
+                          ))
 
 
 class ProductForm(forms.Form):

@@ -16,10 +16,33 @@
                 {% csrf_token %}
                 <h3 class="text-center">创建材料！</h3>
 
-                <div class="form-group">
-                    {{ material_form.material.label_tag }}
-                    {{ material_form.material }}
-                </div>
+                <table class="table table-bordered product_table1" style=" text-align: center; vertical-align: middle">
+
+                    <tr>
+                        <td>{{ material_form.material.label_tag }}</td>
+                        <td>{{ material_form.material }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ material_form.e.label_tag }}</td>
+                        <td>{{ material_form.e }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ material_form.p.label_tag }}</td>
+                        <td>{{ material_form.p }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ material_form.midu.label_tag }}</td>
+                        <td>{{ material_form.midu }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ material_form.hot.label_tag }}</td>
+                        <td>{{ material_form.hot }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ material_form.moca.label_tag }}</td>
+                        <td>{{ material_form.moca }}</td>
+                    </tr>
+                </table>
                <br/>
                 <div>
                     <a href="{% url 'zr:product_show' %}" class="text-success"><ins>产品目录</ins></a>

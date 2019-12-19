@@ -17,6 +17,11 @@ def create_material(request):
         message = "请检查填写内容！"
         if material_form.is_valid():
             material = material_form.cleaned_data.get('material')
+            e = material_form.cleaned_data.get('e')
+            p = material_form.cleaned_data.get('p')
+            midu = material_form.cleaned_data.get('midu')
+            hot = material_form.cleaned_data.get('hot')
+            moca = material_form.cleaned_data.get('moca')
             same_material = Material.objects.filter(material=material)
             if same_material:
                 message = '材料已经存在！'
@@ -24,10 +29,15 @@ def create_material(request):
 
             new_material = Material()
             new_material.material = material
+            new_material.E = e
+            new_material.P = p
+            new_material.midu = midu
+            new_material.hot = hot
+            new_material.moca = moca
             new_material.save()
 
             message = '已经创建材料！'
-            return render(request, 'zr/material.html', locals())
+            # return HttpResponseRedirect(reverse('zr:create_material'))
         else:
             return render(request, 'zr/material.html', locals())
     material_form = forms.MaterialForm()
@@ -72,7 +82,7 @@ def create_product(request):
             new_product.save()
 
             message = '已经创建实体！'
-            return render(request, 'zr/create.html', locals())
+            # return HttpResponseRedirect(reverse('zr:create_product'))
         else:
             return render(request, 'zr/create.html', locals())
     product_form = forms.ProductForm()
@@ -134,8 +144,7 @@ def create_feature(request):
             new_feature.save()
 
             message = '已经创建新的特征！'
-            return HttpResponseRedirect(reverse('zr:create_feature'))
-
+            # return HttpResponseRedirect(reverse('zr:create_feature'))
         else:
             return render(request, 'zr/feature_create.html', locals())
     feature_form = forms.FeatureForm()
@@ -165,7 +174,10 @@ def product_search(request):
         if search_form.is_valid():
             product_name = search_form.cleaned_data.get('product_name')
             try:
-                product = Product.objects.get(product_name=product_name)
+                products = []
+                product1 = Product.objects.filter(product_name__contains=product_name)
+                for i in product1:
+                    products.append(i)
                 message = '查询成功！'
             except:
                 message = '查询失败！'

@@ -1,7 +1,5 @@
 {% extends "zr_base.html" %}
 {% load static %}
-<link href="" rel="stylesheet">
-{#<script src="/login/static/login/js/user_center.js"></script>#}
 {% block title %}实体目录{% endblock %}
 
 {% block main %}
@@ -17,65 +15,6 @@
                     </li>
                 </ul>
             {% endfor %}
-{#            <div class="product_fenye">#}
-{#                <nav aria-label="Page navigation">#}
-{#                    <ul class="pagination">#}
-{#                        <li class="active">#}
-{#                            <a href="#" aria-label="Previous"> <span aria-hidden="true">&laquo;</span> </a>#}
-{#                        </li>#}
-{#                        <li>#}
-{#                            <a href="#">1</a>#}
-{#                        </li>#}
-{#                        <li class="disabled">#}
-{#                            <a href="#">2</a>#}
-{#                        </li>#}
-{#                        <li>#}
-{#                            <a href="#">3</a>#}
-{#                        </li>#}
-{#                        <li>#}
-{#                            <a href="#">4</a>#}
-{#                        </li>#}
-{#                        <li>#}
-{#                            <a href="#">5</a>#}
-{#                        </li>#}
-{#                        <li>#}
-{#                            <a href="#" aria-label="Next"> <span aria-hidden="true">&raquo;</span> </a>#}
-{#                        </li>#}
-{#                    </ul>#}
-{#                </nav>#}
-{#            </div>#}
         </div>
     </div>
-{#        <div class="container">#}
-{#            <div class="col">#}
-{#                <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">#}
-{#                    <tr>#}
-{#                        <td align="center" id="tittle" height="80">产品中心</td>#}
-{#                    </tr>#}
-{#                    <tr>#}
-{#                        <td align="right" height="25" id="datetime">#}
-{#                        <script>#}
-{#                            setInterval("document.getElementById('datetime').innerHTML=new Date().toLocaleString();", 1000);#}
-{#                        </script>#}
-{#                        </td>#}
-{#                     </tr>#}
-{#                </table>#}
-{#                <table width="100%" border="0" cellspacing="1" cellpadding="4" bgcolor="#e9faff" class="main_table"#}
-{#                       align="center">#}
-{#                    <tr>#}
-{#                        <td colspan="1" class="btbg font-center titfont" rowspan="1">产品名称</td>#}
-{#                        <td colspan="1" class="btbg font-center titfont" rowspan="1">产品型号</td>#}
-{#                        <td colspan="1" class="btbg font-center titfont" rowspan="1">创建时间</td>#}
-{#                    </tr>#}
-{#                    {% for product in products %}#}
-{#                        <tr>#}
-{#                            <td colspan="1" class="btbg font-center titfont" rowspan="1">#}
-{#                                <a href="{% url 'zr:product_detail' product.product_name %}">{{ product.product_name }}</a></td>#}
-{#                            <td colspan="1" class="btbg font-center titfont" rowspan="1">{{ product.type_number }}</td>#}
-{#                            <td colspan="1" class="btbg font-center titfont" rowspan="1">{{ product.c_time }}</td>#}
-{#                        </tr>#}
-{#                    {% endfor %}#}
-{#                </table>#}
-{#            </div>#}
-{#        </div>#}
 {% endblock %}
