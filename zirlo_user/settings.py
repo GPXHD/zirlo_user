@@ -180,8 +180,8 @@ SESSION_COOKIE_DOMAIN = None             # Session的cookie保存的域名（默
 SESSION_COOKIE_SECURE = False            # 是否Https传输cookie（默认）
 SESSION_COOKIE_HTTPONLY = True           # 是否Session的cookie只支持http传输（默认）
 SESSION_COOKIE_AGE = 6000                # Session的cookie失效日期（2周）（数字为秒数）（默认）
-SESSION_EXPIRE_AT_BROWSER_CLOSE = True   # 是否关闭浏览器使得Session过期（默认）
-SESSION_SAVE_EVERY_REQUEST = True        # 是否每次请求都保存Session，默认修改之后才保存（默认）
+# SESSION_EXPIRE_AT_BROWSER_CLOSE = True   # 是否关闭浏览器使得Session过期（默认）
+# SESSION_SAVE_EVERY_REQUEST = True        # 是否每次请求都保存Session，默认修改之后才保存（默认）
 
 CAPTCHA_OUTPUT_FORMAT = u'%(text_field)s %(hidden_field)s %(image)s'
 CAPTCHA_NOISE_FUNCTIONS = (  # 'captcha.helpers.noise_null',  # 没有样式
