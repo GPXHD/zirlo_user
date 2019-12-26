@@ -65,7 +65,7 @@ def delete_data(request, data_id):
 def index(request):
     is_login = request.session.get('is_login', None)
     if is_login:
-        return redirect('/product/test')
+        return redirect('/product/main')
 
     login_form = forms.UserForm()
     register_form = forms.RegisterForm()
@@ -92,7 +92,7 @@ def index(request):
                 request.session['user_id'] = user.id
                 request.session['user_username'] = user.username
                 request.session['user_permission'] = user.permission
-                return redirect('/product/test')
+                return redirect('/product/main')
             else:
                 l_message = '密码不正确！'
                 return render(request, 'login/index.html', locals())

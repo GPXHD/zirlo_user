@@ -265,7 +265,7 @@ def modify_feature(request, name):
     return render(request, 'zr/feature_modify.html', locals())
 
 
-def test(request):
+def main(request):
     is_login = request.session.get('is_login', None)
     if not is_login:
         return redirect('/')

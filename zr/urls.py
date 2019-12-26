@@ -25,6 +25,7 @@ app_name = 'zr'
 
 urlpatterns = [
     path('', zr.views.product_search, name='index'),
+    path('main/', zr.views.main, name='main'),
     path('list/', zr.views.ProductListView.as_view(), name='product_list'),
     path('material/', zr.views.create_material, name='create_material'),
     path('create/', zr.views.create_product, name='create_product'),
@@ -35,6 +36,6 @@ urlpatterns = [
     path('delete_data/<data_id>', zr.views.delete_data, name='delete_data'),
     path('modify_feature/<name>', zr.views.modify_feature, name='modify_feature'),
     path('search/', zr.views.product_search, name='product_search'),
-    path('test/', zr.views.test, name='test'),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)\
   + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
