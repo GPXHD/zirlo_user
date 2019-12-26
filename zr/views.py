@@ -92,7 +92,7 @@ def create_product(request):
 def product_show(request):
     is_login = request.session.get('is_login', None)
     if not is_login:
-        return redirect('login')
+        return redirect('/')
     products = Product.objects.all()
     return render(request, 'zr/show.html', locals())
 
@@ -154,7 +154,7 @@ def create_feature(request):
 def feature_show(request):
     is_login = request.session.get('is_login', None)
     if not is_login:
-        return redirect('login')
+        return redirect('/')
     features = Feature.objects.all()
     return render(request, 'zr/feature_show.html', locals())
 
@@ -162,7 +162,7 @@ def feature_show(request):
 def product_search(request):
     is_login = request.session.get('is_login', None)
     if not is_login:
-        return redirect('login')
+        return redirect('/')
 
     # if request.session.get('user_permission') != '1':
     #     return redirect('/')
@@ -264,3 +264,39 @@ def modify_feature(request, name):
     feature_modify_form = forms.FeatureModifyForm(request.GET)
     return render(request, 'zr/feature_modify.html', locals())
 
+
+def test(request):
+    is_login = request.session.get('is_login', None)
+    if not is_login:
+        return redirect('/')
+    all_products = Product.objects.all()
+    all_materials = Material.objects.all()
+
+    # 筛选
+    # 条件1
+    category = request.GET.get('ct', '')
+    if category:
+        all_products = all_products.filter(category=category)
+
+    # 条件2
+    material_id = request.GET.get('mate', '')
+    if material_id:
+        all_products = all_products.filter(material_id=int(material_id))
+
+    product_nums = all_products.count()
+    # 对实体进行分页
+    # try:
+    #     page = request.GET.get('page', 1)
+    # except PageNotAnInteger:
+    #     page = 1
+    # p = Paginator(all_products, 5, request=request)
+    # products = p.page(page)
+
+    return render(request, '../templates/main.html', locals())
+    # return render(request, 'zr/main.html', {
+    #     'all_products': all_products,
+    #     'all_materials': all_materials,
+    #     'product_nums': product_nums,
+    #     'category': category,
+    #     'material_id': material_id,
+    # })

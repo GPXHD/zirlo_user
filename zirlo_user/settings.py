@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'pb%#n90vc5%(r(=&+5i#9plo1ou@c)4$1%g8t+5(s=i1q^!==o'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 IP_ADDRESS = '120.24.171.173'
 # '120.24.171.173', '192.168.52.131', '192.168.52.130'
 ALLOWED_HOSTS = ['*']
@@ -175,10 +175,13 @@ HAYSTACK_SEARCH_RESULT_PER_PAGE = 5
 HAYSTACK_CUSTOM_HIGHLIGHTER = 1
 
 # 会话cookie可以在用户浏览器中保持有效期, True：关闭浏览器，则Cookie失效.
-# SESSION_SAVE_EVERY_REQUEST = True
-# SESSION_COOKIE_AGE=60*30  # 30分钟
-# SESSION_EXPIRE_AT_BROWSER_CLOSE = False
-# SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+SESSION_COOKIE_DOMAIN = None             # Session的cookie保存的域名（默认）
+SESSION_COOKIE_SECURE = False            # 是否Https传输cookie（默认）
+SESSION_COOKIE_HTTPONLY = True           # 是否Session的cookie只支持http传输（默认）
+SESSION_COOKIE_AGE = 6000                # Session的cookie失效日期（2周）（数字为秒数）（默认）
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True   # 是否关闭浏览器使得Session过期（默认）
+SESSION_SAVE_EVERY_REQUEST = True        # 是否每次请求都保存Session，默认修改之后才保存（默认）
 
 CAPTCHA_OUTPUT_FORMAT = u'%(text_field)s %(hidden_field)s %(image)s'
 CAPTCHA_NOISE_FUNCTIONS = (  # 'captcha.helpers.noise_null',  # 没有样式

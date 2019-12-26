@@ -19,8 +19,8 @@ class UserForm(forms.Form):
 class RegisterForm(forms.Form):
     gender = (('male', '男'), ('female', '女'),)
 
-    username = forms.CharField(label='用户名', max_length=128,
-                               widget=forms.TextInput(
+    r_username = forms.CharField(label='用户名', max_length=128,
+                                 widget=forms.TextInput(
                                     attrs={'class': 'form-control', 'placeholder': "用户名", 'autofocus': ''}
                                     ))
     real_name = forms.CharField(label='姓名', max_length=128,
@@ -44,10 +44,10 @@ class RegisterForm(forms.Form):
 
 
 class QueryForm(forms.Form):
-    username = forms.CharField(label='用户名', max_length=128,
-                               widget=forms.TextInput(
+    q_username = forms.CharField(label='用户名', max_length=128,
+                                 widget=forms.TextInput(
                                    attrs={'class': 'form-control', 'placeholder': "Username", 'autofocus': ''}
-                               ))
+                                 ))
     # email = forms.EmailField(label='邮箱地址',
     #                          widget=forms.EmailInput(attrs={'class': 'form-control'}
     #                                                  ))
@@ -86,11 +86,11 @@ class PassForm(forms.Form):
 
 
 class FindForm(forms.Form):
-    username = forms.CharField(label="用户名",
-                               max_length=128,
-                               widget=forms.TextInput(
+    f_username = forms.CharField(label="用户名",
+                                 max_length=128,
+                                 widget=forms.TextInput(
                                    attrs={'class': 'form-control', 'placeholder': "Username", 'autofocus': ''}
-                               ))
+                                 ))
     captcha = CaptchaField(label="验证码")
 
 

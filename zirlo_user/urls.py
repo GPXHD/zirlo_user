@@ -24,24 +24,11 @@ xadmin.autodiscover()
 xversion.register_models()
 
 urlpatterns = [
-    path('', login.views.index),
+    path('', login.views.index, name='index'),
+    path('index1/', login.views.index1, name='index1'),
     path('backend/', xadmin.site.urls),
-    path('login/', login.views.login, name='login'),
-    path('register', login.views.register, name='register'),
-    path('logout', login.views.logout, name='logout'),
-    path('confirm/', login.views.user_confirm, name='confirm'),
-    path('query/', login.views.query, name='query'),
-    # path('query_result/', login.views.query_result, name='query_result'),
-    path('user_center/', login.views.user_center, name='user_center'),
-    path('upload_file_show/', login.views.upload_file_show, name='upload_file_show'),
-    path('reset_pass/', login.views.pass_reset, name='pass_reset'),
-    path('find_pass/', login.views.pass_find, name='find_pass'),
-    path('verify/', login.views.verify, name='verify'),
-    path('new_pwd/', login.views.new_password, name='new_pwd'),
-    path('ajax_val/', login.views.ajax_val, name='ajax_val'),
+    path('login/', include('login.urls', namespace='login')),
     path('product/', include('zr.urls', namespace='zr')),
-    path('delete_data/<data_id>', login.views.delete_data, name='delete_data'),
-    path('download_file/<filename>', login.views.download_file, name='download_file'),
     path('search/', include('haystack.urls')),
     path('captcha/', include('captcha.urls')),
      ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)\

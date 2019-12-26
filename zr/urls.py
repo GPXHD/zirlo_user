@@ -35,5 +35,6 @@ urlpatterns = [
     path('delete_data/<data_id>', zr.views.delete_data, name='delete_data'),
     path('modify_feature/<name>', zr.views.modify_feature, name='modify_feature'),
     path('search/', zr.views.product_search, name='product_search'),
+    path('test/', zr.views.test, name='test'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)\
   + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

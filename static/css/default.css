@@ -1,12 +1,14 @@
-body{
+body #content{
     height: 100%;
-    background: #ffffff;
+    /*background: #ffffff;*/
 }
 
 #base_footer{
-    position: fixed;
-    bottom: 0;
-    right: 45%;
+    position: relative;
+    margin-top: 9%;
+    /*right: 45%;*/
+    height: 42px;
+    text-align: center;
 }
 
 #img-circle{

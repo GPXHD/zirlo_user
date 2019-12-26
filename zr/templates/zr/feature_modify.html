@@ -1,6 +1,6 @@
 {% extends "zr_base.html" %}
 {% load static %}
-{% block css %}<link href="/static/css/zr/css/feature_modify.css" rel="stylesheet">{% endblock %}
+{% block css %}<link rel="stylesheet" href="/static/css/zr/css/feature_modify.css">{% endblock %}
 {% block title %}创建特征{% endblock %}
 
 {% block main %}
@@ -44,15 +44,15 @@
                     <tr>
                         <td><label for="id_appearance">特征外观</label></td>
                         <td>
-                            <img src="{{ MEDIA_URL }}{{ feature.appearance }}" onclick="showImg(this.src)" data-toggle="tooltip"
-                                 title="点击可观看大图" width="50" height="50" alt="无"/>
+                            <img id="myImg01" src="{{ MEDIA_URL }}{{ feature.appearance }}" data-toggle="tooltip" title="点击可观看大图"
+                                 width="50" height="50" alt="特征外观"/>
                         </td>
                         <td>{{ feature_modify_form.appearance }}</td>
                     </tr>
                     <tr>
                         <td><label for="id_scene">应用情景</label></td>
-                        <td><img src="{{ MEDIA_URL }}{{ feature.scene }}" onclick="showImg(this.src)" data-toggle="tooltip"
-                                 title="点击可观看大图" width="50" height="50" alt="无"/></td>
+                        <td><img id="myImg02" src="{{ MEDIA_URL }}{{ feature.scene }}" data-toggle="tooltip" title="点击可观看大图"
+                                 width="50" height="50" alt="应用情景"/></td>
                         <td>{{ feature_modify_form.scene }}</td>
                     </tr>
                 </table>
@@ -67,13 +67,41 @@
             </form>
         </div>
     </div>
+
+    <div id="myModal" class="modal">
+        <span class="close">×</span>
+        <img class="modal-content" id="img01" alt="" src="">
+        <div id="caption"></div>
+    </div>
+
     <script>
-        function col() {
-           document.getElementById('imgContent').style.display='none';
-        }
-        function showImg(url) {
-           document.getElementById('imgCon').src = url;
-           document.getElementById('imgContent').style.display='block';
-        }
+        // 获取模态窗口
+        var modal = document.getElementById('myModal');
+
+        // 获取图片模态框，alt 属性作为图片弹出中文本描述
+        var img01 = document.getElementById('myImg01');
+        var img02 = document.getElementById('myImg02');
+        var modalImg = document.getElementById("img01");
+        var captionText = document.getElementById("caption");
+        img01.onclick = function(){
+            modal.style.display = "block";
+            modalImg.src = this.src;
+            modalImg.alt = this.alt;
+            captionText.innerHTML = this.alt;
+        };
+        img02.onclick = function(){
+            modal.style.display = "block";
+            modalImg.src = this.src;
+            modalImg.alt = this.alt;
+            captionText.innerHTML = this.alt;
+        };
+
+        // 获取 <span> 元素，设置关闭模态框按钮
+        var span = document.getElementsByClassName("close")[0];
+
+        // 点击 <span> 元素上的 (x), 关闭模态框
+        span.onclick = function() {
+            modal.style.display = "none";
+        };
     </script>
 {% endblock %}

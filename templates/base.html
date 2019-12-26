@@ -1,78 +1,215 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="zh-cmn-Hans">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0,shrink-to-fit=no">
-    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
-    <script src="/static/js/jquery.min.js"></script>
-    <script src="/static/js/popper.js"></script>
-    <script src="/static/js/bootstrap.min.js"></script>
-    <script src="/static/js/captcha.js"></script>
-    <link href="/static/css/default.css" rel="stylesheet">
-{#    <link href="/static/image/favicon.ico" rel="shortcut icon">#}
+    <meta charset="UTF-8">
+{#    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>#}
+    <meta name="keywords" content="工业级锆产品,产品列表,国核宝钛锆业股份公司">
+    <meta name="description" content="工业级锆产品,产品列表,国核宝钛锆业股份公司">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,shrink-to-fit=1">
+{#CSS模块#}
+    <link rel="stylesheet"  type="text/css" href="/static/css/index.css">
+    <link rel="stylesheet" href="/static/css/default.css">
+{#JS模块#}
+    <script type="text/javascript" src="/static/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js/jquery-menu.js"></script>
+    <script type="text/javascript" src="/static/js/popper.js"></script>
+    <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/js/captcha.js"></script>
     <title>国核锆业- {% block title %}{% endblock %}</title>
+    {% block css %}{% endblock %}
+    {% block js %}{% endblock %}
 </head>
 
-
 <body>
-    <div>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default">
-            <a class="navbar-brand" href="/"><img src="/static/image/国核锆业logo.png" alt=""></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
-                    aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                    <li class="nav-item active"><a class="nav-link" href="/">首页<span class="sr-only">(current)</span></a></li>
-                    {% if not is_login %}
-                        <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">登录</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">注册</a></li>
-                    {% else %}
-{#                        <li class="nav-item"><a class="nav-link" href="{% url 'user_center' %}">#}
-{#                            {{ request.session.user_username }}</a></li>#}
-                        <li class="nav-item"><a class="nav-link" href="{% url 'user_center' %}">
-                            <img id="img-circle" data-toggle="tooltip" title="{{ request.session.user_username }}" src=""
-                                 width="30" height="30" alt="My face"/></a></li>
-                        <script>
-                            document.getElementById("img-circle").src = localStorage.getItem('face');
-                        </script>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">退出</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'zr:product_list' %}">产品</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'upload_file_show' %}">文件中心</a></li>
+    <div class="header">
+        <div class="header-bar"></div>
+        <div class="header-list">
+            <div class="logo"><a href="/"></a></div>
+            <div class="search-language-menu">
+                <div class="search-language clearfix">
+                    {% if is_login %}
+                    <div class="search">
+                        <form name="searchform" action="{% url 'zr:index' %}" method="POST">
+                            {% csrf_token %}
+                            <div class="search-list">
+                                <ul>
+                                    <li style=" float: left">{{ search_form.product_name.label_tag }}</li>
+                                    <li class="search_input">
+                                        <input name="product_name" id='id_product_name' type="text" style="width: 130px;height:25px;" placeholder="输入关键字">
+                                    </li>
+                                    <li class="search_submit"><input type="submit" value="" name="Submit" id="ssubmit"></li>
+                                </ul>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="language">
+                        <a href="/" target="">中文版</a>|<a href="/" target="_blank">English</a>
+                    </div>
                     {% endif %}
-{#                    <li class="dropdown disabled">#}
-{#                        <button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-hover="dropdown" data-toggle="dropdown">#}
-{#                            Dropdown<span class="caret"></span></button>#}
-{#                        <ul class="dropdown-menu">#}
-{#                            <li class="dropdown-item"><a href="{% url 'query' %}">搜索</a></li>#}
-{#                            <li><a href="#">Another action</a></li>#}
-{#                            <li><a href="#">Something else here</a></li>#}
-{#                            <li role="separator" class="divider"></li>#}
-{#                            <li><a href="#">Separated link</a></li>#}
-{#                            <li role="separator" class="divider"></li>#}
-{#                            <li><a href="#">One more separated link</a></li>#}
-{#                        </ul>#}
-{#                    </li>#}
-                </ul>
-                {% if is_login %}
-                    <form class="form-inline my-2 my-lg-0" role="search" action="{% url 'haystack_search' %}" method="get">
-                        <input  name="q" id='search_keywords' type="text" class="form-control mr-sm-2" placeholder="输入关键字">
-                        <button class="btn btn-outline-success" type="submit">搜索</button>
-                    </form>
-                {% endif %}
+                </div>
+                <div class="menu">
+                    <script type="text/javascript">
+                        $(function(){
+                            $("#nav-menu li").mouseover(function(){
+                                $(this).addClass('navon').siblings().removeClass('navon');
+                            })
+                        })
+                    </script>
+                    <ul id="nav-menu">
+                        <li class="navli navon"><a href="/">首页</a></li>
+                        <li class="navli">
+                            <a href="{% url 'login:user_center' %}" target="_self" class="menu_ico1">个人中心</a>
+                            <ul>
+                                <li><a href="{% url 'index1' %}">Test</a></li>
+                                <li><a href="http://www.sn-zr.com/index.php?ie=1-352-1" target="_self">企业介绍</a></li>
+                                <li><a href="http://www.sn-zr.com/index.php?ie=1-353-1" target="_self">历史沿革</a></li>
+                                <li><a href="http://www.sn-zr.com/index.php?ie=1-354-1" target="_self">组织机构</a></li>
+                            </ul>
+                        </li>
+                        <li class="navli">
+                            <a href="{% url 'index1' %}" target="_self" class="menu_ico2">文件中心</a>
+                            <ul>
+                                <li><a href="http://www.sn-zr.com/index.php?ie=1-359-1" target="_self">公司新闻</a></li>
+                                <li><a href="http://www.sn-zr.com/index.php?ie=1-360-1" target="_self">媒体报道</a></li>
+                                <li><a href="http://www.sn-zr.com/index.php?ie=1-361-1" target="_self">行业动态</a></li>
+                                <li><a href="http://www.sn-zr.com/index.php?ie=1-362-1" target="_self">视频集锦</a></li>
+                            </ul>
+                        </li>
+                        <li class="navli">
+                            <a href="{% url 'zr:product_list' %}" target="_self" class="menu_ico3">产品服务</a>
+                            <ul>
+                                <li><a href="http://www.sn-zr.com/index.php?ie=31-409-1" target="_self">核级锆材</a></li>
+                                <li><a href="http://www.sn-zr.com/index.php?ie=31-410-1" target="_self">工业级锆产品</a></li>
+                                <li><a href="http://www.sn-zr.com/index.php?ie=31-420-1" target="_self">其他产品</a></li>
+                            </ul>
+                        </li>
+                        <li class="navli">
+                            <a href="{% url 'zr:product_show' %}" target="_self" class="menu_ico4">产品展示</a>
+                            <ul>
+                                <li><a href="http://www.sn-zr.com/index.php?ie=1-373-1" target="_self">重大专项</a></li>
+                                <li><a href="http://www.sn-zr.com/index.php?ie=1-375-1" target="_self">科研成果</a></li>
+                                <li><a href="http://www.sn-zr.com/index.php?ie=1-377-1" target="_self">核电常识</a></li>
+                            </ul>
+                        </li>
+                        <li class="navli">
+                            <a href="{% url 'login:logout' %}" target="_self" class="menu_ico5">退出登录</a>
+                            <ul>
+                                <li><a href="http://www.sn-zr.com/index.php?ie=1-421-1" target="_self">企业文化理念</a></li>
+                                <li><a href="http://www.sn-zr.com/index.php?ie=1-378-1" target="_self">员工之家</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </nav>
+        </div>
+    </div>
+    {% if is_logn %}
+        <div class="sidebar" style="position: fixed; right: 0; top: 30%;">
+            <div class="card post">
+                <div class="card-body">
+                    <p><a href="{% url 'zr:create_product' %}">创建产品</a></p>
+                    <p><a href="{% url 'zr:create_feature' %}">创建特征</a></p>
+                    <p><a href="{% url 'zr:create_material' %}">创建材料</a></p>
+                    <p><a href="{% url 'zr:feature_show' %}">特征目录</a></p>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            $('#myModal').on('shown.bs.modal', function () {
+                  $('#myInput').focus()
+                })
+        </script>
+    {% endif %}
+    {% block main %}{% endblock %}
+
+{#    <footer id="base_footer">#}
+{#        <div class="container power">#}
+{#           <span class="text-muted">@国核宝钛锆业股份公司</span>#}
+{#        </div>#}
+{#    </footer>#}
+
+    <div class="footer">
+        <div class="footer-bar"></div>
+        <div class="foot-list">
+            <ul class="clearfix">
+                <li><div id="menu_foot"><span><a href="http://www.sn-zr.com/index.php?ie=1-351-1">公司概况</a></span>
+                    <ul>
+                        <li><a href="http://www.sn-zr.com/index.php?ie=1-352-1">企业介绍</a></li>
+                        <li><a href="http://www.sn-zr.com/index.php?ie=1-353-1">历史沿革</a></li>
+                        <li><a href="http://www.sn-zr.com/index.php?ie=1-354-1">组织机构</a></li>
+                        <li><a href="http://www.sn-zr.com/index.php?ie=1-355-1">企业资质</a></li>
+                        <li><a href="http://www.sn-zr.com/index.php?ie=1-356-1">领导团队</a></li>
+                        <li><a href="http://www.sn-zr.com/index.php?ie=1-357-1">领导致辞</a></li>
+                    </ul>
+                </div></li>
+                <li><div id="menu_foot"><span><a href="http://www.sn-zr.com/index.php?ie=1-358-1">新闻资讯</a></span>
+                    <ul>
+                        <li><a href="http://www.sn-zr.com/index.php?ie=1-359-1">公司新闻</a></li>
+                        <li><a href="http://www.sn-zr.com/index.php?ie=1-360-1">媒体报道</a></li>
+                        <li><a href="http://www.sn-zr.com/index.php?ie=1-361-1">行业动态</a></li>
+                        <li><a href="http://www.sn-zr.com/index.php?ie=1-362-1">视频集锦</a></li>
+                    </ul>
+                </div></li>
+                <li><div id="menu_foot"><span><a href="http://www.sn-zr.com/index.php?ie=31-363-1">产品服务</a></span>
+                    <ul>
+                        <li><a href="http://www.sn-zr.com/index.php?ie=31-409-1">核级锆材</a></li>
+                        <li><a href="http://www.sn-zr.com/index.php?ie=31-410-1">工业级锆产品</a></li>
+                        <li><a href="http://www.sn-zr.com/index.php?ie=31-420-1">其他产品</a></li>
+                    </ul>
+                </div></li>
+                <li><div id="menu_foot"><span><a href="http://www.sn-zr.com/index.php?ie=1-372-1">科技研发</a></span>
+                    <ul><li><a href="http://www.sn-zr.com/index.php?ie=1-373-1">重大专项</a></li>
+                        <li><a href="http://www.sn-zr.com/index.php?ie=1-375-1">科研成果</a></li>
+                        <li><a href="http://www.sn-zr.com/index.php?ie=1-377-1">核电常识</a></li>
+                    </ul>
+                </div></li>
+                <li><div id="menu_foot"><span><a href="http://www.sn-zr.com/index.php?ie=1-376-1">企业文化</a></span>
+                    <ul><li><a href="http://www.sn-zr.com/index.php?ie=1-421-1">企业文化理念</a></li>
+                        <li><a href="http://www.sn-zr.com/index.php?ie=1-378-1">员工之家</a></li>
+                    </ul>
+                </div></li>
+                <li class="content"><div id="menu_foot"><span><a href="http://www.sn-zr.com/index.php?ie=31-410-1">联系我们</a></span>
+                    <ul>
+                        <li>地址：陕西省宝鸡市渭滨区高新大道206号</li>
+                        <li>电话：0917-8661607  8661608（销售部）</li>
+                        <li style="text-indent: 36px;">0917-8661516 （办公室）</li>
+                        <li>邮箱：scyxb@sn-zr.com （销售部）</li>
+                        <li style="text-indent: 36px;">zhbgs@sn-zr.com（办公室）</li>
+                        <li>邮编：721013</li>　
+                    </ul>
+                </div></li>
+                <li class="foot-wap">
+                    <img src="/static/image/20180629100601fTvObU.jpg" alt="" style="width:102px; height:101px; border:0">
+                    <span>关注我们</span>
+                </li>
+                <li class="foot-wap">
+                    <img src="/static/image/wap.png" alt="" width="102" height="101" border="0">
+                    <span>扫一扫访问手机站</span>
+                </li>
+            </ul>
+        </div>
+        <div class="footer-copy">
+            <b>CopyrightCopyright
+                <a href="http://www.sn-zr.com/Admin/governlgn.php" target="_blank">©</a>
+                国核宝钛锆业股份公司&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;版权所有&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;陕ICP备13003049号&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=61030502000191" style="display:inline-block;text-decoration:none;height:40px;line-height:40px;">
+                    <img src="/static/image/gonganbeian.png" alt="" style="float:left;margin-top:10px;margin-right: -10px;">
+                    陕公网安备 61030502000191号
+                </a>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;技术支持：世纪网络&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+{#                <script type="text/javascript" src="/static/image/f.txt"></script>#}
+                <a href="https://www.51.la/?comId=19609681" title="51.La 网站流量统计系统" target="_blank">网站统计</a>
+            </b>
+            <span><a href="http://www.sn-zr.com/index.php?ie=31-410-1#"></a></span>
+            <p style="position: absolute; bottom: 0;right:160px;">
+{#                <script type="text/javascript" src="/static/js/businessLicense.js"></script>#}
+                <a href="http://wljg.snaic.gov.cn//ei/Ei!certificate.action?id=402881c85e499448015e4a6805ae0003" target="_blank" style="border:0;">
+                    <img src="/static/image/Ei!readEiImgByMemory.action" alt="" style="border:0;">
+                </a>
+            </p>
+        </div>
     </div>
 
-{% block main %}{% endblock %}
-
-    <footer id="base_footer">
-        <div class="container power">
-            <span class="text-muted"><h5>@国核宝钛锆业股份公司</h5></span>
-        </div>
-    </footer>
 </body>
 </html>
