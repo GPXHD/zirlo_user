@@ -1,7 +1,15 @@
-{% extends "zr_base.html" %}
+{#{% extends "zr_base.html" %}#}
+
+{% extends "base.html" %}
 {% load static %}
-<link href="" rel="stylesheet">
 {% block title %}实体详细信息{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/index.css">
+    <link rel="stylesheet" href="/static/css/zr/css/index.css">
+    <link rel="stylesheet" href="/static/css/zr/css/media.css">
+{% endblock %}
 
 {% block main %}
     <div class="listbanner">
@@ -272,5 +280,6 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
 {% endblock %}

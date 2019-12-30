@@ -322,9 +322,12 @@ def user_center(request):
     is_login = request.session.get('is_login', None)
     if not is_login:
         return redirect('/')
+    user_form = forms.FaceForm()
+    pass_form = forms.PassForm()
 
     user_id = request.session.get('user_id')
     user = User.objects.get(id=user_id)
+
     if request.method == "POST":
         user_form = forms.FaceForm(request.POST, request.FILES)
         if user_form.is_valid():
@@ -332,7 +335,28 @@ def user_center(request):
             user.save()
             return HttpResponseRedirect(reverse('user_center'))
         return render(request, 'login/user_center.html', locals())
-    user_form = forms.FaceForm()
+
+    if request.method == 'POST' and not user_form.is_valid():
+        pass_form = forms.PassForm(request.POST)
+        re_massage = "请检查填写内容！"
+        if pass_form.is_valid():
+            old_pass = pass_form.cleaned_data.get('old_pass')
+            password1 = pass_form.cleaned_data.get('password')
+            password2 = pass_form.cleaned_data.get('confirm_pass')
+            user_id = request.session.get('user_id')
+            user = User.objects.get(id=user_id)
+
+            if not check_password(old_pass, user.password):
+                re_massage = '输入的旧密码是错误的，请重新输入！'
+                return render(request, 'login/user_center.html', locals())
+            if password1 != password2:
+                re_message = '两次输入的新密码不相同！'
+                return render(request, 'login/user_center.html', locals())
+            user.password = make_password(password1, None, 'pbkdf2_sha1')
+            user.save()
+            return redirect(logout)
+        else:
+            return render(request, 'login/user_center.html', locals())
     return render(request, 'login/user_center.html', locals())
 
 
@@ -342,6 +366,7 @@ def pass_reset(request):
     if not is_login:
         return redirect('/')
 
+    pass_form = forms.PassForm(request.GET)
     message = "请设置新的密码！"
     if request.method == 'POST':
         pass_form = forms.PassForm(request.POST)
@@ -363,7 +388,6 @@ def pass_reset(request):
             return redirect(logout)
         else:
             return render(request, 'login/password_reset.html', locals())
-    pass_form = forms.PassForm()
     return render(request, 'login/password_reset.html', locals())
 
 
@@ -495,3 +519,8 @@ def ajax_val(request):
     #         'context': statue
     #     }
     #     return context1
+
+
+def test(request):
+
+    return render(request, 'login/test.html', locals())

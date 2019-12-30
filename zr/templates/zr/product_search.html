@@ -1,20 +1,24 @@
-{% extends "zr_base.html" %}
+{% extends "base.html" %}
 {% load static %}
 {% block title %}产品查询{% endblock %}
 
+{% block css %}
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/index.css">
+{#    <link rel="stylesheet" href="/static/css/zr/css/index.css">#}
+    <link rel="stylesheet" href="/static/css/zr/css/media.css">
+{% endblock %}
 
 {% block main %}
     <div id="product_main" class="product_main">
         <div class="w1150">
             {% for product in products %}
-                <ul>
-                    <li class="col-xs-6 col-md-3">
-                        <a href="{% url 'zr:product_detail' product.product_name %}">
-                            <img src="{{ MEDIA_URL }}{{ product.product_img }}" alt=""/>
-                            <p style="color: #1b1e21">{{ product.product_name }}</p>
-                        </a>
-                    </li>
-                </ul>
+                <ul><li>
+                    <span><a href="{% url 'zr:product_detail' product.product_name %}">
+                        <img alt="" width="200" height="120" class="scrollLoading" src="{{ MEDIA_URL }}{{ product.product_img }}"/>
+                    </a></span>
+                    <h1><a href="{% url 'zr:product_detail' product.product_name %}">{{ product.product_name }}</a></h1>
+                </li></ul>
             {% endfor %}
         </div>
     </div>

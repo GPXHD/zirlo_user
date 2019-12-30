@@ -1,8 +1,13 @@
-{% extends "zr_base.html" %}
+{% extends "base.html" %}
 {% load static %}
-<link href="" rel="stylesheet">
-{#<script src="/login/static/login/js/user_center.js"></script>#}
 {% block title %}创建特征{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/index.css">
+{#    <link rel="stylesheet" href="/static/css/zr/css/index.css">#}
+    <link rel="stylesheet" href="/static/css/zr/css/media.css">
+{% endblock %}
 
 {% block main %}
     <div class="container">

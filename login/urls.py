@@ -39,5 +39,6 @@ urlpatterns = [
     path('ajax_val/', login.views.ajax_val, name='ajax_val'),
     path('delete_data/<data_id>', login.views.delete_data, name='delete_data'),
     path('download_file/<filename>', login.views.download_file, name='download_file'),
+    path('test/', login.views.test, name='test'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)\
   + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

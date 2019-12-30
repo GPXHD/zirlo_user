@@ -1,12 +1,62 @@
 {% extends "base.html" %}
 {% load static %}
 {% block title %}个人中心{% endblock %}
+
 {% block css %}
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/css/index.css">
+    <link rel="stylesheet" href="/static/css/login/css/test.css">
 {% endblock %}
+
+{#{% block js %}#}
+{#    <script type="text/javascript" src="/static/js/login/js/user_center.js"></script>#}
+{#{% endblock %}#}
+
 {% block main %}
-    <div class="container">
+    <div class="wrap" style="float: left">
+    <div class="nav">
+        <ul>
+            <br/><li style="text-align: center"><img src="{{ MEDIA_URL }}{{ user.face }}" width="100" height="100" id="img-circle" alt="My face"/></li><br/>
+            <li class="list">
+                <h2 onclick="cebian()"><i></i>信息修改</h2>
+                <div class="hide">
+                    <h5>修改用户名</h5>
+                    <h5 onclick="motai()">
+                        <a href="{% url 'login:pass_reset' %}" style="color: #fff" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">
+                            修改密码
+                        </a>
+                    </h5>
+                    <h5>更换头像</h5>
+{#                    修改script可以改变li之间的间隔#}
+                </div>
+            </li>
+            <li class="list">
+                <h2><i></i>信息修改</h2>
+                <div class="hide">
+                    <h5>夫子庙</h5>
+                    <h5>南京总统府</h5>
+                    <h5>明孝陵</h5>
+                    <h5>长江大桥</h5>
+                    <h5>南京博物院</h5>
+                    <h5>雨花台</h5>
+                </div>
+            </li>
+            <li class="list">
+                <h2><i></i>信息修改</h2>
+                <div class="hide">
+                    <h5>钟楼</h5>
+                    <h5>秦皇陵</h5>
+                    <h5>华清池</h5>
+                    <h5>大唐芙蓉园</h5>
+                    <h5>秦岭野生动物园</h5>
+                    <h5>樱花广场</h5>
+                </div>
+            </li>
+        </ul>
+    </div>
+    </div>
+
+    <div class="container" style="min-height: 500px">
         <div class="col"><br/>
             <form id='form' class="form-register" action="{% url 'login:user_center' %}" method="post" enctype="multipart/form-data">
                 {% if message %}
@@ -18,7 +68,7 @@
                 <div id="product_result" class="product_result">
                     <div class="flag1">
                         <div class="row">
-                            <table class="table table-bordered product_table1"  style="vertical-align: middle">
+                            <table class="table table-bordered product_table1"  style="vertical-align: middle;">
                                 <tr>
                                     <td>用户名</td>
                                     <td>{{ user.username }}</td>
@@ -41,7 +91,7 @@
                                     </td>
                                     <td class="padding8">
                                         <label for="img-up">
-                                            <img src="{{ MEDIA_URL }}{{ user.face }}" width="100" height="100" id="img-circle" alt="My face"/>
+{#                                            <img src="{{ MEDIA_URL }}{{ user.face }}" width="100" height="100" id="img-circle" alt="My face"/>#}
 {#                                            <input type="file" name="img-up" id="img-up"/><br/>#}
 {#                                            <span class="button btn-green btn-w100 btn btn-primary" id="jsAvatarBtn">修改头像</span>#}
                                         </label>
@@ -51,13 +101,6 @@
                                 <tr>
                                     <td>注册时间</td>
                                     <td>{{ user.c_time }}</td>
-                                </tr>
-                                <tr>
-                                    <td>修改密码</td>
-                                    <td><a href="{% url 'login:pass_reset' %}">请点击修改！</a></td>
-                                </tr>
-                                <tr>
-
                                 </tr>
                             </table>
                         </div>
@@ -71,55 +114,88 @@
             </form>
         </div>
     </div>
-    <div class="javaScript">
-        <script type="text/javascript">
-            let str = document.getElementById('1').innerText;
-            let str_0 = '/media/';
-            localStorage.setItem("face", str_0+str);
-        </script>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="container" style="background-color: red; background-image: linear-gradient(#e66465, #9198e5)">
+                    <div class="col">
+                        <form class="form-register" action="{% url 'login:pass_reset' %}" method="post"><br/>
+                            <div style="text-align: center">
+                                {% if pass_form.captcha.errors %}
+                                    <div class="alert alert-warning">{{ pass_form.captcha.errors }}</div>
+                                {% elif re_message %}
+                                    <div class="alert alert-warning">{{ re_message }}</div>
+                                {% endif %}
+                            </div>
+
+                            {% csrf_token %}
+                            <h3 class="text-center">修改密码！</h3>
+                            <div class="form-group">
+                                {{ pass_form.old_pass.label_tag }}
+                                {{ pass_form.old_pass }}
+                            </div><br/>
+                            <div class="form-group">
+                                {{ pass_form.password.label_tag }}
+                                {{ pass_form.password }}
+                            </div><br/>
+                            <div class="form-group">
+                                {{ pass_form.confirm_pass.label_tag }}
+                                {{ pass_form.confirm_pass }}
+                            </div><br/>
+                            <div class="form-group">
+                                {{ pass_form.captcha.label_tag }}
+                                {{ pass_form.captcha }}
+                                <button id='js-captcha-refresh' type="button" class="btn btn-link">刷新验证码</button>
+                            </div><br/>
+                            <div>
+                                <button class="btn btn-primary btn-block" type="submit">保存</button>
+                            </div><br/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-{#    <div id="product_btns" class="product_btns">#}
-{#                <a class="active">基本参数</a>#}
-{#                <a>可选配件</a>#}
-{#            </div>#}
+
+    <script type="text/javascript">
+        let str = document.getElementById('1').innerText;
+        let str_0 = '/media/';
+        localStorage.setItem("face", str_0+str);
+    </script>
+
+    <script>
+        (function () {
+            var oList = document.querySelectorAll('.list h2'),
+                oHide = document.querySelectorAll('.hide'),
+                oIcon = document.querySelectorAll('.list i'),
+                lastIndex = 0;
+            for(let i=0;i<oList.length;i++){
+                oList[i].index = i;//自定义属性
+                oList[i].isClick = false;
+                oList[i].initHeight = oHide[i].clientHeight;
+                oHide[i].style.height = '0';
+                oList[i].onclick = function () {
+                    if(this.isClick){
+                        oHide[this.index].style.height = '0';
+                        oIcon[this.index].className = '';
+                        oList[this.index].className = '';
+                        oList[this.index].isClick = false;
+                    }
+                    else{
+                        oHide[lastIndex].style.height = '0';
+                        oIcon[lastIndex].className = '';
+                        oList[lastIndex].className = '';
+                        oHide[this.index].style.height = '220px';
+                        oIcon[this.index].className = 'on';
+                        oList[this.index].className = 'on';
+                        oList[lastIndex].isClick = false;
+                        oList[this.index].isClick = true;
+                        lastIndex = this.index;
+                    }
+                }
+            }
+        })();
+    </script>
 
 {% endblock %}
-
-{#<table width="100%" border="0" cellspacing="1" cellpadding="4" bgcolor="#cccccc"#}
-{#                       class="tabtop13" align="center">#}
-{#                    <tr>#}
-{#                        <td width="8%" class="btbg font-center">用户名</td>#}
-{#                        <td width="8%" class="btbg font-center">{{ user.username }}</td>#}
-{#                    </tr>#}
-{#                    <tr>#}
-{#                        <td width="8%" class="btbg font-center">姓名</td>#}
-{#                        <td width="8%" class="btbg font-center">{{ user.real_name }}</td>#}
-{#                    </tr>#}
-{#                    <tr>#}
-{#                        <td width="8%" class="btbg font-center">邮箱</td>#}
-{#                        <td width="8%" class="btbg font-center">{{ user.email }}</td>#}
-{#                    </tr>#}
-{#                    <tr>#}
-{#                        <td width="8%" class="btbg font-center">性别</td>#}
-{#                        <td width="8%" class="btbg font-center">{{ user.sex }}</td>#}
-{#                    </tr>#}
-{#                    <tr>#}
-{#                        <td width="8%" class="btbg font-center"><label for="face">头像</label></td>#}
-{#                        <td width="8%" class="btbg font-center">#}
-{#                            <label for="img-up">#}
-{#                                <img src="{{ MEDIA_URL }}{{ user.face }}" width="100" height="100" id="img-circle" alt="My face"/>#}
-{#                                <input type="file" name="img-up" id="img-up" style="opacity: 0;"/><br/>#}
-{#                                <span class="button btn-green btn-w100" id="jsAvatarBtn">修改头像</span>#}
-{#                            </label></td>#}
-{#                        <td width="8%" class="btbg font-center">#}
-{#                            <input type="file" name="face" class="form-control-file" id="face" /></td>#}
-{#                    </tr>#}
-{#                    <tr>#}
-{#                        <td width="8%" class="btbg font-center">注册时间</td>#}
-{#                        <td width="10%" class="btbg font-center">{{ user.c_time }}</td>#}
-{#                    </tr>#}
-{#                    <tr>#}
-{#                        <td width="8%" class="btbg font-center">修改密码</td>#}
-{#                        <td width="10%" class="btbg font-center"><a href="{% url 'pass_reset' %}">请点击修改！</a></td>#}
-{#                    </tr>#}
-{#                </table>#}

@@ -1,7 +1,13 @@
-{% extends "zr_base.html" %}
+{% extends "base.html" %}
 {% load static %}
-{% block css %}<link href="/static/css/zr/css/feature_show.css" rel="stylesheet">{% endblock %}
 {% block title %}特征目录{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/index.css">
+{#    <link rel="stylesheet" href="/static/css/zr/css/index.css">#}
+    <link rel="stylesheet" href="/static/css/zr/css/media.css">
+{% endblock %}
 
 {% block main %}
      <div class="container">
@@ -32,10 +38,10 @@
                         <td colspan="1" class="btbg font-center titfont" rowspan="1">{{ feature.feature_type }}</td>
                         <td colspan="1" class="btbg font-center titfont" rowspan="1">{{ feature.part }}</td>
                         <td colspan="1" class="btbg font-center titfont" rowspan="1">
-                            <a href="{% url 'zr:delete_data' feature.feature_name %}">点击删除</a>
+                            <a href="{% url 'zr:delete_data' feature.feature_name %}" style="color: #007bff;">点击删除</a>
                         </td>
                         <td colspan="1" class="btbg font-center titfont" rowspan="1">
-                            <a href="{% url 'zr:modify_feature' feature.feature_name %}">点击修改</a>
+                            <a href="{% url 'zr:modify_feature' feature.feature_name %}" style="color: #007bff;">点击修改</a>
                         </td>
                     </tr>
                 {% endfor %}
