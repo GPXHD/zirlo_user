@@ -36,7 +36,6 @@ urlpatterns = [
     path('find_pass/', login.views.pass_find, name='find_pass'),
     path('verify/', login.views.verify, name='verify'),
     path('new_pwd/', login.views.new_password, name='new_pwd'),
-    path('ajax_val/', login.views.ajax_val, name='ajax_val'),
     path('delete_data/<data_id>', login.views.delete_data, name='delete_data'),
     path('download_file/<filename>', login.views.download_file, name='download_file'),
     path('test/', login.views.test, name='test'),

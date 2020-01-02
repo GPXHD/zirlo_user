@@ -27,6 +27,7 @@ urlpatterns = [
     path('', login.views.index, name='index'),
     path('index1/', login.views.index1, name='index1'),
     path('backend/', xadmin.site.urls),
+    path('ajax_val/', login.views.ajax_val, name='ajax_val'),
     path('login/', include('login.urls', namespace='login')),
     path('product/', include('zr.urls', namespace='zr')),
     path('search/', include('haystack.urls')),
