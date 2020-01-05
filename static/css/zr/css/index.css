@@ -796,7 +796,8 @@ a:focus, a:hover{
 	margin-right: 5px;
 }
 .product_btns a.active{
-	background: #006ab8;
+	/*background: #006ab8;*/
+	background: #1D4F83;
 	color: #fff;
 }
 .table.product_table1>tbody>tr>td{
