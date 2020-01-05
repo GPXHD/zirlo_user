@@ -10,8 +10,10 @@ from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
 
 
 def create_material(request):
-    if not request.session.get('is_login', None):
+    is_login = request.session.get('is_login', None)
+    if not is_login:
         return redirect('/')
+
     if request.method == 'POST':
         material_form = forms.MaterialForm(request.POST)
         message = "请检查填写内容！"
@@ -45,7 +47,8 @@ def create_material(request):
 
 
 def create_product(request):
-    if not request.session.get('is_login', None):
+    is_login = request.session.get('is_login', None)
+    if not is_login:
         return redirect('/')
 
     if request.method == 'POST':
@@ -98,7 +101,8 @@ def product_show(request):
 
 
 def product_detail(request, product_name):
-    if not request.session.get('is_login', None):
+    is_login = request.session.get('is_login', None)
+    if not is_login:
         return redirect('/')
 
     features = []
@@ -115,7 +119,8 @@ def product_detail(request, product_name):
 
 
 def create_feature(request):
-    if not request.session.get('is_login', None):
+    is_login = request.session.get('is_login', None)
+    if not is_login:
         return redirect('/')
 
     if request.method == 'POST':
@@ -225,12 +230,20 @@ class ProductListView(View):
 
 
 def delete_data(request, data_id):
+    is_login = request.session.get('is_login', None)
+    if not is_login:
+        return redirect('/')
+
     feature_name = data_id
     Feature.objects.filter(feature_name=feature_name).delete()
     return redirect('feature_show')
 
 
 def modify_feature(request, name):
+    is_login = request.session.get('is_login', None)
+    if not is_login:
+        return redirect('/')
+
     feature = Feature.objects.get(feature_name=name)
     feature_dict = {
         'feature_name': feature.feature_name,
@@ -269,6 +282,7 @@ def main(request):
     is_login = request.session.get('is_login', None)
     if not is_login:
         return redirect('/')
+
     all_products = Product.objects.all()
     all_materials = Material.objects.all()
 
