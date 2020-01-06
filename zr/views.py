@@ -122,6 +122,7 @@ def product_show(request):
 
     # return render(request, 'zr/show.html', locals())
     return render(request, 'zr/show.html', {
+        'is_login': is_login,
         'all_products': products,
         'all_materials': all_materials,
         'product_nums': product_nums,
