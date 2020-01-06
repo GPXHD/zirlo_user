@@ -44,6 +44,7 @@
                         </form>
                     </div>
                     <div class="language">
+                        <a href="{% url 'login:user_center' %}" target="">欢迎：{{ request.session.user_username }}</a>
                         <a href="/" target="">中文版</a>|<a href="/" target="_blank">English</a>
                     </div>
                     {% endif %}

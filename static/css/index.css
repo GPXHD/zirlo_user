@@ -114,7 +114,7 @@ input::-ms-input-placeholder {
 }
 .header .header-list .search-language-menu .search-language .language {
   float: right;
-  width: 125px;
+  width: 220px;
   height: 24px;
   line-height: 24px;
 }
