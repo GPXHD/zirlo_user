@@ -37,6 +37,9 @@
                 <li class="nav-item"><a class="nav-link" href="{% url 'zr:create_product' %}">创建产品</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'zr:product_show' %}">产品目录</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'zr:feature_show' %}">特征目录</a></li>
+                {% if is_login %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'login:user_center' %}">欢迎：{{ request.session.user_username }}</a></li>
+                {% endif %}
             </ul>
         </nav>
     </div>

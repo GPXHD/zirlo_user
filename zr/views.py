@@ -230,6 +230,9 @@ class ProductListView(View):
     def get(self, request):
         all_products = Product.objects.all()
         all_materials = Material.objects.all()
+        is_login = request.session.get('is_login', None)
+        if not is_login:
+            return redirect('/')
 
         # 筛选
         # 条件1
@@ -252,6 +255,7 @@ class ProductListView(View):
         products = p.page(page)
 
         return render(request, 'zr/product_list.html', {
+            'is_login': is_login,
             'all_products': products,
             'all_materials': all_materials,
             'product_nums': product_nums,
