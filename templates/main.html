@@ -8,30 +8,30 @@
     </div>
 
     <div class="banneron" style="height: auto; font-size: 20px">
-        <div class="listoptions">
-            <ul>
-                <li>
-                    <div style="float: left"><h3>实体类别</h3></div>
-                    <div class="cont" style="float: left;margin-left: 0;">
-                        <a href="?mate={{ material_id }}"><span class="{% ifequal category '' %}active2{% endifequal %}">全部&nbsp;</span></a>
-                        <a href="?ct=第一种&mate={{ material_id }}"><span class="{% ifequal category '第一种' %}active2 {% endifequal %}">第一种&nbsp;</span></a>
-                        <a href="?ct=第二种&mate={{ material_id }}"><span class="{% ifequal category '第二种' %}active2{% endifequal %}">第二种&nbsp;</span></a>
-                        <a href="?ct=第三种&mate={{ material_id }}"><span class="{% ifequal category '第三种' %}active2{% endifequal %}">第三种</span></a>
-                    </div>
-                </li>
-                <li>
-                    <div style="float: left"><h3>材料类别</h3></div>
-                    <div class="cont" style="float: left;margin-left: 0;">
-                        <a href="?ct={{ category }}"><span class="{% ifequal material_id '' %}active2{% endifequal %}">全部&nbsp;</span></a>
-                        {% for material in all_materials %}
-                            <a href="?mate={{ material.id }}&ct={{ category }}"><span class="{% ifequal material_id material.id|stringformat:'i' %}active2{% endifequal %}">
-                                {{ material.material }}&nbsp;
-                            </span></a>
-                        {% endfor %}
-                    </div>
-                </li>
-            </ul>
-        </div>
+{#        <div class="listoptions">#}
+{#            <ul>#}
+{#                <li>#}
+{#                    <div style="float: left"><h3>实体类别</h3></div>#}
+{#                    <div class="cont" style="float: left;margin-left: 0;">#}
+{#                        <a href="?mate={{ material_id }}"><span class="{% ifequal category '' %}active2{% endifequal %}">全部&nbsp;</span></a>#}
+{#                        <a href="?ct=第一种&mate={{ material_id }}"><span class="{% ifequal category '第一种' %}active2 {% endifequal %}">第一种&nbsp;</span></a>#}
+{#                        <a href="?ct=第二种&mate={{ material_id }}"><span class="{% ifequal category '第二种' %}active2{% endifequal %}">第二种&nbsp;</span></a>#}
+{#                        <a href="?ct=第三种&mate={{ material_id }}"><span class="{% ifequal category '第三种' %}active2{% endifequal %}">第三种</span></a>#}
+{#                    </div>#}
+{#                </li>#}
+{#                <li>#}
+{#                    <div style="float: left"><h3>材料类别</h3></div>#}
+{#                    <div class="cont" style="float: left;margin-left: 0;">#}
+{#                        <a href="?ct={{ category }}"><span class="{% ifequal material_id '' %}active2{% endifequal %}">全部&nbsp;</span></a>#}
+{#                        {% for material in all_materials %}#}
+{#                            <a href="?mate={{ material.id }}&ct={{ category }}"><span class="{% ifequal material_id material.id|stringformat:'i' %}active2{% endifequal %}">#}
+{#                                {{ material.material }}&nbsp;#}
+{#                            </span></a>#}
+{#                        {% endfor %}#}
+{#                    </div>#}
+{#                </li>#}
+{#            </ul>#}
+{#        </div>#}
     </div>
 
     <div class="mainer">

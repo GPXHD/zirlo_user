@@ -1,18 +1,133 @@
 {% extends "base.html" %}
 {% load static %}
-{% block title %}产品查询{% endblock %}
+{% block title %}产品页面{% endblock %}
 
 {% block css %}
-    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/static/css/index.css">
+{#    <link rel="stylesheet" href="/static/css/bootstrap.min.css">#}
+{#    <link rel="stylesheet" href="/static/css/index.css">#}
 {#    <link rel="stylesheet" href="/static/css/zr/css/index.css">#}
-    <link rel="stylesheet" href="/static/css/zr/css/media.css">
+{#    <link rel="stylesheet" href="/static/css/zr/css/media.css">#}
+    <link rel="stylesheet" href="/static/css/zr/css/show.css">
 {% endblock %}
 
-
 {% block main %}
-    <div id="product_main" class="product_main">
+    <div class="banneron">
+        <img src="/static/image/20180616110607VgCjpa.jpg" border="0" alt="">
+    </div>
 
+    <div class="banneron" style="height: auto; font-size: 20px">
+        <div class="listoptions">
+            <ul>
+                <li>
+                    <div style="float: left"><h3>实体类别</h3></div>
+                    <div class="cont" style="float: left;margin-left: 0;">
+                        <a href="?mate={{ material_id }}"><span class="{% ifequal category '' %}active2{% endifequal %}">全部&nbsp;</span></a>
+                        <a href="?ct=第一种&mate={{ material_id }}"><span class="{% ifequal category '第一种' %}active2 {% endifequal %}">第一种&nbsp;</span></a>
+                        <a href="?ct=第二种&mate={{ material_id }}"><span class="{% ifequal category '第二种' %}active2{% endifequal %}">第二种&nbsp;</span></a>
+                        <a href="?ct=第三种&mate={{ material_id }}"><span class="{% ifequal category '第三种' %}active2{% endifequal %}">第三种</span></a>
+                    </div>
+                </li>
+                <li>
+                    <div style="float: left"><h3>材料类别</h3></div>
+                    <div class="cont" style="float: left;margin-left: 0;">
+                        <a href="?ct={{ category }}"><span class="{% ifequal material_id '' %}active2{% endifequal %}">全部&nbsp;</span></a>
+                        {% for material in all_materials %}
+                            <a href="?mate={{ material.id }}&ct={{ category }}"><span class="{% ifequal material_id material.id|stringformat:'i' %}active2{% endifequal %}">
+                                {{ material.material }}&nbsp;
+                            </span></a>
+                        {% endfor %}
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="mainer">
+        <div class="mainer-title" style="margin-top: 15px">
+            <a href="/" class="guide_menu"> 首页</a> &gt;&gt;
+            <a href="{% url 'zr:product_list' %}" class="guideMenu">产品服务</a> &gt;&gt;
+            <a href="/" class="guideMenu">工业级锆产品</a> &gt;&gt;
+            <a href="{% url 'zr:product_show' %}" class="guideMenu">实体</a>
+        </div>
+
+        <div class="mainer-list">
+            <div id="mainer-mid">
+                <div class="lump-title-list">
+                    <div class="title_list">
+                        <a href="http://www.sn-zr.com/index.php?ie=31-412-1" target="">实体&nbsp;</a>
+                        <a href="{% url 'zr:create_product' %}" target="">创建实体&nbsp;</a>
+                        <a href="{% url 'zr:create_material' %}" target="">创建材料&nbsp;</a>
+                        <a href="{% url 'zr:create_feature' %}" target="">创建特征</a>
+                    </div>
+                    <div class="more_list"><a href="{% url 'zr:product_show' %}" target="">+更多</a></div>
+                </div>
+                <div id="product_main" class="product_main">
+    {#            <div class="txpic_list">#}
+                    {% for product in all_products.object_list %}
+                        <ul><li>
+                            <span><a href="{% url 'zr:product_detail' product.product_name %}">
+                                <img alt="" width="200" height="120" class="scrollLoading" src="{{ MEDIA_URL }}{{ product.product_img }}"/>
+                            </a></span>
+                            <h1><a href="{% url 'zr:product_detail' product.product_name %}">{{ product.product_name }}</a></h1>
+                        </li></ul>
+                    {% endfor %}
+                </div>
+                <div class="pageturn">
+                    <ul class="pagelist">
+                        {% if all_products.has_previous %}
+                            <li class="long"><a href="?{{ all_products.previous_page_number.querystring }}">上一页</a></li>
+                        {% endif %}
+                        {% for page in all_products.pages %}
+                            {% if page %}
+                                {% ifequal page all_products.number %}
+                                    <li class="active"><a href="?{{ page.querystring }}">{{ page }}</a></li>
+                                {% else %}
+                                    <li><a href="?{{ page.querystring }}" class="page">{{ page }}</a></li>
+                                {% endifequal %}
+                            {% else %}
+                                <li class="none"><a href="">...</a> </li>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if all_products.has_next %}
+                            <li class="long"><a href="?{{ all_products.next_page_number.querystring }}">下一页</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="mainer-side">﻿
+            <div class="righter">
+                <div id="right-title"><h1>工业级锆产品</h1></div>
+                <div id="right-mid">
+                    <div id="right-list">
+                        <ul>
+                            <li class="onm"><a href="{% url 'zr:product_show' %}">实体</a></li>
+                            <li><a href="{% url 'zr:test' %}">海绵锆</a></li>
+                            <li><a href="http://www.sn-zr.com/index.php?ie=31-413-1">铸锭</a></li>
+                            <li><a href="http://www.sn-zr.com/index.php?ie=31-414-1">管材</a></li>
+                            <li><a href="http://www.sn-zr.com/index.php?ie=31-415-1">棒材</a></li>
+                            <li><a href="http://www.sn-zr.com/index.php?ie=31-416-1">板材</a></li>
+                            <li><a href="http://www.sn-zr.com/index.php?ie=31-417-1">带材</a></li>
+                            <li><a href="http://www.sn-zr.com/index.php?ie=31-418-1">丝材</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+    <div id="product_main" class="product_main">
         <div class="w1150">
             {% for product in products %}
                 <ul><li>
