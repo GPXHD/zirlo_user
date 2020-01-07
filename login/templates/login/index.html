@@ -11,15 +11,7 @@
             <div class="modal-content">
                 <div class="container" style="background-color: red; background-image: linear-gradient(#e66465, #9198e5)">
                     <div class="col">
-                        <form class="form-register" action="{% url 'index' %}" method="post"><br/>
-
-                            <div style="text-align: center">
-                                {% if register_form.captcha.errors %}
-                                    <div class="alert alert-warning">{{ register_form.captcha.errors }}</div>
-                                {% elif r_message %}
-                                    <div class="alert alert-warning">{{ r_message }}</div>
-                                {% endif %}
-                            </div>
+                        <form class="form-register" action="{% url 'login:register' %}" method="post"><br/>
 
                             {% csrf_token %}
                             <h3 class="text-center">欢迎注册！</h3>
@@ -74,7 +66,11 @@
                     <h2 class="card-title" style="text-align: center">锆合金工艺数据库</h2>
                     <form class="form-login" action="{% url 'index' %}" method="post"><br/>
                         <div style="text-align: center">
-                            {% if l_message %}
+                            {% if register_form.captcha.errors %}
+                                    <div class="alert alert-warning">{{ register_form.captcha.errors }}</div>
+                            {% elif r_message %}
+                                <div class="alert alert-warning">{{ r_message }}</div>
+                            {% elif l_message %}
                                 <div class="alert alert-warning">{{ l_message }}</div>
                             {% endif %}
                         </div>

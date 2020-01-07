@@ -9,43 +9,6 @@ from django.views.generic import TemplateView, View
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
 
 
-def create_material(request):
-    is_login = request.session.get('is_login', None)
-    if not is_login:
-        return redirect('/')
-
-    if request.method == 'POST':
-        material_form = forms.MaterialForm(request.POST)
-        message = "请检查填写内容！"
-        if material_form.is_valid():
-            material = material_form.cleaned_data.get('material')
-            e = material_form.cleaned_data.get('e')
-            p = material_form.cleaned_data.get('p')
-            midu = material_form.cleaned_data.get('midu')
-            hot = material_form.cleaned_data.get('hot')
-            moca = material_form.cleaned_data.get('moca')
-            same_material = Material.objects.filter(material=material)
-            if same_material:
-                message = '材料已经存在！'
-                return render(request, 'zr/material.html', locals())
-
-            new_material = Material()
-            new_material.material = material
-            new_material.E = e
-            new_material.P = p
-            new_material.midu = midu
-            new_material.hot = hot
-            new_material.moca = moca
-            new_material.save()
-
-            message = '已经创建材料！'
-            # return HttpResponseRedirect(reverse('zr:create_material'))
-        else:
-            return render(request, 'zr/material.html', locals())
-    material_form = forms.MaterialForm()
-    return render(request, 'zr/material.html', locals())
-
-
 def create_product(request):
     is_login = request.session.get('is_login', None)
     if not is_login:
@@ -149,52 +112,6 @@ def product_detail(request, product_name):
     return render(request, 'zr/detail.html', locals())
 
 
-def create_feature(request):
-    is_login = request.session.get('is_login', None)
-    if not is_login:
-        return redirect('/')
-
-    if request.method == 'POST':
-        feature_form = forms.FeatureForm(request.POST, request.FILES)
-        message = "请检查填写内容！"
-        if feature_form.is_valid():
-            feature_name = feature_form.cleaned_data.get('feature_name')
-            feature_number = feature_form.cleaned_data.get('feature_number')
-            feature_type = feature_form.cleaned_data.get('feature_type')
-            part = feature_form.cleaned_data.get('part')
-            appearance = feature_form.cleaned_data.get('appearance')
-            scene = feature_form.cleaned_data.get('scene')
-
-            same_feature = Feature.objects.filter(feature_name=feature_name)
-            if same_feature:
-                message = '该特征已经存在！'
-                return render(request, 'zr/feature_create.html', locals())
-
-            new_feature = Feature()
-            new_feature.feature_name = feature_name
-            new_feature.feature_number = feature_number
-            new_feature.feature_type = feature_type
-            new_feature.part = part
-            new_feature.appearance = appearance
-            new_feature.scene = scene
-            new_feature.save()
-
-            message = '已经创建新的特征！'
-            # return HttpResponseRedirect(reverse('zr:create_feature'))
-        else:
-            return render(request, 'zr/feature_create.html', locals())
-    feature_form = forms.FeatureForm()
-    return render(request, 'zr/feature_create.html', locals())
-
-
-def feature_show(request):
-    is_login = request.session.get('is_login', None)
-    if not is_login:
-        return redirect('/')
-    features = Feature.objects.all()
-    return render(request, 'zr/feature_show.html', locals())
-
-
 def product_search(request):
     is_login = request.session.get('is_login', None)
     if not is_login:
@@ -264,14 +181,152 @@ class ProductListView(View):
         })
 
 
-def delete_data(request, data_id):
+def create_material(request):
+    is_login = request.session.get('is_login', None)
+    if not is_login:
+        return redirect('/')
+
+    if request.method == 'POST':
+        material_form = forms.MaterialForm(request.POST)
+        message = "请检查填写内容！"
+        if material_form.is_valid():
+            material = material_form.cleaned_data.get('material')
+            e = material_form.cleaned_data.get('e')
+            p = material_form.cleaned_data.get('p')
+            density = material_form.cleaned_data.get('density')
+            k = material_form.cleaned_data.get('k')
+            fs = material_form.cleaned_data.get('fs')
+            same_material = Material.objects.filter(material=material)
+            if same_material:
+                message = '材料已经存在！'
+                return render(request, 'zr/material.html', locals())
+
+            new_material = Material()
+            new_material.material = material
+            new_material.E = e
+            new_material.P = p
+            new_material.midu = density
+            new_material.hot = k
+            new_material.moca = fs
+            new_material.save()
+
+            message = '已经创建材料！'
+            # return HttpResponseRedirect(reverse('zr:create_material'))
+        else:
+            return render(request, 'zr/material.html', locals())
+    material_form = forms.MaterialForm()
+    return render(request, 'zr/material.html', locals())
+
+
+def material_show(request):
+    is_login = request.session.get('is_login', None)
+    if not is_login:
+        return redirect('/')
+    materials = Material.objects.all()
+    return render(request, 'zr/material_show.html', locals())
+
+
+def delete_material(request, data_id):
+    is_login = request.session.get('is_login', None)
+    if not is_login:
+        return redirect('/')
+
+    material_name = data_id
+    Material.objects.filter(material=material_name).delete()
+    return redirect('zr:material_show')
+
+
+def modify_material(request, name):
+    is_login = request.session.get('is_login', None)
+    if not is_login:
+        return redirect('/')
+
+    material = Material.objects.get(material=name)
+    material_dict = {
+        'material': material.material,
+        'e': material.E,
+        'P': material.P,
+        'density': material.midu,
+        'k': material.hot,
+        'fs': material.moca,
+    }
+
+    if request.method == 'POST':
+        material_modify_form = forms.MaterialModifyForm(request.POST)
+        message = "更新失败，请检查填写内容！"
+        material_list = ['material', 'e', 'p', 'density', 'k', 'fs']
+        for i in material_list:
+            if material_modify_form[i].value():
+                material_dict[i] = material_modify_form[i].value()
+
+        Material.objects.filter(material=name).update(
+            material=material_dict['material'],
+            E=material_dict['e'],
+            P=material_dict['p'],
+            midu=material_dict['density'],
+            hot=material_dict['k'],
+            moca=material_dict['fs']
+        )
+        message = '此材料已经更新成功！'
+        return HttpResponseRedirect(reverse('zr:material_show'))
+    material_modify_form = forms.MaterialModifyForm(request.GET)
+    return render(request, 'zr/material_modify.html', locals())
+
+
+def create_feature(request):
+    is_login = request.session.get('is_login', None)
+    if not is_login:
+        return redirect('/')
+
+    if request.method == 'POST':
+        feature_form = forms.FeatureForm(request.POST, request.FILES)
+        message = "请检查填写内容！"
+        if feature_form.is_valid():
+            feature_name = feature_form.cleaned_data.get('feature_name')
+            feature_number = feature_form.cleaned_data.get('feature_number')
+            feature_type = feature_form.cleaned_data.get('feature_type')
+            part = feature_form.cleaned_data.get('part')
+            appearance = feature_form.cleaned_data.get('appearance')
+            scene = feature_form.cleaned_data.get('scene')
+
+            same_feature = Feature.objects.filter(feature_name=feature_name)
+            if same_feature:
+                message = '该特征已经存在！'
+                return render(request, 'zr/feature_create.html', locals())
+
+            new_feature = Feature()
+            new_feature.feature_name = feature_name
+            new_feature.feature_number = feature_number
+            new_feature.feature_type = feature_type
+            new_feature.part = part
+            new_feature.appearance = appearance
+            new_feature.scene = scene
+            new_feature.save()
+
+            message = '已经创建新的特征！'
+            # return HttpResponseRedirect(reverse('zr:create_feature'))
+        else:
+            return render(request, 'zr/feature_create.html', locals())
+    feature_form = forms.FeatureForm()
+    return render(request, 'zr/feature_create.html', locals())
+
+
+def feature_show(request):
+    is_login = request.session.get('is_login', None)
+    if not is_login:
+        return redirect('/')
+    features = Feature.objects.all()
+    return render(request, 'zr/feature_show.html', locals())
+
+
+def delete_feature(request, data_id):
     is_login = request.session.get('is_login', None)
     if not is_login:
         return redirect('/')
 
     feature_name = data_id
     Feature.objects.filter(feature_name=feature_name).delete()
-    return redirect('feature_show')
+    return redirect('zr:feature_show')
 
 
 def modify_feature(request, name):

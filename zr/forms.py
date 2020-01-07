@@ -2,40 +2,6 @@ from django import forms
 from .models import Product, Feature, Material
 
 
-class MaterialForm(forms.Form):
-    material = forms.CharField(label="材料名称",
-                           required=False,
-                               max_length=128,
-                               widget=forms.TextInput(
-                                   attrs={'class': 'form-control', 'placeholder': "材料名称", 'autofocus': ''}
-                               ))
-    e = forms.CharField(label="弹性模量",required=False,
-                               max_length=128,
-                               widget=forms.TextInput(
-                                   attrs={'class': 'form-control', 'placeholder': "弹性模量", 'autofocus': ''}
-                               ))
-    p = forms.CharField(label="泊松比",required=False,
-                               max_length=128,
-                               widget=forms.TextInput(
-                                   attrs={'class': 'form-control', 'placeholder': "泊松比", 'autofocus': ''}
-                               ))
-    midu = forms.CharField(label="密度",required=False,
-                               max_length=128,
-                               widget=forms.TextInput(
-                                   attrs={'class': 'form-control', 'placeholder': "密度", 'autofocus': ''}
-                               ))
-    hot = forms.CharField(label="导热系数",required=False,
-                               max_length=128,
-                               widget=forms.TextInput(
-                                   attrs={'class': 'form-control', 'placeholder': "导热系数", 'autofocus': ''}
-                               ))
-    moca = forms.CharField(label="摩擦系数",required=False,
-                          max_length=128,
-                          widget=forms.TextInput(
-                              attrs={'class': 'form-control', 'placeholder': "摩擦系数", 'autofocus': ''}
-                          ))
-
-
 class ProductForm(forms.Form):
     choices = (('第一种', '第一种'), ('第二种', '第二种'), ('第三种', '第三种'))
     product_name = forms.CharField(label="产品名称",
@@ -85,6 +51,50 @@ class ProductForm(forms.Form):
         for i in list1:
             self.fields[i].choices = ((x.feature_name, x.feature_name) for x in Feature.objects.all())
         # self.fields['material'].choices = ((x.id, x.material) for x in Material.objects.all())
+
+
+class MaterialForm(forms.Form):
+    material = forms.CharField(label="材料名称", required=False, max_length=128,
+                               widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': "材料名称",
+                                                             'autofocus': ''}))
+    e = forms.CharField(label="弹性模量", required=False, max_length=128,
+                        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': "弹性模量", 'autofocus': ''}
+                                               ))
+    p = forms.CharField(label="泊松比", required=False, max_length=128,
+                        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': "泊松比", 'autofocus': ''}
+                                               ))
+    density = forms.CharField(label="密度", required=False, max_length=128,
+                              widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': "密度",
+                                                            'autofocus': ''}))
+    k = forms.CharField(label="导热系数",required=False, max_length=128,
+                        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': "导热系数", 'autofocus': ''}
+                                               ))
+    fs = forms.CharField(label="摩擦系数", required=False, max_length=128,
+                         widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': "摩擦系数", 'autofocus': ''}
+                                                ))
+
+
+class MaterialModifyForm(forms.Form):
+    material = forms.CharField(label="材料名称", required=False, max_length=128,
+                               widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': "材料名称",
+                                                             'autofocus': ''}
+                                                      ))
+    e = forms.CharField(label="弹性模量", required=False, max_length=128,
+                        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': "弹性模量", 'autofocus': ''}
+                                               ))
+    p = forms.CharField(label="泊松比", required=False, max_length=128,
+                        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': "泊松比", 'autofocus': ''}
+                                               ))
+    density = forms.CharField(label="密度", required=False, max_length=128,
+                              widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': "密度",
+                                                            'autofocus': ''}
+                                                     ))
+    k = forms.CharField(label="导热系数", required=False, max_length=128,
+                        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': "导热系数", 'autofocus': ''}
+                                               ))
+    fs = forms.CharField(label="摩擦系数", required=False, max_length=128,
+                         widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': "摩擦系数", 'autofocus': ''}
+                                                ))
 
 
 class FeatureForm(forms.Form):

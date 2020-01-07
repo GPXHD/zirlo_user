@@ -38,21 +38,21 @@
                         <td>{{ material_form.p }}</td>
                     </tr>
                     <tr>
-                        <td>{{ material_form.midu.label_tag }}</td>
-                        <td>{{ material_form.midu }}</td>
+                        <td>{{ material_form.density.label_tag }}</td>
+                        <td>{{ material_form.density }}</td>
                     </tr>
                     <tr>
-                        <td>{{ material_form.hot.label_tag }}</td>
-                        <td>{{ material_form.hot }}</td>
+                        <td>{{ material_form.k.label_tag }}</td>
+                        <td>{{ material_form.k }}</td>
                     </tr>
                     <tr>
-                        <td>{{ material_form.moca.label_tag }}</td>
-                        <td>{{ material_form.moca }}</td>
+                        <td>{{ material_form.fs.label_tag }}</td>
+                        <td>{{ material_form.fs }}</td>
                     </tr>
                 </table>
                <br/>
                 <div>
-                    <a href="{% url 'zr:product_show' %}" class="text-success"><ins>产品目录</ins></a>
+                    <a href="{% url 'zr:material_show' %}" class="text-success"><ins>材料目录</ins></a>
                     <button class="btn btn-primary float-right" type="submit">提交</button>
                 </div>
             </form>
