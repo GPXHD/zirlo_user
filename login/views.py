@@ -77,7 +77,7 @@ def index(request):
 
     if request.method == "POST":
         login_form = forms.UserForm(request.POST)
-        l_message = '请检查填写的内容！'
+        l_message = '请输入账号密码！'
         if login_form.is_valid():
             username = login_form.cleaned_data.get('username')
             password = login_form.cleaned_data.get('password')

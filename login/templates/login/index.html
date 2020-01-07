@@ -67,11 +67,11 @@
                     <form class="form-login" action="{% url 'index' %}" method="post"><br/>
                         <div style="text-align: center">
                             {% if register_form.captcha.errors %}
-                                    <div class="alert alert-warning">{{ register_form.captcha.errors }}</div>
-                            {% elif r_message %}
-                                <div class="alert alert-warning">{{ r_message }}</div>
+                                <div class="alert alert-warning">{{ register_form.captcha.errors }}</div>
                             {% elif l_message %}
                                 <div class="alert alert-warning">{{ l_message }}</div>
+                            {% elif r_message %}
+                                <div class="alert alert-warning">{{ r_message }}</div>
                             {% endif %}
                         </div>
 
