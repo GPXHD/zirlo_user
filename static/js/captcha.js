@@ -25,9 +25,13 @@ $(function(){
         $.getJSON('/ajax_val', json_data, function(data){ //ajax发送
             // ('#captcha_status').remove();
             if(data['status']){ //status返回1为验证码正确， status返回0为验证码错误， 在输入框的后面写入提示信息
-                $('#id_captcha_1').after('<span id="captcha_status" >*验证码正确</span>')}
+                // $('#id_captcha_1').after('<span id="captcha_status" >*验证码正确</span>')
+                alert('验证码正确!')
+            }
             else{
-                $('#id_captcha_1').after('<span id="captcha_status" >*验证码错误</span>')}
+                // $('#id_captcha_1').after('<span id="captcha_status" >*验证码错误</span>')
+                alert('验证码错误!')
+            }
         });
     });
 });

@@ -15,8 +15,8 @@
             <div style="text-align: center">
                 {% if register_form.captcha.errors %}
                     <div class="alert alert-warning">{{ register_form.captcha.errors }}</div>
-                {% elif message %}
-                    <div class="alert alert-warning">{{ message }}</div>
+                {% elif r_message %}
+                    <div class="alert alert-warning">{{ r_message }}</div>
                 {% endif %}
             </div>
         
@@ -24,8 +24,8 @@
             <h3 class="text-center">欢迎注册！</h3>
 
             <div class="form-group">
-                {{ register_form.username.label_tag }}
-                {{ register_form.username }}
+                {{ register_form.r_username.label_tag }}
+                {{ register_form.r_username }}
             </div><br/>
             <div class="form-group">
                 {{ register_form.real_name.label_tag }}

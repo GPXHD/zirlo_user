@@ -205,9 +205,9 @@ def create_material(request):
             new_material.material = material
             new_material.E = e
             new_material.P = p
-            new_material.midu = density
-            new_material.hot = k
-            new_material.moca = fs
+            new_material.density = density
+            new_material.K = k
+            new_material.fs = fs
             new_material.save()
 
             message = '已经创建材料！'
@@ -246,9 +246,9 @@ def modify_material(request, name):
         'material': material.material,
         'e': material.E,
         'P': material.P,
-        'density': material.midu,
-        'k': material.hot,
-        'fs': material.moca,
+        'density': material.density,
+        'k': material.K,
+        'fs': material.fs,
     }
 
     if request.method == 'POST':
@@ -263,9 +263,9 @@ def modify_material(request, name):
             material=material_dict['material'],
             E=material_dict['e'],
             P=material_dict['p'],
-            midu=material_dict['density'],
-            hot=material_dict['k'],
-            moca=material_dict['fs']
+            density=material_dict['density'],
+            K=material_dict['k'],
+            fs=material_dict['fs']
         )
         message = '此材料已经更新成功！'
         return HttpResponseRedirect(reverse('zr:material_show'))

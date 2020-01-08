@@ -24,7 +24,7 @@ xversion.register_models()
 app_name = 'login'
 
 urlpatterns = [
-    # path('login/', login.views.login, name='login'),
+    path('login/', login.views.login, name='login'),
     path('register', login.views.register, name='register'),
     path('logout/', login.views.logout, name='logout'),
     path('confirm/', login.views.user_confirm, name='confirm'),

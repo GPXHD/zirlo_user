@@ -7,9 +7,9 @@ class Material(models.Model):
     material = models.CharField(max_length=128, null=True, verbose_name='材料名称')
     E = models.CharField(verbose_name="弹性模量", null=False, max_length=128, default=1)
     P = models.CharField(verbose_name="泊松比", null=False, max_length=128, default=1)
-    midu = models.CharField(verbose_name="密度", null=False, max_length=128, default=1)
-    hot = models.CharField(verbose_name="导热系数", null=False, max_length=128, default=1)
-    moca = models.CharField(verbose_name="摩擦系数", null=False, max_length=128, default=1)
+    density = models.CharField(verbose_name="密度", null=False, max_length=128, default=1)
+    K = models.CharField(verbose_name="导热系数", null=False, max_length=128, default=1)
+    fs = models.CharField(verbose_name="摩擦系数", null=False, max_length=128, default=1)
     time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

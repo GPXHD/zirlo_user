@@ -103,46 +103,6 @@ def index(request):
                 return render(request, 'login/index.html', locals())
         else:
             return render(request, 'login/index.html', locals())
-
-    # if request.method == 'POST' and not login_form.is_valid():
-    #     register_form = forms.RegisterForm(request.POST)
-    #     r_message = "请检查填写内容！"
-    #     if register_form.is_valid():
-    #         username = register_form.cleaned_data.get('r_username')
-    #         real_name = register_form.cleaned_data.get('real_name')
-    #         password1 = register_form.cleaned_data.get('password1')
-    #         password2 = register_form.cleaned_data.get('password2')
-    #         email = register_form.cleaned_data.get('email')
-    #         sex = register_form.cleaned_data.get('sex')
-    #
-    #         if password1 != password2:
-    #             r_message = '两次输入的密码不相同！'
-    #             return render(request, 'login/index.html', locals())
-    #         else:
-    #             same_username_user = User.objects.filter(username=username)
-    #             if same_username_user:
-    #                 r_message = '用户名已经存在'
-    #                 return render(request, 'login/index.html', locals())
-    #
-    #             same_email_user = User.objects.filter(email=email)
-    #             if same_email_user:
-    #                 r_message = '该邮箱已经注册过了，请更换邮箱！'
-    #                 return render(request, 'login/index.html', locals())
-    #
-    #         new_user = User()
-    #         new_user.username = username
-    #         new_user.real_name = real_name
-    #         new_user.password = make_password(password1, None, 'pbkdf2_sha1')
-    #         new_user.email = email
-    #         new_user.sex = sex
-    #         new_user.save()
-    #
-    #         code = confirms.make_confirm_string(new_user)
-    #         send_mail.send_mails(email, code)
-    #         r_message = '请前往邮箱进行确认！'
-    #         return render(request, 'login/confirm.html', locals())
-    #     else:
-    #         return render(request, 'login/index.html', locals())
     return render(request, 'login/index.html', locals())
 
 
@@ -168,49 +128,50 @@ def index1(request):
 
 
 # 用户登录
-# def login(request):
-#     is_login = request.session.get('is_login', None)
-#     if not is_login:
-#         return redirect('/')
-#
-#     if request.method == "POST":
-#         login_form = forms.UserForm(request.POST)
-#         message = '请检查填写的内容！'
-#         if login_form.is_valid():
-#             username = login_form.cleaned_data.get('username')
-#             password = login_form.cleaned_data.get('password')
-#
-#             try:
-#                 user = User.objects.get(username=username)
-#             except:
-#                 message = '用户不存在！'
-#                 return render(request, 'login/index.html', locals())
-#
-#             if not user.has_confirmed:
-#                 message = '该用户还未经过邮件确认！'
-#                 return render(request, 'login/index.html', locals())
-#
-#             if check_password(password, user.password):
-#                 request.session['is_login'] = True
-#                 request.session['user_id'] = user.id
-#                 request.session['user_username'] = user.username
-#                 request.session['user_permission'] = user.permission
-#                 return redirect('/')
-#             else:
-#                 message = '密码不正确！'
-#                 return render(request, 'login/index.html', locals())
-#         else:
-#             return render(request, 'login/index.html', locals())
-#     login_form = forms.UserForm()
-#     return render(request, 'login/index.html', locals())
+def login(request):
+    is_login = request.session.get('is_login', None)
+    if not is_login:
+        return redirect('/')
+
+    if request.method == "POST":
+        login_form = forms.UserForm(request.POST)
+        l_message = '请填写用户名和密码！'
+        if login_form.is_valid():
+            username = login_form.cleaned_data.get('username')
+            password = login_form.cleaned_data.get('password')
+
+            try:
+                user = User.objects.get(username=username)
+            except:
+                l_message = '用户不存在！'
+                return render(request, 'login/index.html', locals())
+
+            if not user.has_confirmed:
+                l_message = '该用户还未经过邮件确认！'
+                return render(request, 'login/index.html', locals())
+
+            if check_password(password, user.password):
+                request.session['is_login'] = True
+                request.session['user_id'] = user.id
+                request.session['user_username'] = user.username
+                request.session['user_permission'] = user.permission
+                return redirect('/')
+            else:
+                l_message = '密码不正确！'
+                return render(request, 'login/index.html', locals())
+        else:
+            return render(request, 'login/index.html', locals())
+    login_form = forms.UserForm()
+    return render(request, 'login/index.html', locals())
 
 
 # 用户注册
 def register(request):
     is_login = request.session.get('is_login', None)
-    if not is_login:
+    if is_login:
         return redirect('/')
 
+    login_form = forms.UserForm()
     if request.method == 'POST':
         register_form = forms.RegisterForm(request.POST)
         r_message = "请检查填写内容！"
@@ -228,7 +189,7 @@ def register(request):
             else:
                 same_username_user = User.objects.filter(username=username)
                 if same_username_user:
-                    r_message = '用户名已经存在'
+                    r_message = '用户名已经存在！'
                     return render(request, 'login/index.html', locals())
 
                 same_email_user = User.objects.filter(email=email)
@@ -251,7 +212,7 @@ def register(request):
         else:
             return render(request, 'login/index.html', locals())
     register_form = forms.RegisterForm()
-    return render(request, 'login/index.html', locals())
+    return render(request, 'login/register.html', locals())
 
 
 # 用户登出

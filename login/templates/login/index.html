@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
-{% block title %}Test{% endblock %}
+{% block title %}首页{% endblock %}
 {% block css %}
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/css/index.css">
@@ -100,16 +100,16 @@
                 </div>
             </div>
 
-            <div class="sidebar" style="position: fixed; right: 0; top: 30%;">
-                <div class="card post">
-                    <div class="card-body">
-                        <p><a href="{% url 'zr:create_product' %}">创建产品</a></p>
-                        <p><a href="{% url 'zr:create_feature' %}">创建特征</a></p>
-                        <p><a href="{% url 'zr:create_material' %}">创建材料</a></p>
-                        <p><a href="{% url 'zr:feature_show' %}">特征目录</a></p>
-                    </div>
-                </div>
-            </div>
+{#            <div class="sidebar" style="position: fixed; right: 0; top: 30%;">#}
+{#                <div class="card post">#}
+{#                    <div class="card-body">#}
+{#                        <p><a href="{% url 'zr:create_product' %}">创建产品</a></p>#}
+{#                        <p><a href="{% url 'zr:create_feature' %}">创建特征</a></p>#}
+{#                        <p><a href="{% url 'zr:create_material' %}">创建材料</a></p>#}
+{#                        <p><a href="{% url 'zr:feature_show' %}">特征目录</a></p>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
         </div>
     </div>
 
