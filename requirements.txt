@@ -23,7 +23,7 @@ django-simple-captcha==0.5.11
 docopt==0.6.2
 et-xmlfile==1.0.1
 future==0.17.1
-httplib2==0.13.1
+httplib2==0.18.0
 idna==2.8
 javascript==2015.32.59
 jdcal==1.4.1
