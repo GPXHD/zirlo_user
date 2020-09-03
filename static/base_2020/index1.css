@@ -1,0 +1,368 @@
+﻿
+/* 内外边距通常让各个浏览器样式的表现位置不同 */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "微软雅黑";
+    background-color: #e8e8e8;
+}
+::-ms-clear{display: none;}
+.div-c {
+    margin: 0 auto;
+    width: 1000px;
+    background-color: #ffffff;
+    padding-left: 0;
+}
+
+.div-h {
+    height: 970px;
+}
+
+    .logo-font {
+        height: 30px;
+        line-height: 30px;
+        font-size: 18px;
+        font-weight: 600;
+        color: #3e3e3e;
+        vertical-align: top;
+        font-style: oblique;
+    }
+
+.div-algin {
+    text-align: center;
+}
+
+.nav-span {
+    padding-left: 10px;
+}
+
+.nav-a {
+    color: #fe8a01;
+    font-size: 14px;
+    text-decoration:underline;
+    font-weight:bold;
+}
+
+.top {
+    height: 35px;
+    border-bottom: #e8e8e8 1px solid;
+}
+
+.top-right {
+    float: left;
+    text-align: right;
+    width: 450px;
+    vertical-align: middle;
+    overflow: hidden;
+    line-height: 30px;
+}
+
+a {
+    color: #7c7c7c;
+    font-size: 12px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+
+.top-right-icon {
+    background-repeat: no-repeat;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.top-right-user {
+    width: 24px;
+    height: 24px;
+    background-image: url(/static/base_2020/top_user.png);
+}
+
+.top-right-mod {
+    width: 24px;
+    height: 24px;
+    background-image: url(/static/base_2020/top_mod.png);
+}
+
+
+.mid-cn {
+    width: 16px;
+    height: 16px;
+    background-image: url(/static/base_2020/zh-cn.png);
+}
+
+.mid-en {
+    width: 16px;
+    height: 16px;
+    background-image: url(/static/base_2020/eng.png);
+}
+
+.icon-title1 {
+    width: 36px;
+    height: 36px;
+    background-image: url(/static/base_2020/ico1.png);
+}
+
+.icon-title2 {
+    width: 36px;
+    height: 36px;
+    background-image: url(/static/base_2020/ico2.png);
+}
+
+.icon-title3 {
+    width: 36px;
+    height: 36px;
+    background-image: url(/static/base_2020/ico3.png);
+}
+
+.icon-title4 {
+    width: 36px;
+    height: 36px;
+    background-image: url(/static/base_2020/ico4.png);
+}
+
+.icon-title5 {
+    width: 36px;
+    height: 36px;
+    background-image: url(/static/base_2020/ico5.png);
+}
+
+.icon-title6 {
+    width: 36px;
+    height: 36px;
+    background-image: url(/static/base_2020/ico6.png);
+}
+
+.icon-title7 {
+    width: 36px;
+    height: 36px;
+    background-image: url(/static/base_2020/ico7.png);
+}
+
+.icon-more {
+    width: 20px;
+    height: 30px;
+    background-image: url(/static/base_2020/more_title.png);
+}
+
+.mid {
+    min-height: 310px;
+}
+
+.mid-text {
+    border: 2px solid #59c8f6;
+    color: #000;
+    PADDING-LEFT: 25px;
+    background: url(/static/base_2020/search.png) no-repeat;
+    background-position-y:center;
+    LINE-HEIGHT: 20px;
+    font-size: 18px;
+    height: 35px;
+    width: 500px;
+    margin-top: 50px;
+}
+
+.mid-btn {
+    border: none;
+    background: #59c8f6;
+    height: 41px;
+    width: 80px;
+    cursor: pointer;
+    color: #fff;
+    font-size: 18px;
+    margin-top: 50px;
+}
+
+.mid-right {
+    height: 30px;
+    border: #e5e5e5;
+    color: #7c7c7c;
+    font-size: 18px;
+    margin-left: 50px;
+    margin-top: 50px;
+}
+
+
+/*滚动*/
+ul {
+    list-style: none;
+    padding: 0px;
+}
+
+.slider {
+    width: 930px;
+    padding: 10px 20px;
+    height: 300px;
+    margin: 0 auto;
+    position: relative;
+}
+
+#slider_pic {
+    width: 830px;
+    margin: 0 auto;
+    overflow: hidden;
+    height: 300px;
+    position: relative;
+}
+
+.prev, .next {
+    position: absolute;
+    width: 50px;
+    height: 100px;
+    cursor: pointer;
+    top: 100px;
+    text-align: center;
+    line-height: 20px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.next {
+    right: 10px;
+}
+
+.no_click {
+    background-color: #808080;
+}
+
+#slider_pic li {
+    float: left;
+    margin-right: 10px;
+}
+
+#slider_pic ul {
+    position: absolute;
+    left: 0;
+}
+
+.li-div-top {
+    height: 5px;
+    background-color: #59c8f6;
+    width: 200px;
+}
+
+.li-div-content {
+    height: 250px;
+    width: 198px;
+    border: #e6e6e6 1px solid;
+}
+
+.li-content-div {
+    margin-top: 10px;
+    margin-left: 20px;
+}
+
+    .li-content-div span {
+        color: #7f7f7f;
+        font-size: 18px;
+        margin-left: 10px;
+    }
+/*底部*/
+.bot-div {
+    color: #a0adb5;
+    font-size: 14px;
+}
+
+    .bot-div p {
+        line-height: 10px;
+    }
+
+.bot-content {
+    padding-top: 10px;
+    height:125px;
+}
+
+    .bot-content a {
+        font-size: 14px;
+        font-weight: bold;
+        color: black;
+        margin-left: 20px;
+    }
+
+    .bot-content p {
+        font-size: 14px;
+        font-weight: bold;
+        color: black;
+        margin-left: 20px;
+        line-height: 5px;
+    }
+
+.bot-content1 {
+    padding-top: 10px;
+    float: left;
+    height: 40px;
+}
+
+.bot-content1-title {
+    width: 65px;
+    height: 50px;
+    float: left;
+    font-size: 14px;
+    font-weight: bold;
+    color: black;
+    text-align: right;
+    padding: 2px 2px;
+}
+
+.bot-content1-msg {
+    width: 120px;
+    height: 40px;
+    float: left;
+}
+
+    .bot-content1-msg a {
+        font-size: 14px;
+        font-weight: bold;
+        color: black;
+        margin-left: 10px;
+    }
+
+
+.daohang {
+    font-size:12px;
+    text-align: center;
+    display: none;
+    position: absolute;
+    width: 100px;
+    padding: 3px 3px;
+    line-height: 18px;
+    border: 1px solid #a0adb5;
+    background-color: white;
+}
+
+.customdaohang {
+    font-size:12px;
+    text-align: center;
+    display: none;
+    position: absolute;
+    width: 200px;
+    padding: 3px 3px;
+    line-height: 18px;
+    border: 1px solid #a0adb5;
+    background-color: white;
+}
+
+.footer {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: middle;
+    text-decoration: none;
+}
+
+    .footer p {
+        width: 100%;
+        color: #a0adb5;
+        font-size: 14px;
+        line-height: 30px;
+        text-align: center;
+    }
+
+footer {
+    display: block;
+}
+
+
+i { font-style: normal !important; }

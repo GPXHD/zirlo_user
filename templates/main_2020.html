@@ -1,0 +1,27 @@
+{% extends "base_2020.html" %}
+{% load static %}
+{% block title %}首页{% endblock %}
+
+{% block search %}
+    <div class="div-c div-algin en-div-algin">
+        <div class="mid-search-menu-box">
+            <ul class="mid-search-menu">
+                <li><a class="selected" href="/">材料快速搜索</a></li>
+                <li style="margin-left:22px;"><a href="{% url 'zr:advanced_search' %}">材料高级搜索</a></li>
+                <li style="margin-left:22px;"><a href="{% url 'zr:material_wizard' 1 %}">材料向导</a></li>
+                <li style="margin-left:22px;"><a href="{% url 'zr:compare_material' %}">材料对比</a></li>
+            </ul>
+        </div>
+        <div class="mid-search-condition">
+            <form method="post" action="/">
+                {% csrf_token %}
+{#                <label for="id_name" style="display: none"></label>#}
+{#                {{ query_form.name }}#}
+                <input type="text" name="name" class="mid-text mid-text-1" style="width:565px;" placeholder="请输入关键词" autofocus="" maxlength="128" required="" id="id_name">
+
+{#                <input type="text" id="id_name" class="mid-text mid-text-1" style="width:565px;" placeholder="请输入关键词">#}
+                <button type="submit">搜索</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

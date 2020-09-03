@@ -61,3 +61,26 @@ class Feature(models.Model):
         ordering = ['-c_time']
         verbose_name = '特征'
         verbose_name_plural = verbose_name
+
+
+class Product1(models.Model):
+    pid = models.AutoField(primary_key=True)
+    name = models.CharField(verbose_name='产品名称', null=True, max_length=255, blank=True, default='')
+    standard = models.CharField(verbose_name='产品标准', null=True, max_length=255, blank=True, default='')
+    country = models.CharField(verbose_name='产品国别', null=True, max_length=255, blank=True, default='')
+    C = models.CharField(verbose_name='产品含碳量(%)', null=True, max_length=255, blank=True, default='')
+    Si = models.CharField(verbose_name='产品含硅量(%)', null=True, max_length=255, blank=True, default='')
+    Mn = models.CharField(verbose_name='产品含锰量(%)', null=True, max_length=255, blank=True, default='')
+    P = models.CharField(verbose_name='产品含磷量(%)', null=True, max_length=255, blank=True, default='')
+    S = models.CharField(verbose_name='产品含硫量(%)', null=True, max_length=255, blank=True, default='')
+    Ys = models.CharField(verbose_name='产品屈服强度(Mpa)', null=True, max_length=255, blank=True, default='')
+    Rm = models.CharField(verbose_name='产品抗拉强度(Mpa)', null=True, max_length=255, blank=True, default='')
+    Akv = models.CharField(verbose_name='产品冲击功(J)', null=True, max_length=255, blank=True, default='')
+    c_time = models.DateTimeField(verbose_name='创建时间', auto_now_add=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = '产品'
+        verbose_name_plural = verbose_name

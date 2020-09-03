@@ -141,7 +141,7 @@
                 oldImg.remove();
             }, 3000);
             modal.find('.modal-title').text(this.$links[index].title);
-            modal.find('.modal-download').prop(
+            modal.find('.modal-print_report').prop(
                 'href',
                 download || url
             );

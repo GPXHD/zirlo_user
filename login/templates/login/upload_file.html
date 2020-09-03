@@ -38,7 +38,7 @@
                         <script>
                             setInterval("document.getElementById('datetime').innerHTML=new Date().toLocaleString();");
                         </script>
-                        <form class="form-register" action="{% url 'index1' %}" method="post" enctype="multipart/form-data">
+                        <form class="form-register" action="{% url 'login:upload_file' %}" method="post" enctype="multipart/form-data">
                             {% csrf_token %}
 {#                                <h4 class="card-title">文件上传</h4>#}
                             <span>

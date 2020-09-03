@@ -1,0 +1,95 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <link href="/static/css/default.css" rel="stylesheet">
+    <link href="/static/base_2020/index1.css" rel="stylesheet">
+    {% block css %}{% endblock %}
+    {% block js %}{% endblock %}
+    <title>ZIRLO - {% block title %}{% endblock %}</title>
+
+    <style>
+        .top { height: 35px !important; }
+        .clear {clear: both;}
+        .div-c {margin: 0 auto;width: 1000px;background-color: #ffffff;padding-left: 0;}
+        .div-h {height: 970px;}
+        /* Make the image fully responsive */
+        .carousel-inner img {width: 100%;height: 400px;}
+        .en-div-algin { margin-top: 30px; }
+        .mid-search-menu-box { height: 40px; line-height: 40px; }
+        .mid-search-menu { display: block; width: 500px; margin-left: 164px; }
+        .mid-search-menu li { float: left; margin-left: 10px; color: #CBCBCB; font-weight: 600; cursor: pointer; }
+        .mid-search-menu .selected { color: #59c8f6; }
+        .mid-search-condition { height: 42px; position: relative; top: -10px; }
+        .mid-text, .mid-btn { margin-top: 0 !important; border: 0; }
+        .mid-text-1 { background: url(/static/base_2020/steel1.jpg) no-repeat; background-size: 100%; width: 565px; height: 56px; outline: none; padding-top: 8px; }
+        .mid-text-2 { background: url(/static/base_2020/welding1.jpg) no-repeat; background-size: 100%; width: 565px; height: 56px; outline: none; padding-top: 8px; }
+        .daohang a{font-size:14px !important; line-height:26px;}
+    </style>
+</head>
+
+<body>
+    <div class="div-c">
+        {% block nav %}
+            <div class="top">
+                <div style="font-size: 22px; color: #0094ff; float: left; width:220px"><img src="/static/image/hnu_logo.png" alt="湖南大学"></div>
+                <div class="top-right" style="width:750px">
+                    <i class="top-right-icon top-right-user"></i><span><a href="{% url 'login:login' %}" >您好！请登录</a></span>
+                    <i class="top-right-icon top-right-user"></i><span><a href="{% url 'login:register' %}">免费注册</a></span>
+                    <span><a href="/" >首页</a></span>
+                    <span><a href="{% url 'login:user_center' %}" >个人中心</a></span>
+                    <span><a href="{% url 'login:logout' %}" >退出</a></span>
+                    <span><a href="{% url 'login:upload_file_show' %}" >上传文件</a></span>
+                    <span><a href="{% url 'zr:print_report' %}" >打印报表</a></span>
+                    <span><a href="{% url 'zr:quxian' %}" >曲线</a></span>
+                </div>
+            </div><br/>
+        {% endblock %}
+
+        <div class="mid">
+            {% block banner %}
+            <div id="demo" class="carousel slide container" data-ride="carousel" style="height: 360px;width: 830px">
+                <!-- 指示符 -->
+                <ul class="carousel-indicators">
+                    <li data-target="#demo" data-slide-to="0" class="active"></li>
+                    <li data-target="#demo" data-slide-to="1"></li>
+                    <li data-target="#demo" data-slide-to="2"></li>
+                    <li data-target="#demo" data-slide-to="3"></li>
+                </ul>
+                <!-- 轮播图片 -->
+                <div class="carousel-inner">
+                    <div class="carousel-item active"><img src="/static/image/15692.jpg" alt=""></div>
+                    <div class="carousel-item"><img src="/static/image/banner2.jpg" alt=""></div>
+                    <div class="carousel-item"><img src="/static/image/banner3.jpg" alt=""></div>
+                    <div class="carousel-item"><img src="/static/image/banner4.jpg" alt=""></div>
+                </div>
+                <!-- 左右切换按钮 -->
+                <a class="carousel-control-prev" href="#demo" data-slide="prev"><span class="carousel-control-prev-icon"></span></a>
+                <a class="carousel-control-next" href="#demo" data-slide="next"><span class="carousel-control-next-icon"></span></a>
+            </div>
+            {% endblock %}
+            <div class="clear"></div>
+            {% block search %}{% endblock %}
+            {% block main %}{% endblock %}
+            {% block content %}{% endblock %}
+        </div>
+
+        <div class="footer_1">
+            {% block footer %}
+                <footer class="div-c" style="text-align: center;">
+                    <div class="row col-sm-12">
+                        <hr/>
+                        <p>Powered by <a href="http://www.zrilo.com.cn">Gao Px</a>.</p>
+                    </div>
+                </footer>
+            {% endblock %}
+        </div>
+    </div>
+
+</body>
+</html>

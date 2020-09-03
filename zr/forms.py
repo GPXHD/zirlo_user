@@ -1,5 +1,5 @@
 from django import forms
-from .models import Product, Feature, Material
+from .models import Product, Feature, Material, Product1
 
 
 class ProductForm(forms.Form):
@@ -169,3 +169,13 @@ class FeatureModifyForm(forms.Form):
                            ))
     appearance = forms.ImageField(label="特征外观", required=False)
     scene = forms.ImageField(label="应用情景", required=False)
+
+
+class Product1Form(forms.ModelForm):
+    # name = forms.CharField(label="项目名称", required=False, max_length=255,
+    #                        widget=forms.TextInput(
+    #                            attrs={'class': 'form-control', 'placeholder': "项目名称", 'autofocus': ''}
+    #                        ))
+    class Meta:
+        model = Product1
+        exclude = ['pid', 'c_time']

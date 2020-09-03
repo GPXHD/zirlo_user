@@ -1,0 +1,1356 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="format-detection" content="telephone=no">
+    <title>材料列表</title>
+    <meta name="viewport" content="width=device-width">
+    <script src="/static/css/advanced_search/hm.js"></script>
+    <script src="/static/css/advanced_search/jquery.min.js"></script>
+    <link href="/static/css/advanced_search/index_main.css" rel="stylesheet">
+    <style>
+        .layui-layer-shade { opacity: 0.2 !important; }
+    </style>
+    <script src="/static/css/advanced_search/knockout.js"></script>
+    <script src="/static/css/advanced_search/knockout.mapping.js"></script>
+    <script src="/static/css/advanced_search/validform_v5.3.2_min.js"></script>
+    <script src="/static/css/advanced_search/wdatepicker.js"></script>
+{#    <link href="/static/advanced_search/WdatePicker.css" rel="stylesheet" type="text/css">#}
+    <script src="/static/css/advanced_search/layer.js"></script>
+    <link rel="stylesheet" href="/static/css/advanced_search/layer.css" id="layui_layer_skinlayercss" style="">
+    <script src="/static/css/advanced_search/jscommon.js"></script>
+    <script src="/static/css/advanced_search/scriptpager.js"></script>
+    <script src="/static/css/advanced_search/jquery-ui.min.js"></script>
+    <script>
+        $(function () {
+            $(".top").find("a,img").css({ "vertical-align": "super" });
+        })
+    </script>
+</head>
+
+<body style="background-color: #e8e8e8; margin: 0; padding: 0; font-family: 微软雅黑">
+    <div class="div-c">
+        <header><div>
+            <style>
+                .logo-font {height: 30px;line-height: 30px;font-size: 18px;font-weight: 600;color: #3e3e3e;vertical-align: top;font-style: oblique;}
+                .message-count{position:absolute;color:red;top:-20px;left:12px;}
+            </style>
+            <div class="top">
+                <div style="font-size: 22px; color: #0094ff; float: left; width:220px" class="en-logo">
+                    <a href="/" class="en-top-logo" style="vertical-align: super;"><img src="/static/image/hnu_logo.png" alt="" style="vertical-align: super;"></a>
+                </div>
+                <div style=" margin-left:5px; margin-top: 7px; float: left; " class="en-header-center">
+                    <span class="nav-span"><a href="" class="nav-a" style="vertical-align: super;">首页</a></span>
+                    <span class="nav-span"><a href="" class="nav-a" style="vertical-align: super;">高级搜索</a></span>
+                    <span class="nav-span"><a href="" class="nav-a" style="vertical-align: super;">智能匹配</a></span>
+                    <span class="nav-span"><a href="" class="nav-a" style="vertical-align: super;">模糊搜索</a></span>
+                    <span class="nav-span"><a href="" class="nav-a" style="vertical-align: super;">产品打印</a></span>
+                    <span class="nav-span"><a href="" class="nav-a" style="vertical-align: super;">产品对比</a></span>
+                    <span class="nav-span"><a href="" class="nav-a" style="vertical-align: super;">CAE</a></span>
+                </div>
+                <div class="top-right" style=" width:280px;padding-right: 10px;">
+                    <i class=" top-right-icon top-right-user"></i><span><a href="{% url 'login:login' %}" style="cursor: pointer; font-size: 12px; text-decoration: none; vertical-align: super;">您好！请登录</a></span>
+                    <i class=" top-right-icon top-right-user"></i><span><a href="{% url 'login:register' %}" style="cursor: pointer; font-size: 12px; text-decoration: none; vertical-align: super;" >免费注册</a></span>
+                </div>
+            </div>
+            <div id="lightmenu" class="daohang" style="box-shadow: 3px 3px 3px 3px #d8d8d8;z-index:99999"></div>
+        </div></header>
+
+        <div class="divcontent">
+            <style>
+                .sort {background-image: url('/static/css/advanced_search/bg.gif');cursor: pointer;background-repeat: no-repeat;background-position: center right;}
+                .select li {padding:5px 0 5px 80px;}
+                .select dd {margin: 0 2px;}
+                .select dt {font-size: 14px !important;left: -80px;}
+                .select a {height:22px;line-height:22px;font-size: 14px !important;padding: 0 6px;}
+                #divContent table a:visited{color:#B5B5B5 !important;}
+            </style>
+            <div id="wrapper">
+                <div style="height: 20px; line-height: 20px; font-size: 13px; width: 100%;margin-top:9px">
+                    <a href="{% url 'zrLadvanced_search' %}">当前位置：</a>
+                    <a href="{% url 'index' %}">首页-&gt;</a>
+                    <a href="{% url 'zr:advanced_search' %}">材料高级搜索</a>
+                </div>
+                <div id="formquery">
+                    <div>
+                        <ul class="select">
+                            <li class="select-list">
+                                <dl id="selType">
+                                    <dt languageattribute="MaterialClasses">材料类别</dt>
+                                    <dd class="select-all"><a href="javaScript:void(0)" languageattribute="All">全部</a></dd>
+                                    <dd name="碳素结构钢" id="MainType_碳素结构钢"><a href="javaScript:void(0)">碳素结构钢</a></dd>
+                                    <dd name="低合金高强度钢" id="MainType_低合金高强度钢"><a href="javaScript:void(0)">低合金高强度钢</a></dd>
+                                    <dd name="其他" id="MainType_其他"><a href="javaScript:void(0)">其他材料类别</a></dd>
+                                </dl>
+                            </li>
+                            <li class="select-list">
+                                <dl id="selShape">
+                                    <dt languageattribute="TheShapeOf">形状</dt>
+                                    <dd class="select-all"><a href="javaScript:void(0)" languageattribute="All">全部</a></dd>
+                                    <dd name="plate" id="Shape_plate"><a href="javaScript:void(0)">板</a></dd>
+                                    <dd name="strip" id="Shape_strip"><a href="javaScript:void(0)">带</a></dd>
+                                    <dd name="others" id="Shape_others"><a href="javaScript:void(0)">其他形状</a></dd>
+                                </dl>
+                            </li>
+                            <li class="select-list">
+                                <dl id="selProduct">
+                                    <dt languageattribute="ProductCategory">产品类别</dt>
+                                    <dd class="select-all"><a href="javaScript:void(0)" languageattribute="All">全部</a></dd>
+                                    <dd name="hot rolled" id="Product_hot rolled"><a href="javaScript:void(0)">热轧材</a></dd>
+                                    <dd name="cold rolled" id="Product_cold rolled"><a href="javaScript:void(0)">冷轧材</a></dd>
+                                </dl>
+                            </li>
+                            <li class="select-list">
+                                <dl><dt languageattribute="StandardSystem">标准体系</dt></dl>
+                                <div id="standardSysBox">
+                                    <div id="selStandardHide">
+                                        <dl id="" style="width: 93%; height: 54px; overflow-y: hidden;display:inline-block;">
+                                            <dd class="select-all-1"><a href="javaScript:void(0)" languageattribute="AllEationalAndIndustryStandards">所有国家以及行业标准</a></dd>
+                                            <dd class="select-all-9"><a href="javaScript:void(0)" languageattribute="AllEnterpriseStandards">所有企业标准</a></dd>
+                                            <dd name="中国(GB)" id="StandardSys_hide_7fa02be2-50f8-4893-8c19-43290bce9469" standardtype="1" standardsysid="7fa02be2-50f8-4893-8c19-43290bce9469"><a href="javaScript:void(0)">中国(GB)</a></dd>
+                                            <dd name="日本(JIS)" id="StandardSys_hide_11e5cb24-747a-4197-8131-917b584e95af" standardtype="1" standardsysid="11e5cb24-747a-4197-8131-917b584e95af"><a href="javaScript:void(0)">日本(JIS)</a></dd>
+                                            <dd name="美国(ASTM)" id="StandardSys_hide_38ab0bd4-66e4-463e-a63f-14bdec77a751" standardtype="1" standardsysid="38ab0bd4-66e4-463e-a63f-14bdec77a751"><a href="javaScript:void(0)">美国(ASTM)</a></dd>
+                                            <dd name="印度(IS)" id="StandardSys_hide_ec1d88ee-6cc3-439b-b225-26f92502dfee" standardtype="1" standardsysid="ec1d88ee-6cc3-439b-b225-26f92502dfee"><a href="javaScript:void(0)">印度(IS)</a></dd>
+                                            <dd name="俄国(GOST)" id="StandardSys_hide_a7cbafed-3f34-4b16-8067-60f9774774f5" standardtype="1" standardsysid="a7cbafed-3f34-4b16-8067-60f9774774f5"><a href="javaScript:void(0)">俄国(GOST)</a></dd>
+                                            <dd name="欧洲(EN)" id="StandardSys_hide_2d8382d8-99e8-4d3d-a5ed-b570f2654972" standardtype="1" standardsysid="2d8382d8-99e8-4d3d-a5ed-b570f2654972"><a href="javaScript:void(0)">欧洲(EN)</a></dd>
+                                        </dl>
+                                        <span style="vertical-align: top;cursor: pointer;unselectable:on;-moz-user-select:none;-webkit-user-select:none;" class="s_more" onclick="showOrHideStandardSys(1, this);" languageattribute="More">更多</span>
+                                    </div>
+                                    <div id="selStandardShow" style="display:none;">
+                                        <div style="width: 93%; height: 100px; overflow-y: auto;display:inline-block;">
+                                            <dl id="" style="width: 100%; display:inline-block;">
+                                                <dd class="select-all-1"><a href="javaScript:void(0)" languageattribute="AllEationalAndIndustryStandards">所有国家以及行业标准</a></dd>
+                                                <div style="width: 81%; display:inline-block;">
+                                                    <dd name="中国(GB)" style="float:none;" id="StandardSys_show_7fa02be2-50f8-4893-8c19-43290bce9469" standardtype="1" standardsysid="7fa02be2-50f8-4893-8c19-43290bce9469"><a href="javaScript:void(0)">中国(GB)</a></dd>
+                                                    <dd name="日本(JIS)" style="float:none;" id="StandardSys_show_11e5cb24-747a-4197-8131-917b584e95af" standardtype="1" standardsysid="11e5cb24-747a-4197-8131-917b584e95af"><a href="javaScript:void(0)">日本(JIS)</a></dd>
+                                                    <dd name="美国(ASTM)" style="float:none;" id="StandardSys_show_38ab0bd4-66e4-463e-a63f-14bdec77a751" standardtype="1" standardsysid="38ab0bd4-66e4-463e-a63f-14bdec77a751"><a href="javaScript:void(0)">美国(ASTM)</a></dd>
+                                                    <dd name="印度(IS)" style="float:none;" id="StandardSys_show_ec1d88ee-6cc3-439b-b225-26f92502dfee" standardtype="1" standardsysid="ec1d88ee-6cc3-439b-b225-26f92502dfee"><a href="javaScript:void(0)">印度(IS)</a></dd>
+                                                    <dd name="俄国(GOST)" style="float:none;" id="StandardSys_show_a7cbafed-3f34-4b16-8067-60f9774774f5" standardtype="1" standardsysid="a7cbafed-3f34-4b16-8067-60f9774774f5"><a href="javaScript:void(0)">俄国(GOST)</a></dd>
+                                                    <dd name="欧洲(EN)" style="float:none;" id="StandardSys_show_2d8382d8-99e8-4d3d-a5ed-b570f2654972" standardtype="1" standardsysid="2d8382d8-99e8-4d3d-a5ed-b570f2654972"><a href="javaScript:void(0)">欧洲(EN)</a></dd>
+                                                </div>
+                                                <hr style="border:#eee 1px dashed;">
+                                                <dd class="select-all-9"><a href="javaScript:void(0)" languageattribute="AllEnterpriseStandards">所有企业标准</a></dd>
+                                                <div style="width: 81%; display:inline-block;padding-left:42px;">
+                                                    <dd name="中国宝钢(Q/BQB)" style="float:none;" id="StandardSys_show_c16a1c0c-1e94-4f9d-9372-c2d3087fec51" standardtype="9" standardsysid="c16a1c0c-1e94-4f9d-9372-c2d3087fec51"><a href="javaScript:void(0)">中国宝钢(Q/BQB)</a></dd>
+                                                    <dd name="中国鞍钢(Q/ASB)" style="float:none;" id="StandardSys_show_ec2cf97e-00df-409e-acc7-03b2ad065baf" standardtype="9" standardsysid="ec2cf97e-00df-409e-acc7-03b2ad065baf"><a href="javaScript:void(0)">中国鞍钢(Q/ASB)</a></dd>
+                                                    <dd name="中国首钢(Q/SG)" style="float:none;" id="StandardSys_show_cddac1c9-aad5-45b3-9c5e-e58425bfbce3" standardtype="9" standardsysid="cddac1c9-aad5-45b3-9c5e-e58425bfbce3"><a href="javaScript:void(0)">中国首钢(Q/SG)</a></dd>
+                                                    <dd name="瑞典SSAB（SSAB）" style="float:none;" id="StandardSys_show_fcde7595-c0bb-4093-8916-021d8f0eb980" standardtype="9" standardsysid="fcde7595-c0bb-4093-8916-021d8f0eb980"><a href="javaScript:void(0)">瑞典SSAB（SSAB）</a></dd>
+                                                    <dd name="蒂森克虏伯(TKSE)" style="float:none;" id="StandardSys_show_883c30e4-16c9-4a84-9aec-9a34d5061c1d" standardtype="9" standardsysid="883c30e4-16c9-4a84-9aec-9a34d5061c1d"><a href="javaScript:void(0)">蒂森克虏伯(TKSE)</a></dd>
+                                                    <dd name="安赛乐米塔尔南非(AMSA)" style="float:none;" id="StandardSys_show_7096cfe4-93ba-48b1-840d-3e7bc463143e" standardtype="9" standardsysid="7096cfe4-93ba-48b1-840d-3e7bc463143e"><a href="javaScript:void(0)">安赛乐米塔尔南非(AMSA)</a></dd>
+                                                </div>
+                                            </dl>
+                                        </div>
+                                        <span style="vertical-align: top;cursor: pointer;unselectable:on;-moz-user-select:none;-webkit-user-select:none;" class="s_close" onclick="showOrHideStandardSys(0, this);" onselect="return false;" languageattribute="PackUp">收起</span>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="select-result">
+                                <dl id="selSelect" onclick="removeSelect()">
+                                    <dt languageattribute="TheSelectedConditions">已选条件</dt>
+                                    <dd class="select-no" languageattribute="PromptInformation">暂时没有选择过滤条件</dd>
+                                </dl>
+                            </li>
+                        </ul>
+                    </div>
+                    <form method="post" action="{% url 'zr:advanced_search' %}">
+                        {% csrf_token %}
+                        <input id="hello" name='post_value' value="1" style="display: none">
+
+                        <div class="fn-dashed-line" style="width:94%;"></div> <!-- 虚线 MaterialSearch-->
+                        <div class="huaxue" id="huaxuelist">
+                            <span class="huaxue-cap" style="padding-top: 6px;padding-bottom: 6px;"><i languageattribute="ChemicalComposition">化学成分(wt%）</i></span>
+                            <div class="huaxue_right">
+                                <div class="huaxue-control-div">
+                                    <select class="huaxue-select" id="hauxue1">
+                                        <option value="C" selected="">C </option>
+                                        <option value="Si">Si </option>
+                                        <option value="Mn">Mn </option>
+                                        <option value="P">P </option>
+                                        <option value="S">S </option>
+                                    </select>
+                                </div>
+                                <div class="huaxue-control-div">
+                                    <input name="huaxue1" class="huaxue-text" type="text" onkeypress="return CheckNum(this,event)" onpaste="return false" oncontextmenu="return false" oncopy="return false" oncut="return false"> -
+                                    <input name="huaxue2" class="huaxue-text" type="text" onkeypress="return CheckNum(this,event)" onpaste="return false" oncontextmenu="return false" oncopy="return false" oncut="return false">
+                                </div>
+                                <div class="huaxue-control-div"></div>
+                            </div>
+                            <div class="huaxue_right">
+                                <div class="huaxue-control-div">
+                                    <select class="huaxue-select" id="hauxue2" style="margin-left:5px;">
+                                        <option value="C">C </option>
+                                        <option value="Si" selected="">Si </option>
+                                        <option value="Mn">Mn </option>
+                                        <option value="P">P </option>
+                                        <option value="S">S </option>
+                                    </select>
+                                </div>
+                                <div class="huaxue-control-div">
+                                    <input name="huaxue3" class="huaxue-text" type="text" onkeypress="return CheckNum(this,event)" onpaste="return false" oncontextmenu="return false" oncopy="return false" oncut="return false"> -
+                                    <input name="huaxue4" class="huaxue-text" type="text" onkeypress="return CheckNum(this,event)" onpaste="return false" oncontextmenu="return false" oncopy="return false" oncut="return false">
+                                </div>
+                                <div class="huaxue-control-div"></div>
+                            </div>
+                        </div>
+                        <div class="huaxue" id="lixuelist">
+                            <span class="huaxue-cap"><i languageattribute="Mechanical">力学性能</i></span>
+                            <div class="huaxue_right">
+                                <div class="huaxue-control-div">
+                                    <select class="lixue-select" id="lixue1">
+                                        <option value="Rel" selected="">屈服强度YS(MPa)</option>
+                                        <option value="Rm">抗拉强度Rm(MPa)</option>
+                                        <option value="A">延伸率A(%)</option>
+                                        <option value="Akv">冲击功Akv(J)</option>
+                                        <option value="Akvt">冲击温度(℃)</option>
+                                    </select>
+                                </div>
+                                <div class="huaxue-control-div">
+                                    <input class="huaxue-text" id="qfmin" type="text" onkeypress=" return CheckNum(this, event)" onpaste="    return false" oncontextmenu="    return false" oncopy="    return false" oncut="    return false"> -
+                                    <input class="huaxue-text" id="qfmax" type="text" onkeypress="return CheckNum(this,event)" onpaste="return false" oncontextmenu="return false" oncopy="return false" oncut="return false">
+                                </div>
+                                <div class="huaxue-control-div"></div>
+                            </div>
+                            <div class="huaxue_right">
+                                <div class="huaxue-control-div">
+                                    <select class="lixue-select" id="lixue2" style="margin-left:50px;">
+                                        <option value="Rel">屈服强度YS(MPa)</option>
+                                        <option value="Rm" selected="">抗拉强度Rm(MPa)</option>
+                                        <option value="A">延伸率A(%)</option>
+                                        <option value="Akv">冲击功Akv(J)</option>
+                                        <option value="Akvt">冲击温度(℃)</option>
+                                    </select>
+                                </div>
+                                <div class="huaxue-control-div">
+                                    <input class="huaxue-text" id="relmin" type="text" onkeypress="return CheckNum(this,event)" onpaste="return false" oncontextmenu="return false" oncopy="return false" oncut="return false">-
+                                    <input class="huaxue-text" id="relmax" type="text" onkeypress="return CheckNum(this,event)" onpaste="return false" oncontextmenu="return false" oncopy="return false" oncut="return false">
+                                </div>
+                                <div class="huaxue-control-div"></div>
+                            </div>
+                        </div>
+                        <div class="fn-dashed-line" style="width:94%; clear:both;"></div> <!-- 虚线 -->
+                        <div class="huaxue" id="keywords_box">
+                            <span class="huaxue-cap"><i languageattribute="Thekeyword">关键字</i></span>
+                            <div class="huaxue_right">
+                                <div class="huaxue-control-div"><input class="gjz-text" type="text" id="Keywords" value="{{ key }}"></div>
+                                <div class="huaxue-control-div">
+                                    <select class="gjz-select" id="Keywords1Type">
+                                        <option value="AndContain1">并含</option>
+                                        <option value="OrContain">或含</option>
+                                        <option value="DoNotContain">不含</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="huaxue_right">
+                                <div class="huaxue-control-div"><input class="gjz-text" type="text" id="Keywords1"></div>
+                                <div class="huaxue-control-div">
+                                    <select class="gjz-select" id="Keywords2Type">
+                                        <option value="AndContain1">并含</option>
+                                        <option value="OrContain">或含</option>
+                                        <option value="DoNotContain">不含</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="huaxue_right">
+                                <div class="huaxue-control-div"><input class="gjz-text" type="text" id="Keywords2"></div>
+                            </div>
+                            <div class="huaxue_right" style="padding-top:7px; ">
+                                <a id="lbtnSigin" href="javaScript:void(0)" class="button blue medium" style=" margin-left:15px" onclick="searchData(1, );" languageattribute="TheQuery">查询</a>
+                                <a id="lbtnSigin" href="{% url 'zr:advanced_search' %}" class="button blue medium" style=" margin-left:10px" languageattribute="Reset">重置</a>
+                            </div>
+                        </div>
+                        <div class="fn-dashed-line" style="width:94%; clear:both;"></div> <!-- 虚线 -->
+                        <div style=" margin-top:8px; padding-left:8px;">
+                            <div id="divContent" style="text-align: center;">
+                                <table id="tbdatalist" style=" width:99%; " border="0" cellspacing="0" cellpadding="0" class="staff-table interleave-bgcolor tablesorter">
+                                    <thead>
+                                        <tr>
+                                            <th width="12%" rowspan="2" class="sort" onclick="_sort(this)" id="LongSteelName" languageattribute="Varieties">品种</th>
+                                            <th width="8%" rowspan="2" class="sort" onclick="_sort(this)" id="FullCode" languageattribute="ApplicableStandards">适用标准</th>
+                                            <th width="8%" rowspan="2" class="sort" onclick="_sort(this)" id="StandardSys" languageattribute="Vountry">国别</th>
+                                            <th colspan="5" width="25%" languageattribute="ChemicalComposition">化学成分(wt%）</th>
+                                            <th colspan="3" width="35%" id="4" name="a" languageattribute="MechanicalPropertiesOf">力学性能</th>
+                                            <th width="6%" rowspan="2" languageattribute="AddACollection">添加收藏</th>
+                                        </tr>
+                                        <tr>
+                                            <th width="5%" class="sort" onclick="_sort(this)" id="corder">C </th>
+                                            <th width="5%" class="sort" onclick="_sort(this)" id="siorder">Si </th>
+                                            <th width="5%" class="sort" onclick="_sort(this)" id="mnorder">Mn </th>
+                                            <th width="5%" class="sort" onclick="_sort(this)" id="porder">P </th>
+                                            <th width="5%" class="sort" onclick="_sort(this)" id="sorder">S </th>
+                                            <th width="5%" class="sort" onclick="_sort(this)" id="Relorder">YS </th>
+                                            <th width="5%" class="sort" onclick="_sort(this)" id="Rmorder">Rm </th>
+                                            <th width="5%" class="sort" onclick="_sort(this)" id="Akvorder">Akv </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% if not mat %}
+                                        <tr style=" height:30px;" class="odd-tr">
+                                            <td colspan="12" style="text-align:center;">请输入搜索条件</td>
+                                        </tr>
+                                    {% else %}
+                                        <tr style=" height:30px;" class="odd-tr">
+                                            <td colspan="12" style="text-align:center;"><a href="{% url 'zr:material_detail' mat.name %}">{{ mat.name }}</a></td>
+                                        </tr>
+                                    {% endif %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="pagelist-material jun-paging-wrapp">
+                                <div class="l-btns">
+                                    <span style="cursor:pointer" languageattribute="AccordingTo">显示</span>
+                                    <select id="txtPageNum" onchange="searchData(1, )" value="15" class="pagenum" style="width:56px;">
+                                        <option value="15" selected="selected">15</option>
+                                        <option value="50">50</option>
+                                        <option value="100">100</option>
+                                    </select>
+                                    <span languageattribute="Article_pp">条/页</span>
+                                </div>
+                                <div class="l-btns">
+                                    <span languageattribute="JumpTo">跳转到</span>
+                                    <input type="text" id="txtPageIndex" class="pagenum" style="width:60px;" onkeypress=" return CheckNumber(event);" onkeyup="value=value.replace(/\D/g,)" onpaste="return false" oncontextmenu="return false" oncopy="return false" oncut="return false" max="">
+                                    <span onclick="searchData($(#txtPageIndex).val(), );" style="cursor:pointer;width:60px;height:30px !important;line-height:30px !important;" languageattribute="GO">GO</span>
+                                </div>
+                                <div id="PageContent" class="default">
+                                    <span>
+                                        <i languageattribute="ATotalOf" style="font-style: normal;">共</i> 0
+                                        <i languageattribute="Record" style="font-style: normal;">记录</i>
+                                    </span>
+                                    <span class="disabled" languageattribute="ThePreviousPage">上一页</span>
+                                    <span class="current">1</span>
+                                    <span class="disabled" languageattribute="TheNextPage">下一页</span>
+                                </div>
+                            </div>
+                        </div>
+{#                        <button type="button" onclick="get_value()">获取值</button>#}
+                        <button type="submit" onclick="get_value()">提交</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function get_value() {
+            let objs = document.getElementById("selSelect").children;
+            let s = '';
+            for (let i=0; i<objs.length;i++){
+                console.log(objs[i].innerHTML);
+                s += objs[i].innerHTML;
+            }
+            document.getElementById("hello").value = s;
+        }
+        function advertising() {
+            let objs = document.getElementById("hello");
+            console.log(objs.value);
+        }
+    </script>
+<script>
+    $(function () {
+        hideControlInIframe("header,footer");
+
+        loadFilter();
+        if (IsSearch != "") {
+            //$(".select-list").hide();
+        }
+        //BindData(1, "");
+        $("#selType dd").click(function () {
+            ddclick("selType", this);
+        })
+        $("#selShape dd").click(function () {
+            ddclick("selShape", this);
+        })
+        $("#selProduct dd").click(function () {
+            ddclick("selProduct", this);
+        })
+        $("#selApplication dd").click(function () {
+            ddclick("selApplication", this);
+        })
+        $("#selDeliveryState dd").click(function () {
+            ddclick("selDeliveryState", this);
+        });
+        $("#standardSysBox dd").click(function () {
+            ddclick("standardSysBox", this);
+        });
+
+        $(".select dd").on("click", function () {
+            if ($(".select-result dd").length > 1) {
+                $(".select-no").hide();
+            } else {
+                $(".select-no").show();
+            }
+        });
+        $(".huaxue-select").change(function () {
+            var $this = $(this);
+            //取化学成分
+            var selList = $('#huaxuelist').find('div select');
+            $.each(selList, function (c, s) {
+                if (s.value != "空") {
+                    if ($(s)[0].id != $this[0].id) {
+                        if ($(s).val() == $this.val()) {
+                            layer.alert("已经选择该化学成分，无法重复选择！");
+                            $this.val("空");
+                        }
+                    }
+                }
+                else {
+                    $(s).parent().next().children()[0].value = "";
+                    $(s).parent().next().children()[1].value = "";
+                }
+            })
+        })
+        $(".lixue-select").change(function () {
+            var $this = $(this);
+            //取化学成分
+            var selList = $('#lixuelist').find('div select');
+            $.each(selList, function (c, s) {
+                if (s.value != "空") {
+                    if ($(s)[0].id != $this[0].id) {
+                        if ($(s).val() == $this.val()) {
+                            layer.alert("已经选择该力学性能，无法重复选择！");
+                            $this.val("空");
+                        }
+                    }
+                }
+                else {
+                    $(s).parent().next().children()[0].value = "";
+                    $(s).parent().next().children()[1].value = "";
+                }
+            })
+        })
+        $(document).keydown(function (event) {
+            if (event.keyCode == 13) {
+                searchData(1, "");
+                event.preventDefault();
+            }
+        });
+
+
+        $("#txtPageIndex").focus(function () {
+            $(document).unbind("keydown").keydown(function (event) {
+                if (event.keyCode == 13) {
+                    searchData($("#txtPageIndex").val(), "");
+                    event.preventDefault();
+                }
+            });
+        });
+
+        $("#txtPageIndex").blur(function () {
+            $(document).keydown(function (event) {
+                if (event.keyCode == 13) {
+                    searchData(1, "");
+                    event.preventDefault();
+                }
+            });
+        });
+        initSearchCondition();
+        searchData(1);
+    });
+
+
+    var IsSearch = "";
+    function loadFilter() {
+        var filter = "";
+        if ('' != null && '' != "") {
+            filter = '';
+            IsSearch = "1";
+        }
+        if (filter != "" && filter != "undefined" && filter != undefined) {
+            var filterArr = filter.split(' ');
+            if (filterArr.length > 0) {
+                if (filterArr.length == 1) {
+                    filterArr[0] = (filterArr[0] == undefined || filterArr[0] == "undefined") ? "" : filterArr[0];
+                    $("#Keywords").val(filterArr[0]);
+                }
+                else if (filterArr.length == 2) {
+                    $("#Keywords").val(filterArr[0]);
+                    $("#Keywords1").val(filterArr[1]);
+                }
+                else if (filterArr.length >= 3) {
+                    $("#Keywords").val(filterArr[0]);
+                    $("#Keywords1").val(filterArr[1]);
+                    $("#Keywords2").val(filterArr[2]);
+                }
+            }
+        }
+        var MainType = "";
+        if ('' != null && '' != "") {
+            MainType = '';
+            IsSearch = "1";
+        }
+        if (MainType != "") {
+            $.each($("#selType dd"), function (n, k) {
+                if ($(k).hasClass("select-all")) {
+                    $(k).removeClass("selected");
+                    return true;
+                }
+                if ($(k).hasClass("selected")) {
+                    var name = $(k)[0].getAttribute("id");
+                    var id = "select" + name;
+                    var copy = $(k).clone();
+                    copy.attr("id", id);
+                    copy.attr("onclick", "del('selType',this)")
+                    $(".select-result dl").append(copy);
+                }
+            })
+            $(".select-no").hide();
+        }
+        var Application = "";
+        if ('' != null && '' != "") {
+            Application = '';
+            IsSearch = "1";
+        }
+        if (Application != "") {
+            $.each($("#selApplication dd"), function (n, k) {
+                if ($(k).hasClass("select-all")) {
+                    $(k).removeClass("selected");
+                    return true;
+                }
+                if ($(k).hasClass("selected")) {
+                    var name = $(k)[0].getAttribute("id");
+                    var id = "select" + name;
+                    var copy = $(k).clone();
+                    copy.attr("id", id);
+                    copy.attr("onclick", "del('selApplication',this)")
+                    $(".select-result dl").append(copy);
+                }
+            })
+            $(".select-no").hide();
+        }
+
+        var Shape = "";
+        if ('' != null && '' != "") {
+            Shape = '';
+            IsSearch = "1";
+        }
+        if (Shape != "") {
+            $.each($("#selShape dd"), function (n, k) {
+                if ($(k).hasClass("select-all")) {
+                    $(k).removeClass("selected");
+                    return true;
+                }
+                if ($(k).hasClass("selected")) {
+                    var name = $(k)[0].getAttribute("id");
+                    var id = "select" + name;
+                    var copy = $(k).clone();
+                    copy.attr("id", id);
+                    copy.attr("onclick", "del('selShape',this)")
+                    $(".select-result dl").append(copy);
+                }
+            })
+            $(".select-no").hide();
+        }
+        var DeliveryState = "";
+        if ('' != null && '' != "") {
+            DeliveryState = '';
+            IsSearch = "1";
+        }
+        if (DeliveryState != "") {
+            $.each($("#selDeliveryState dd"), function (n, k) {
+                if ($(k).hasClass("select-all")) {
+                    $(k).removeClass("selected");
+                    return true;
+                }
+                if ($(k).hasClass("selected")) {
+                    var name = $(k)[0].getAttribute("id");
+                    var id = "select" + name;
+                    var copy = $(k).clone();
+                    copy.attr("id", id);
+                    copy.attr("onclick", "del('selDeliveryState',this)")
+                    $(".select-result dl").append(copy);
+                }
+            })
+            $(".select-no").hide();
+        }
+
+
+        var Ranage = "";
+        if ('' != null && '' != "") {
+            Ranage = '';
+            IsSearch = "1";
+        }
+
+
+        if ('' != null && '' != "") {
+            var rel = '';
+            $("#relmin").val(rel.split('-')[0]);
+            $("#relmax").val(rel.split('-')[1]);
+            IsSearch = "1";
+            $("#relmin").parent().prev().find("select").val('Rel');
+        }
+        if ('' != null && '' != "") {
+            var Rm = '';
+            $("#qfmin").val(Rm.split('-')[0]);
+            $("#qfmax").val(Rm.split('-')[1]);
+            IsSearch = "1";
+            $("#qfmin").parent().prev().find("select").val('Rm');
+        }
+
+        if ('' != "") {
+            $("#lixue4").val("Akvt");
+            $("#lixue4").parent().next().find("input[type=text]:eq(0)").val(''.split('~')[0]);
+            $("#lixue4").parent().next().find("input[type=text]:eq(1)").val(''.split('~')[1]);
+        }
+
+
+
+        $(".select-all-9").click(function () {
+            var list = $(this).parent().find("[standardtype='9']");
+            if ($(this).hasClass("selected")) {
+                $(this).removeClass("selected");
+                addOrRemove(list, 0);
+            } else {
+                $(this).addClass("selected");
+                addOrRemove(list, 1);
+            }
+        });
+
+        $(".select-all-1").click(function () {
+            var list = $(this).parent().find("[standardtype='1']");
+            if ($(this).hasClass("selected")) {
+                $(this).removeClass("selected");
+                addOrRemove(list, 0);
+            } else {
+                $(this).addClass("selected");
+                addOrRemove(list, 1);
+            }
+        })
+    }
+
+
+
+    var pageSize = 15;
+    var indexA;
+    function BindData(currpage, ordercol) {
+        var flag = true;
+        if ($("#txtPageNum").val() == "")
+            $("#txtPageNum").val('15');
+        else if (parseInt($("#txtPageNum").val()) <= 0) {
+            appAlert("请输入大于 0 的数字");
+            return;
+        } else {
+            pageSize = $("#txtPageNum").val();
+        }
+        var row = new Object();
+        //取材料类别
+        var MateraType = "";
+        $.each($("#selType dd"), function (c, s) {
+            if ($(s).hasClass("select-all selected")) {
+                //return false;
+            }
+            else {
+                if ($(s).hasClass("selected")) {
+                    MateraType += "→" + $(s).children().html();
+                }
+            }
+        })
+        row.MateraType = MateraType;
+        //取形状
+        var Shape = "";
+        $.each($("#selShape dd"), function (c, s) {
+            if ($(s).hasClass("select-all selected")) {
+                //return false;
+            }
+            else {
+                if ($(s).hasClass("selected")) {
+                    Shape += "→" + $(s).attr("name");
+                }
+            }
+        })
+        row.Shape = Shape;
+        //取产品
+        var Product = "";
+        $.each($("#selProduct dd"), function (c, s) {
+            if ($(s).hasClass("select-all selected")) {
+                //return false;
+            }
+            else {
+                if ($(s).hasClass("selected")) {
+                    Product += "→" + $(s).attr("name");
+                }
+            }
+        })
+        row.Product = Product;
+        //取用途
+        var Application = "";
+        $.each($("#selApplication dd"), function (c, s) {
+            if ($(s).hasClass("select-all selected")) {
+                //return false;
+            }
+            else {
+                if ($(s).hasClass("selected")) {
+                    Application += "→" + $(s).attr("name");
+                }
+            }
+        })
+        row.Application = Application;
+        //取交货状态
+        var DeliveryState = "";
+        $.each($("#selDeliveryState dd"), function (c, s) {
+            if ($(s).hasClass("select-all selected")) {
+                //return false;
+            }
+            else {
+                if ($(s).hasClass("selected")) {
+                    DeliveryState += "→" + $(s).attr("name");
+                }
+            }
+        })
+        row.DeliveryState = DeliveryState;
+        //取化学成分
+        var selList = $('#huaxuelist').find('div select');
+        var HuaXueList = "";
+
+        $.each(selList, function (c, s) {
+            if (s.value != "空") {
+                var minValue = "空";
+                var maxValue = "空";
+                var min = $(s).parent().next().children()[0].value;
+                var max = $(s).parent().next().children()[1].value;
+                if ((!(/^(\d|[1-9]\d+)(\.\d+)?$/.test(min)) && (min !== "")) || (!(/^(\d|[1-9]\d+)(\.\d+)?$/.test(max)) && (max != ""))) {
+
+                    layer.alert("化学成分" + s.value + "请输入正确格式的数字");
+                    flag = false;
+                    return;
+                }
+                if (max != "" && isNaN(max)) {
+
+                    layer.alert("化学成分" + s.value + "最大值必须输入数字");
+
+                    flag = false;
+                    return;
+                }
+                if (min != "" && isNaN(min)) {
+                    layer.alert("化学成分" + s.value + "最小值必须输入数字");
+
+                    flag = false;
+                    return;
+                }
+                if (max != "" && min != "" && parseFloat(max) < parseFloat(min)) {
+                    layer.alert("化学成分" + s.value + "最大值应大于最小值");
+                    flag = false;
+                    return;
+                }
+                if (min < 0 || max < 0 || min > 100 || max > 100) {
+                    layer.alert("化学成分" + s.value + "应在0~100之间");
+                    flag = false;
+                    return;
+                }
+
+                if (min != "")
+                    minValue = min;
+                if (max != "")
+                    maxValue = max;
+
+                HuaXueList += "," + s.value + "→" + minValue + "→" + maxValue;
+
+            }
+        })
+        row.HuaXueList = HuaXueList;
+        //取力学性能
+        var selList1 = $('#lixuelist').find('div select');
+        var LiXueList = "";
+        $.each(selList1, function (c, s) {
+            if (s.value != "空") {
+                var minValue = "空";
+                var maxValue = "空";
+                var min = $(s).parent().next().children()[0].value;
+                var max = $(s).parent().next().children()[1].value;
+                if ((!(/^[-+]?(\d|[1-9]\d+)(\.\d+)?$/.test(min)) && (min !== "")) || (!(/^[-+]?(\d|[1-9]\d+)(\.\d+)?$/.test(max)) && (max != ""))) {
+
+                    layer.alert("力学性能" + $(s).find("option:selected").text() + "请输入正确格式的数字");
+                    flag = false;
+                    return;
+                }
+                if (max != "" && isNaN(max)) {
+                    layer.alert("力学性能" + $(s).find("option:selected").text() + "最大值必须输入数字");
+                    flag = false;
+                    return;
+                }
+                if (min != "" && isNaN(min)) {
+                    layer.alert("力学性能" + $(s).find("option:selected").text() + "最小值必须输入数字");
+                    flag = false;
+                    return;
+                }
+                if (max != "" && min != "" && parseFloat(max) < parseFloat(min)) {
+                    layer.alert("力学性能" + $(s).find("option:selected").text() + "最大值应该大于最小值");
+                    flag = false;
+                    return;
+
+                }
+                if (s.value != "Akvt") {
+                    if (min < 0 || max < 0) {
+                        layer.alert("力学性能" + $(s).find("option:selected").text() + "应大于0");
+                        flag = false;
+                        return;
+                    }
+                }
+
+                if (min != "")
+                    minValue = min;
+                if (max != "")
+                    maxValue = max;
+                LiXueList += "," + s.value + "→" + minValue + "→" + maxValue;
+            }
+        })
+        row.LiXueList = LiXueList;
+        //取关键字
+        row.gjztxt1 = $("#gjztxt1").val().trim();
+        row.gjztxt2 = $("#gjztxt2").val().trim();
+        row.gjztxt3 = $("#gjztxt3").val().trim();
+        row.gjzsel1 = $("#gjzsel1").val().trim();
+        row.gjzsel2 = $("#gjzsel2").val().trim();
+        var jsondata = JSON.stringify(row);
+        //获取关键字来源
+        var source = '';
+        if (flag == false) {
+            return;
+        }
+        indexA = layer.load(2);
+        $.ajax({
+            type: "Post",
+            url: "/GetMaterialSearchList",
+            data: { jsondata: jsondata, pageIndex: currpage, pageSize: pageSize, ordercol: ordercol, source: source },
+            success: function (data) {
+                //SetPageList(jsondata, currpage, pageSize, ordercol, source)
+                if (data.success) {
+                    ordercol = ordercol.replace(/\'/g, "\\\'");
+                    html = AdminPanel_PrintPage(currpage, pageSize, data.TotalCount, 'BindData', ",'" + ordercol + "'", 6);
+                    $('#PageContent').html(html);
+                    $("#txtPageIndex").attr("max", $('#PageContent a').last().prev().text()).val(currpage);
+                    if (data.Data == "") {
+                        $('#divContent').html("<span>没有搜索到相关数据<span>");
+                        if (!isInIframe()) {
+                            layer.confirm('没有查到相应数据，是否跳转到【产品定制】界面？', {
+                                btn: ['确定', '取消'] //按钮
+                            }, function () {
+                                window.location.href = "/MaterialCustom/Create";
+                            }, function () {
+
+                            });
+                        }
+                    } else {
+                        $("#divContent").html(data.Data);
+                        if (isInIframe()) {
+                            $("#divContent table tr").find("td:eq(11),th:not([id])").hide();
+                        }
+                        var th = $('#divContent').find('table tr th');
+                        $.each(th, function (c, s) {
+                            if (ordercol != undefined && ordercol != "") {
+                                if ($.trim(s.id) == $.trim(ordercol.replace("desc", "").replace(/\\/g, ""))) {
+                                    if (ordercol.indexOf("desc") > 0) {
+                                        $(s).css("background-image", "url(/static/search_file/desc.gif)");
+                                        $(s).css("background-repeat", "no-repeat");
+                                        $(s).css("background-position", " center right");
+                                        sort = "desc";
+                                    }
+                                    else {
+                                        $(s).css("background-image", "url(/static/search_file/asc.gif)");
+                                        $(s).css("background-repeat", "no-repeat");
+                                        $(s).css("background-position", " center right");
+                                        sort = "";
+                                    }
+                                }
+                            }
+                        });
+                    }
+                    postMessageToIframe();
+                } else {
+                    appAlert(data.msg);
+                }
+            },
+            complete: function () {
+                layer.close(indexA);
+            }
+        });
+    }
+
+
+    function SetPageList(jsondata, currentPage, pageSize, ordercol, source) {
+        var html = "";
+        $.ajax({
+            type: "POST",
+            url: "/GetMaterialSearchCount",
+            data: {
+                jsondata: jsondata, source: source
+            },
+            async: false,
+            success: function (data) {
+                if (data != 0) {
+                    ordercol = ordercol.replace(/\'/g, "\\\'");
+                    html = AdminPanel_PrintPage(currentPage, pageSize, data, 'BindData', ",'" + ordercol + "'", 6);
+                }
+                $('#PageContent').html(html);
+            }
+        });
+    }
+
+    function ddclick(obj, o, isIf) {
+        if ($(o).hasClass("select-all-1") || $(o).hasClass("select-all-9")) {
+            return;
+        }
+        var name = $(o)[0].getAttribute("id");
+
+        var id = "select" + name;
+        if ($(o).hasClass("select-all")) {
+            removeSelect(obj);
+            if (!$(o).hasClass("selected")) {
+                $.each($("#" + obj).find("dd"), function () {
+                    if (!$(this).hasClass("select-all")) {
+                        ddclick(obj, this, true);
+                    }
+                });
+                $(o).addClass("selected");
+            } else {
+                $("#" + obj + " .select-all").addClass("selected").siblings().removeClass("selected");
+                $(o).removeClass("selected");
+            }
+        }
+        else {
+            if (isIf) {
+                $("#" + obj + " .select-all").removeClass("selected");
+                $(o).addClass("selected");
+                var copy = $(o).clone();
+                copy.attr("id", id);
+                copy.attr("onclick", "del('" + obj + "',this)");
+                if ($(".select-result dl").find("[id='" + id + "']").length == 0) {
+                    $(".select-result dl").append(copy);
+                }
+            } else {
+                if ($(o).hasClass("selected")) {
+                    $(o).removeClass("selected");
+                    $("#" + obj + " .select-all").removeClass("selected");
+                    $('#' + id).remove();
+                    var i = 0;
+                    $.each($("#" + obj + " dd"), function (c, s) {
+                        if ($(s).hasClass("selected"))
+                            i++;
+                    })
+                    //if (i == 0)
+                    //    $("#" + obj + " .select-all").addClass("selected");
+                    if (name != undefined && (name.indexOf("StandardSys") > -1)) {
+                        var standardsysid = name.split("_")[2];
+                        $("[standardsysid='" + standardsysid + "']").removeClass("selected");
+                        $(".select-result [standardsysid='" + standardsysid + "']").remove();
+                        $(".select-all-" + $(o).attr("standardtype")).removeClass("selected");
+                    }
+                } else {
+                    $("#" + obj + " .select-all").removeClass("selected");
+                    $(o).addClass("selected");
+                    var copy = $(o).clone();
+                    copy.attr("id", id);
+                    copy.attr("onclick", "del('" + obj + "',this)");
+                    if ($(".select-result dl").find("[id='" + id + "']").length == 0) {
+                        $(".select-result dl").append(copy);
+                    }
+                    if (name != undefined && (name.indexOf("StandardSys") > -1)) {
+                        $("[standardsysid='" + name.split("_")[2] + "']").addClass("selected");
+                    }
+                }
+            }
+        }
+        postMessageToIframe();
+    }
+
+    function del(obj, o) {
+        var id = $(o).attr("id");
+        $(o).remove();
+        $.each($("#" + obj + " dd"), function (n, k) {
+            if ("select" + k.getAttribute("id") == o.getAttribute("id"))
+                $(k).removeClass("selected");
+        })
+
+        if ($(".select-result dd").length > 1) {
+            $(".select-no").hide();
+        } else {
+            $(".select-no").show();
+        }
+        var i = 0;
+        $.each($("#" + obj + " dd"), function (c, s) {
+            if ($(s).hasClass("selected"))
+                i++;
+        })
+        if (i == 0)
+            $("#" + obj + " .select-all").addClass("selected");
+
+        $("#" + obj).find(".select-all").removeClass("selected");
+        postMessageToIframe();
+
+        if (id != undefined && (id.indexOf("StandardSys") > -1)) {
+            $("[standardsysid='" + id.split("_")[2] + "']").removeClass("selected");
+            $(".select-all-" + $(o).attr("standardtype")).removeClass("selected");
+        }
+    }
+
+    function addOrRemove(list, addOrMove) {
+        $.each(list, function (index, item) {
+            var sysid = $(item).attr("standardsysid");
+            if (addOrMove == 0) {//移除
+                $("[standardsysid='" + sysid + "']").removeClass("selected");
+                $(".select-result dd[standardsysid='" + sysid + "']").remove();
+            } else {//添加
+                if ($(".select-result dd[standardsysid='" + sysid + "']").length == 0) {
+                    ddclick("standardSysBox", item);
+                }
+            }
+        });
+    }
+
+    function removeSelect(obj) {
+        $.each($("#" + obj + " dd"), function (c, s) {
+            var sid = "select" + s.getAttribute("id");
+            $.each($("#selSelect dd"), function (n, k) {
+                if (sid == $(k)[0].id)
+                    $(k).remove();
+            })
+        })
+        postMessageToIframe();
+    }
+
+    function openFrm(steelID, substeelid, specid) {
+        var params = "steelID=" + steelID + "&substeelid=" + substeelid + "&specid=" + specid + "&titleFlag=" + "MeterialSearch";
+        if (!isInIframe()) {
+            window.open("/MaterialDetail?" + params);
+        } else {
+            window.open("https://zhidao.wuage.com/zhishi/pinzhong.html?" + params + "&iframe=true");
+        }
+
+    }
+
+    function openFrm1(fullcode) {
+        var params = "fullcode=" + fullcode + "&titleFlag=" + "MeterialSearch";
+        if (!isInIframe()) {
+            window.open("/StandByFullCode?" + params);
+        } else {
+            window.open("https://zhidao.wuage.com/zhishi/biaozhun.html?" + params + "&iframe=true");
+        }
+
+    }
+
+    //重置
+    function Reset() {
+        $("#formquery")[0].reset();
+        clearFilter("selType");
+        clearFilter("selShape");
+        clearFilter("selProduct");
+        clearFilter("selApplication");
+        clearFilter("selDeliveryState");
+        clearFilter("selDeliveryState");
+        clearFilter("standardSysBox");
+        $("#selSelect").append('<dd class="select-no">' + _languageObj.getConfitTypeValue(_languageObj.title, 'PromptInformation') + '</dd>');
+        searchData(1, '');
+    }
+
+    function clearFilter(obj) {
+        $.each($("#" + obj + " dd"), function (c, s) {
+            if ($(s).hasClass("selected"))
+                $(s).removeClass("selected");
+        })
+        //$("#" + obj + " .select-all").addClass("selected").siblings().removeClass("selected");
+        $.each($("#selSelect dd"), function (n, k) {
+            $(k).remove();
+        })
+        postMessageToIframe();
+    }
+    //收藏
+    function addMyCollection(obj, steelID, substeelid, specid) {
+        $.ajax({
+            type: "POST",
+            url: "/addMyCollection",
+            data: {
+                steelID: steelID, substeelid: substeelid, specid: specid
+            },
+            dataType: "json",
+            async: false,
+            success: function (data) {
+                if (data.IsSuccess) {
+                    $(obj).addClass("display", "none");
+                    $(obj).parent().html(_languageObj.getConfitTypeValue(_languageObj.title, 'Collectioned'));
+                }
+                else {
+                    layer.alert(_languageObj.getConfitTypeValue(_languageObj.msg, 'PleaseLogInAndSave'),
+                        {
+                            title: _languageObj.getConfitTypeValue(_languageObj.msg, 'Information'),
+                            btn: [_languageObj.getConfitTypeValue(_languageObj.msg, 'Determine1')]
+                        });
+                }
+            }
+        });
+    }
+    var sort = "desc";
+
+    var orderByProperty = "";
+    function _sort(obj) {
+
+        var id = obj.id;
+        if (sort != "desc") {
+            sort = "desc";
+            id = id + " desc";
+        }
+        else {
+            sort = "";
+        }
+        orderByProperty = id;
+        searchData(1, id);
+    }
+</script>
+
+<script>
+    function postMessageToIframe() {
+        if (isInIframe()) {
+            var bodyHeight = $("body").height();
+            window.parent.postMessage(bodyHeight, "https://zhidao.wuage.com/zhishi.html");
+        }
+    }
+
+    function searchData(pageIndex, orderBy) {
+        if (!orderBy && orderByProperty) orderBy = orderByProperty;
+        var searchModel = collectionSearchCondition();
+        searchModel.PageIndex = pageIndex;
+        searchModel.PageSize = $("#txtPageNum").val();
+        if (parseInt(searchModel.PageSize) > 100) {
+            appAlert("每页最多一百条数据"); return;
+        }
+        searchModel.OrderBy = orderBy || "";
+        var indexA = layer.load(2);
+        $.ajax({
+            url: "/GetMaterialSearchListNew",
+            type: "post",
+            dataType: "json",
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(searchModel),
+            success: function (result) {
+                if (result.state == 1) {
+                    if (result.TotalCount == 0) {
+                        html = AdminPanel_PrintPage(pageIndex, searchModel.PageSize, (result.TotalCount == null ? 0 : result.TotalCount), 'searchData', ",''", 6);
+                        $('#PageContent').html(html);
+                        $("#divContent").html(result.Data);
+                        if (!isInIframe()) {
+                            layer.confirm(_languageObj.getConfitTypeValue(_languageObj.msg, 'ThereIsNoData'), {
+                                btn: [_languageObj.getConfitTypeValue(_languageObj.dialogTitle, 'Determine'), _languageObj.getConfitTypeValue(_languageObj.dialogTitle, 'Cancel')]//按钮
+                                , title: _languageObj.getConfitTypeValue(_languageObj.dialogTitle, 'Information')
+                            }, function () {
+                                window.location.href = "/MaterialCustom/Create";
+                            }, function () {
+
+                            });
+                        }
+                    } else {
+                        html = AdminPanel_PrintPage(pageIndex, searchModel.PageSize, (result.TotalCount == null ? 0 : result.TotalCount), 'searchData', ",''", 6);
+                        $('#PageContent').html(html);
+                        $("#txtPageIndex").attr("max", $('#PageContent a').last().prev().text()).val(pageIndex);
+                        $("#divContent").html(result.Data);
+                        var th = $('#divContent').find('table tr th');
+                        $.each(th, function (c, s) {
+                            if (orderBy != undefined && orderBy != "") {
+                                if ($.trim(s.id) == $.trim(orderBy.replace("desc", ""))) {
+                                    if (orderBy.indexOf("desc") > 0) {
+                                        $(s).css("background-image", "url(/static/search_file/desc.gif)");
+                                        $(s).css("background-repeat", "no-repeat");
+                                        $(s).css("background-position", " center right");
+                                        sort = "desc";
+                                    }
+                                    else {
+                                        $(s).css("background-image", "url(/static/search_file/asc.gif)");
+                                        $(s).css("background-repeat", "no-repeat");
+                                        $(s).css("background-position", " center right");
+                                        sort = "";
+                                    }
+                                }
+                            }
+                        });
+
+                        var shapeTextArray = [];
+                        $.each($(".select-result dd[class='selected']"), function (ddIndex, dd) {
+                            if ($(this).attr("id").split("_")[0].replace("select", "") == "Shape") {
+                                shapeTextArray.push($(this).text());
+                            }
+                        });
+
+                        $.each(shapeTextArray, function () {
+                            var text = this;
+                            $.each($("#divContent table tbody tr td"), function () {
+                                setKeywordTextFont(this, text);
+                            })
+                        });
+
+                        var selectTextArray = [];
+                        $.each($("#keywords_box input"), function () {
+                            var text = $(this).val();
+                            if (text != "") {
+                                selectTextArray.push(text);
+                            }
+                        });
+                        $.each($(".select-result dd[class='selected']"), function (ddIndex, dd) {
+                            selectTextArray.push($(this).text());
+                        });
+
+                        $.each($("#divContent table tbody tr"), function () {
+                            var a = $(this).find("td").first().find("a");
+                            a.attr("href", a.attr("href") + "&ky=" + encodeURI(selectTextArray.join(",")));
+                        })
+
+
+                        if (isInIframe()) {
+                            $($("#divContent table tr").find("td:eq(11),th:not([id])")[1]).hide();
+                            $("#divContent table tr").find("td:eq(11)").hide();
+                        }
+                    }
+                } else if (result.state == 99) {
+                    layer.open({
+                        type: 1,
+                        title: _languageObj.getConfitTypeValue(_languageObj.msg, 'Information'),
+                        content: "<div style='margin:10px 7px;'>" + _languageObj.getConfitTypeValue(_languageObj.msg, 'AfterLoggingIn') + "</div>",
+                        btn: [_languageObj.getConfitTypeValue(_languageObj.msg, 'ToLogIn'), _languageObj.getConfitTypeValue(_languageObj.msg, 'Cancel')],
+                        yes: function (index, layero) {
+                            window.location.href = "/Login/Index?returnUrl=" + window.location.pathname + window.location.search;
+                        },
+                        cancel: function () {
+                        }
+                    });
+                } else if (result.state == 999) {
+                    window.location.href = "/Login/Index?returnUrl=" + window.location.pathname + window.location.search;
+                } else {
+                    appAlert(result.msg);
+                }
+                postMessageToIframe();
+                _languageObj.refreshControl("divContent", _languageObj.title);
+                _languageObj.refreshControl("PageContent", _languageObj.title);
+            },
+            error: function () {
+
+            },
+            complete: function () {
+                layer.close(indexA);
+            }
+        })
+    }
+
+    function setKeywordTextFont(el, val) {
+        var nt = '<font style="color:#c00">{val}</font>';
+        val = val.replace(/[&\|\\\*^%$#.\-]/g, "");
+        if (val == '') return false;
+        var reg = RegExp(val, "gi");
+        if ($(el).find("a").length > 0) {
+            $(el).find("a").html($(el).find("a").html().replace(reg, nt.replace("{val}", $(el).find("a").html().match(reg) ? $(el).find("a").html().match(reg)[0] : "")));
+        } else {
+            $(el).html($(el).html().replace(reg, nt.replace("{val}", $(el).html().match(reg) ? $(el).html().match(reg)[0] : "")));
+        }
+    }
+
+    function collectionSearchCondition() {
+        var searchConditionArray = [];
+        $.each($(".select-result dd[class='selected']"), function (ddIndex, dd) {
+            var selectedItem = {};
+            selectedItem.ConditionType = $(this).attr("id").split("_")[0].replace("select", "");
+            selectedItem.ConditionValue = selectedItem.ConditionType == "StandardSys" ? $(this).attr("standardsysid") : $(this).attr("name");
+            selectedItem.StandardSysID = $(this).attr("standardsysid");//搜索用不到，只是登录之后重新加载搜索条件用到
+            searchConditionArray.push(selectedItem);
+        });
+        if ('' != null && '' != "") {
+            searchConditionArray.push({ ConditionType: 'MainType', ConditionValue: '' });
+        }
+        if ('' != null && '' != "") {
+            searchConditionArray.push({ ConditionType: 'Application', ConditionValue: '' });
+        }
+        if ('' != null && '' != "") {
+            searchConditionArray.push({ ConditionType: 'Shape', ConditionValue: '' });
+        }
+
+        var chemicalElementArray = [];
+        $.each($("#huaxuelist select"), function (selIndex, item) {
+            var chemicalElementItem = {};
+            chemicalElementItem.PropertyName = $(this).val();
+            chemicalElementItem.min = $(this).parent().next().find("input[type='text']").eq(0).val();
+            chemicalElementItem.max = $(this).parent().next().find("input[type='text']").eq(1).val();
+            chemicalElementArray.push(chemicalElementItem);
+        });
+
+        var dynamicsElementArray = [];
+        $.each($("#lixuelist select"), function (selIndex, item) {
+            var dynamicsElementItem = {};
+            dynamicsElementItem.PropertyName = $(this).val();
+            dynamicsElementItem.min = $(this).parent().next().find("input[type='text']").eq(0).val();
+            dynamicsElementItem.max = $(this).parent().next().find("input[type='text']").eq(1).val();
+            dynamicsElementArray.push(dynamicsElementItem);
+        });
+        var result = {};
+        $.each($("#keywords_box input,select"), function (keyIndex, item) {
+            result[$(this).attr("id")] = $(this).val();
+        });
+        result.SelectedConditionList = searchConditionArray;
+        result.ChemicalElementList = chemicalElementArray;
+        result.DynamicsElementList = dynamicsElementArray;
+        result.Keywords = $("#Keywords").val().trim();
+        result.Keywords1 = $("#Keywords1").val().trim();
+        result.Keywords2 = $("#Keywords2").val().trim();
+        $("#Keywords").val($("#Keywords").val().trim());
+        $("#Keywords1").val($("#Keywords1").val().trim());
+        $("#Keywords2").val($("#Keywords2").val().trim());
+        result.Keywords1Type = $("#Keywords1Type").val();
+        result.Keywords2Type = $("#Keywords2Type").val();
+        return result;
+    }
+
+    function showOrHideStandardSys(t, obj) {
+        if (t == 1){//展开
+            $("#selStandardHide").hide();
+            $("#selStandardShow").show();
+        } else {//收起
+            $("#selStandardHide").show();
+            $("#selStandardShow").hide();
+        }
+    }
+
+    function OpenLoginFrm() {
+        set_cache("__MaterialSearchConditonCacheKey", JSON.stringify(collectionSearchCondition()));
+        window.location = "/Login/Index?returnUrl=" + window.location.pathname + window.location.search; +"&resource=login"
+        return false;
+    }
+
+    function initSearchCondition() {
+        var conditionStr = get_cache("__MaterialSearchConditonCacheKey");
+        if (conditionStr != null && conditionStr != '') {
+            var conObj = JSON.parse(conditionStr);
+            if (conObj.SelectedConditionList.length > 0) {
+                $.each(conObj.SelectedConditionList, function (index, item) {
+                    if (item.ConditionType == "StandardSys") {
+                        $(".select dd[id='" + item.ConditionType + "_hide_" + item.StandardSysID + "']").click();
+                    } else {
+                        $(".select dd[id='" + item.ConditionType + "_" + item.ConditionValue + "']").click();
+                    }
+                });
+            }
+            if (conObj.ChemicalElementList.length > 0) {
+                $.each(conObj.ChemicalElementList, function (index, item) {
+                    var select = $("#huaxuelist select:eq(" + index + ")");
+                    select.val(item.PropertyName);
+                    select.parent().next().find("input[type='text']").eq(0).val(item.min);
+                    select.parent().next().find("input[type='text']").eq(1).val(item.max);
+                });
+            }
+            if (conObj.DynamicsElementList.length > 0) {
+                $.each(conObj.DynamicsElementList, function (index, item) {
+                    var select = $("#lixuelist select:eq(" + index + ")");
+                    select.val(item.PropertyName);
+                    select.parent().next().find("input[type='text']").eq(0).val(item.min);
+                    select.parent().next().find("input[type='text']").eq(1).val(item.max);
+                });
+            }
+            if (conObj.Keywords) {
+                $("#Keywords").val(conObj.Keywords);
+            }
+            if (conObj.Keywords1) {
+                $("#Keywords1").val(conObj.Keywords1);
+            }
+            if (conObj.Keywords2) {
+                $("#Keywords2").val(conObj.Keywords2);
+            }
+            remove_cache("__MaterialSearchConditonCacheKey");
+        }
+    }
+</script>
+
+</body>
+</html>

@@ -33,7 +33,7 @@
                 <div class="product_name col-xs-6 col-md-5">
 {#                    <h3 style="text-align: center">{{ product.product_name }}</h3>#}
                     <div class="btn-group-vertical" style="margin-top: 80px">
-                        <button class="button15 button15-1 button15-2">报表输出</button>
+                        <button class="button15 button15-1 button15-2" id='excel' type="button" onclick="method5('dataTable')">报表输出</button>
                         <button class="button15 button15-1 button15-2 margin15">添加收藏</button>
                         <button class="button15 button15-1 button15-2 margin15">关联零件</button>
                         <button class="button15 button15-1 button15-2 margin15">加入对比</button>
@@ -48,7 +48,7 @@
             <div id="product_result" class="product_result">
                 <div class="flag1">
                     <div class="row">
-                        <table class="table table-bordered product_table1">
+                        <table class="table table-bordered product_table1" id="dataTable">
                             <tr>
                                 <td>名称</td>
                                 <td>{{ product.product_name }}</td>
@@ -166,17 +166,103 @@
             </div>
         </div>
     </div>
+    </div>
+    <script>
+    //打印表格
+    var idTmr;
 
-<script>
-$(document).ready(function(){
-    $("#product_btns a").click(function(){
-        if(!$(this).hasClass("active")){
-            $("#product_btns a").removeClass("active");
-            $(this).addClass("active");
-            $("#product_result>div").addClass("disno");
-            $("#product_result>div").eq($(this).index()).removeClass("disno");
+    function getExplorer() {
+        var explorer = window.navigator.userAgent;
+        //ie
+        if(explorer.indexOf("MSIE") >= 0) {
+            return 'ie';
         }
-    });
-});
+        //firefox
+        else if(explorer.indexOf("Firefox") >= 0) {
+            return 'Firefox';
+        }
+        //Chrome
+        else if(explorer.indexOf("Chrome") >= 0) {
+            return 'Chrome';
+        }
+        //Opera
+        else if(explorer.indexOf("Opera") >= 0) {
+            return 'Opera';
+        }
+        //Safari
+        else if(explorer.indexOf("Safari") >= 0) {
+            return 'Safari';
+        }
+    }
+
+    function method5(tableid) {
+        if(getExplorer() == 'ie') {
+            var curTbl = document.getElementById(tableid);
+            var oXL = new ActiveXObject("Excel.Application");
+            var oWB = oXL.Workbooks.Add();
+            var xlsheet = oWB.Worksheets(1);
+            var sel = document.body.createTextRange();
+            sel.moveToElementText(curTbl);
+            sel.select();
+            sel.execCommand("Copy");
+            xlsheet.Paste();
+            oXL.Visible = true;
+
+            try {
+                var fname = oXL.Application.GetSaveAsFilename("Excel.xls",
+                        "Excel Spreadsheets (*.xls), *.xls");
+            } catch(e) {
+                print("Nested catch caught " + e);
+            } finally {
+                oWB.SaveAs(fname);
+                oWB.Close(savechanges = false);
+                oXL.Quit();
+                oXL = null;
+                idTmr = window.setInterval("Cleanup();", 1);
+            }
+
+        } else {
+            tableToExcel(tableid)
+        }
+    }
+
+    function Cleanup() {
+        window.clearInterval(idTmr);
+        CollectGarbage();
+    }
+    var tableToExcel = (function() {
+        var uri = 'data:application/vnd.ms-excel;base64,',
+                template = '<html><head><meta charset="UTF-8"></head><body><table  border="1">{table}</table></body></html>',
+                base64 = function(
+                        s) {
+                    return window.btoa(unescape(encodeURIComponent(s)))
+                },
+                format = function(s, c) {
+                    return s.replace(/{(\w+)}/g, function(m, p) {
+                        return c[p];
+                    })
+                }
+        return function(table, name) {
+            if(!table.nodeType)
+                table = document.getElementById(table)
+            var ctx = {
+                worksheet: name || 'Worksheet',
+                table: table.innerHTML
+            }
+            window.location.href = uri + base64(format(template, ctx))
+        }
+    })()
 </script>
+    <script>
+        $(document).ready(function(){
+            $("#product_btns a").click(function(){
+                if(!$(this).hasClass("active")){
+                    $("#product_btns a").removeClass("active");
+                    $(this).addClass("active");
+                    $("#product_result>div").addClass("disno");
+                    $("#product_result>div").eq($(this).index()).removeClass("disno");
+                };
+            });
+        });
+    </script>
 {% endblock %}

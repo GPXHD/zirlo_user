@@ -24,9 +24,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'pb%#n90vc5%(r(=&+5i#9plo1ou@c)4$1%g8t+5(s=i1q^!==o'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 IP_ADDRESS = '120.24.171.173'
 # '120.24.171.173', '192.168.52.131', '192.168.52.130'
+# 本地连接的话需要用本机的IP地址
 ALLOWED_HOSTS = ['*']
 
 

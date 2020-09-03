@@ -1,14 +1,17 @@
 from django.shortcuts import render, redirect, render_to_response
 from django.conf import settings
-from .models import Product, Feature, Material
+from .models import Product, Feature, Material, Product1
 from . import forms
 import datetime
 from django.urls import reverse
 from django.http import JsonResponse, HttpResponseRedirect, Http404
 from django.views.generic import TemplateView, View
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Q
+import csv
 
 
+# 创建实体
 def create_product(request):
     is_login = request.session.get('is_login', None)
     if not is_login:
@@ -55,6 +58,7 @@ def create_product(request):
     return render(request, 'zr/create.html', locals())
 
 
+# 实体展示
 def product_show(request):
     is_login = request.session.get('is_login', None)
     if not is_login:
@@ -83,8 +87,8 @@ def product_show(request):
     p = Paginator(all_products, 9, request=request)
     products = p.page(page)
 
-    # return render(request, 'zr/show.html', locals())
-    return render(request, 'zr/show.html', {
+    # return render(request, 'zr/product_show.html', locals())
+    return render(request, 'zr/product_show.html', {
         'is_login': is_login,
         'all_products': products,
         'all_materials': all_materials,
@@ -94,6 +98,7 @@ def product_show(request):
     })
 
 
+# 实体详情
 def product_detail(request, product_name):
     is_login = request.session.get('is_login', None)
     if not is_login:
@@ -112,6 +117,7 @@ def product_detail(request, product_name):
     return render(request, 'zr/detail.html', locals())
 
 
+# 实体搜索
 def product_search(request):
     is_login = request.session.get('is_login', None)
     if not is_login:
@@ -137,11 +143,12 @@ def product_search(request):
             return render(request, 'zr/product_search.html', locals())
         else:
             products = Product.objects.all()
-            return render(request, 'zr/show.html', locals())
+            return render(request, 'zr/product_show.html', locals())
     search_form = forms.SearchForm()
     return render(request, 'zr_base.html', locals())
 
 
+# 产品展示分页
 class ProductListView(View):
 
     def get(self, request):
@@ -181,6 +188,7 @@ class ProductListView(View):
         })
 
 
+# 创建材料
 def create_material(request):
     is_login = request.session.get('is_login', None)
     if not is_login:
@@ -218,6 +226,7 @@ def create_material(request):
     return render(request, 'zr/material.html', locals())
 
 
+# 材料展示
 def material_show(request):
     is_login = request.session.get('is_login', None)
     if not is_login:
@@ -226,6 +235,7 @@ def material_show(request):
     return render(request, 'zr/material_show.html', locals())
 
 
+# 删除材料
 def delete_material(request, data_id):
     is_login = request.session.get('is_login', None)
     if not is_login:
@@ -236,6 +246,7 @@ def delete_material(request, data_id):
     return redirect('zr:material_show')
 
 
+# 修改材料
 def modify_material(request, name):
     is_login = request.session.get('is_login', None)
     if not is_login:
@@ -254,8 +265,8 @@ def modify_material(request, name):
     if request.method == 'POST':
         material_modify_form = forms.MaterialModifyForm(request.POST)
         message = "更新失败，请检查填写内容！"
-        material_list = ['material', 'e', 'p', 'density', 'k', 'fs']
-        for i in material_list:
+        material_lists = ['material', 'e', 'p', 'density', 'k', 'fs']
+        for i in material_lists:
             if material_modify_form[i].value():
                 material_dict[i] = material_modify_form[i].value()
 
@@ -273,6 +284,7 @@ def modify_material(request, name):
     return render(request, 'zr/material_modify.html', locals())
 
 
+# 创建特征
 def create_feature(request):
     is_login = request.session.get('is_login', None)
     if not is_login:
@@ -311,6 +323,7 @@ def create_feature(request):
     return render(request, 'zr/feature_create.html', locals())
 
 
+# 特征展示
 def feature_show(request):
     is_login = request.session.get('is_login', None)
     if not is_login:
@@ -319,6 +332,7 @@ def feature_show(request):
     return render(request, 'zr/feature_show.html', locals())
 
 
+# 删除特征
 def delete_feature(request, data_id):
     is_login = request.session.get('is_login', None)
     if not is_login:
@@ -329,6 +343,7 @@ def delete_feature(request, data_id):
     return redirect('zr:feature_show')
 
 
+# 修改特征
 def modify_feature(request, name):
     is_login = request.session.get('is_login', None)
     if not is_login:
@@ -368,6 +383,7 @@ def modify_feature(request, name):
     return render(request, 'zr/feature_modify.html', locals())
 
 
+# 主页
 def main(request):
     is_login = request.session.get('is_login', None)
     if not is_login:
@@ -392,5 +408,116 @@ def main(request):
     return render(request, '../templates/main.html', locals())
 
 
-def test(request):
-    return render(request, 'zr/test.html')
+# 高级检索
+def advanced_search(request):
+    if request.method == 'POST':
+        input_value = request.POST.get('post_value', None)
+        l1 = request.POST.get('huaxue1', None)
+        input_list = input_value.strip().split('>')[1:-1]
+        dict1 = {
+            '材料类别': ['碳素结构钢', '低合金高强度钢', '其他材料类别'],
+            '形状': ['板', '带', '其他形状'],
+            '产品类别': ['冷轧材', '热轧材'],
+        }
+        d = []
+        for i in range(len(input_list) // 2 + 1):
+            d.append(input_list[2 * i][:-3])
+        condition = {1: ['0'] * 3, 2: ['0'] * 3, 3: ['0'] * 2}
+        for i in d:
+            if i in dict1['材料类别']:
+                for j in range(len(dict1['材料类别'])):
+                    if i == dict1['材料类别'][j]:
+                        condition[1][j] = '1'
+            elif i in dict1['形状']:
+                for j in range(len(dict1['形状'])):
+                    if i == dict1['形状'][j]:
+                        condition[2][j] = '1'
+            elif i in dict1['产品类别']:
+                for j in range(len(dict1['产品类别'])):
+                    if i == dict1['产品类别'][j]:
+                        condition[3][j] = '1'
+        condition1 = int(''.join(condition[1]), 2)
+        condition2 = int(''.join(condition[2]), 2)
+        condition3 = int(''.join(condition[3]), 2)
+        print(l1)
+        print(input_value)
+        print(d)
+        print(condition)
+        print(condition1)
+        print(condition2)
+        print(condition3)
+    return render(request, 'zr/advanced_search.html', locals())
+
+
+# 材料比较
+def compare_material(request):
+    return render(request, 'zr/compare_material.html', locals())
+
+
+# 主页
+def base_2020(request):
+    return render(request, 'main_2020.html', locals())
+
+
+# 材料详情展示
+def material_detail(request, key):
+    product = Product.objects.get(name=key)
+    if request.method == 'POST':
+        b = request.POST.get('111', None)
+        with open('./{}.csv'.format(product.name), 'w', newline='') as f:
+            csv_writer = csv.writer(f)
+            csv_writer.writerow(["品种", "适用标准", "国别", "碳含量（C）", "锰含量（Mn）", "硅含量（Si）",
+                                 "磷含量（P）", "硫含量（S）", "屈服强度YS", "抗拉强度Rm", "冲击功Akv"])
+            csv_writer.writerow([product.name, product.standard, product.country, product.C, product.Mn,
+                                 product.Si, product.P, product.S, product.Ys, product.Rm, product.Akv])
+        return redirect('material_detail')
+    return render(request, 'zr/material_detail.html', locals())
+
+
+# 材料列表
+def material_list(request, key):
+    key1 = key
+    try:
+        mat = Product.objects.get(name=key)
+        # users = []
+        # user1 = User.objects.filter(username__icontains=username)
+        # for i in user1:
+        #     users.append(i)
+        return render(request, 'zr/material_list.html', locals())
+    except:
+        mat = ''
+    return render(request, 'zr/material_list.html', locals())
+
+
+# 材料相似性
+def material_similar(request, key):
+    mat_base = Product.objects.get(name=key)
+    # 当要求的性能参数不同时，可以设定一个字典，前端传来参数名，后端匹配
+    para1 = mat_base.Ys
+    para2 = mat_base.Rm
+    para3 = mat_base.Akv
+    para4 = mat_base.C
+    try:
+        mat = Product.objects.filter(
+            Q(Ys=para1) | Q(Rm=para2) | Q(Akv=para3) | Q(C=para4)
+        ).exclude(name=key)[:20]
+        msg = '成功！'
+    except:
+        msg = '失败！'
+    return render(request, 'zr/material_similar.html', locals())
+
+
+# 材料向导
+def material_wizard(request, pid=''):
+    p_id = pid
+    return render(request, 'zr/material_wizard.html', locals())
+
+
+# 打印报表
+def print_report(request):
+    return render(request, 'zr/print_report.html', locals())
+
+
+# 生成曲线
+def quxian(request):
+    return render(request, 'zr/quxian.html', locals())

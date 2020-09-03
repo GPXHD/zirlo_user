@@ -21,7 +21,7 @@ def get_gallery_modal():
                   <a class="btn btn-info modal-prev"><i class="fa fa-arrow-left"></i> <span>%s</span></a>
                   <a class="btn btn-primary modal-next"><span>%s</span> <i class="fa fa-arrow-right"></i></a>
                   <a class="btn btn-success modal-play modal-slideshow" data-slideshow="5000"><i class="fa fa-play"></i> <span>%s</span></a>
-                  <a class="btn btn-default modal-download" target="_blank"><i class="fa fa-download"></i> <span>%s</span></a>
+                  <a class="btn btn-default modal-print_report" target="_blank"><i class="fa fa-print_report"></i> <span>%s</span></a>
               </div>
             </div><!-- /.modal-content -->
           </div><!-- /.modal-dialog -->

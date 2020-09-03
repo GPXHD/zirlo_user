@@ -1,0 +1,42 @@
+﻿@charset"utf-8";
+
+
+/*-----------------自定义按钮样式，移动端不需要，PC端根据实际情况选择----------------*/
+.banner {font-size: 14px;position:relative;text-align:center;}
+.banner a.bannercontrol {position:absolute;display: block;top: 42%;width: 36px;height: 56px;cursor: pointer;z-index: 2;}
+.banner a.bannerprev {left: 0;background: url(/static/base_2020/left.jpg) no-repeat;opacity:0.8;background-size: 100%;}
+.banner a.bannernext {right: 0;background: url(/static/base_2020/right.jpg) no-repeat;opacity:0.8;background-size: 100%;}
+/*.banner a.bannerprev:hover {background-position: -20px -112px;opacity:0.3;}
+.banner a.bannernext:hover {background-position: -60px -112px;opacity:0.3;}*/
+
+    .banner .bannerbox {    
+        width:30px;
+        height:5px; 
+        display:inline-block;
+        margin:2px;
+        background-color:#ffffff;
+        bottom:10px;
+    }
+        .banner .selected {
+            background-color:#494039 !important;
+        }
+/*----------------------------为保证最佳效果，建议设置如下样式------------------------*/
+.bannerslider {display: none}
+
+.banner .title{
+    float: left;
+    height: 1em;
+    padding: 1em 0.5em;
+    font-family: "microsoft yahei";
+    vertical-align: top;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    background: 0 0;
+    font-weight: 400;
+    font-style: inherit;
+    font-family: inherit;
+    vertical-align: top; 
+}

@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, render_to_response
+from django.shortcuts import render, redirect, render_to_response, reverse
 from django.conf import settings
 from .models import User, ConfirmString, ConfirmNumber, Files
 from . import forms
@@ -7,6 +7,8 @@ from django.urls import reverse
 from login.others import send_mail, confirms, encryption
 from django.contrib.auth.hashers import make_password, check_password
 from captcha.models import CaptchaStore
+import csv
+from django.db.models import Q
 from captcha.helpers import captcha_image_url
 from django.http import JsonResponse, HttpResponseRedirect, Http404, FileResponse
 from django.utils import timezone
@@ -32,6 +34,27 @@ def page_not_found(request, exception):
 # 500错误
 def page_error(request):
     return render(request, '500.html')
+
+
+# 上传文件
+def upload_file(request):
+    is_login = request.session.get('is_login', None)
+    if not is_login:
+        return redirect('/')
+    user_id = request.session.get('user_id')
+    user = User.objects.get(id=user_id)
+    if request.method == "POST":
+        upload_form = forms.FileForm(request.POST, request.FILES)
+        if upload_form.is_valid():
+            filename = upload_form.cleaned_data['file'].name
+            file = upload_form.cleaned_data['file']
+            new_file = Files(filename=filename, file=file)
+            new_file.save()
+            return redirect('login:upload_file')
+        message = '上传文件失败！'
+        return render(request, 'login/upload_file.html', locals())
+    upload_form = forms.FileForm()
+    return render(request, 'login/upload_file.html', locals())
 
 
 # 上传文件展示
@@ -104,27 +127,6 @@ def index(request):
         else:
             return render(request, 'login/index.html', locals())
     return render(request, 'login/index.html', locals())
-
-
-# index1
-def index1(request):
-    is_login = request.session.get('is_login', None)
-    if not is_login:
-        return redirect('/')
-    user_id = request.session.get('user_id')
-    user = User.objects.get(id=user_id)
-    if request.method == "POST":
-        upload_form = forms.FileForm(request.POST, request.FILES)
-        if upload_form.is_valid():
-            filename = upload_form.cleaned_data['file'].name
-            file = upload_form.cleaned_data['file']
-            new_file = Files(filename=filename, file=file)
-            new_file.save()
-            return redirect('index1')
-        message = '上传文件失败！'
-        return render(request, 'login/index1.html', locals())
-    upload_form = forms.FileForm()
-    return render(request, 'login/index1.html', locals())
 
 
 # 用户登录
@@ -491,6 +493,7 @@ def ajax_val(request):
     #     return context1
 
 
-def test(request):
+def kongjian(request):
 
     return render(request, 'login/test.html', locals())
+

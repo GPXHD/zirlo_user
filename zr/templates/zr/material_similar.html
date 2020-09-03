@@ -1,0 +1,89 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="format-detection" content="telephone=no">
+    <title>材料详情</title>
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <script src="/static/css/material_detail/hm.js"></script>
+    <script src="/static/css/material_detail/jquery-1.11.1.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <link href="/static/css/material_detail/index_main.css" rel="stylesheet">
+    <script src="/static/css/material_detail/knockout.js"></script>
+    <script src="/static/css/material_detail/knockout.mapping.js"></script>
+    <script src="/static/css/material_detail/validform_v5.3.2_min.js"></script>
+    <script src="/static/css/material_detail/wdatepicker.js"></script>
+    <link href="/static/css/material_detail/WdatePicker.css" rel="stylesheet" type="text/css">
+    <script src="/static/css/material_detail/layer.js"></script>
+    <link rel="stylesheet" href="/static/css/material_detail/layer.css" id="layui_layer_skinlayercss" style="">
+    <script src="/static/css/material_detail/jscommon.js"></script>
+    <script src="/static/css/material_detail/scriptpager.js"></script>
+    <script src="/static/css/material_detail/jquery-ui.min.js"></script>
+
+    <script>
+        $(function () {
+            $(".top").find("a,img").css({ "vertical-align": "super" });
+        })
+    </script>
+</head>
+
+<body style="background-color: #e8e8e8; margin: 0; padding: 0; font-family: 微软雅黑">
+    <div class="div-c">
+        <header>
+            <div class="top">
+                <div style="font-size: 22px; color: #0094ff; float: left; width:220px"><img src="/static/image/hnu_logo.png" alt="湖南大学"></div>
+                <div class="top-right" style="width:750px">
+                    <i class="top-right-icon top-right-user"></i><span><a href="{% url 'login:login' %}" >您好！请登录</a></span>
+                    <i class="top-right-icon top-right-user"></i><span><a href="{% url 'login:register' %}">免费注册</a></span>
+                    <span><a href="/" >首页</a></span>
+                    <span><a href="{% url 'login:user_center' %}" >个人中心</a></span>
+                    <span><a href="{% url 'login:logout' %}" >退出</a></span>
+                    <span><a href="{% url 'login:upload_file_show' %}" >上传文件</a></span>
+                    <span><a href="{% url 'zr:print_report' %}" >打印报表</a></span>
+                </div>
+            </div>
+            <style>.daohang a{font-size:14px !important; line-height:26px;}</style>
+            <div id="lightmenu" class="daohang" style="box-shadow: 3px 3px 3px 3px #d8d8d8;z-index:99999"></div>
+        </header>
+        <div class="divcontent">
+            <div style="height: 20px; line-height: 20px; font-size: 13px; width: 100%;margin-top:9px">
+                <a href="{% url 'zr:material_similar' mat_base.name %}">当前位置：</a>
+                <a href="/">首页-></a>
+                <a href="{% url 'zr:material_detail' mat_base.name %}">材料详情-></a>
+                <a href="{% url 'zr:material_similar' mat_base.name %}">相似材料</a>
+            </div>
+            <div class="body-left">
+                <h1 class="detail-h1-class"><font style="background:yellow;">{{ mat_base.name }}</font>相似材料</h1>
+            </div>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>牌号</th>
+                    <th>标准</th>
+                    <th>材料类别</th>
+                    <th>产品</th>
+                    <th>用途</th>
+                    <th>说明</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for m in mat %}
+                    <tr>
+                        <td>{{ m.name }}</td>
+                        <td>{{ m.standard }}</td>
+                        <td>{{ m.name }}</td>
+                        <td>{{ m.name }}</td>
+                        <td>{{ m.name }}</td>
+                        <td>{{ m.name }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <script src="/static/css/material_detail/affirm-public.js"></script>
+        </div>
+    </div>
+</body>
+</html>

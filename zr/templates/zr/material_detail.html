@@ -1,0 +1,589 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="format-detection" content="telephone=no">
+    <title>材料详情</title>
+    <meta name="viewport" content="width=device-width">
+    <script src="/static/css/material_detail/hm.js"></script>
+    <script src="/static/css/material_detail/jquery-1.11.1.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <link href="/static/css/material_detail/index_main.css" rel="stylesheet">
+    <style>
+        .layui-layer-shade { opacity: 0.2 !important; }
+    </style>
+    <script src="/static/css/material_detail/knockout.js"></script>
+    <script src="/static/css/material_detail/knockout.mapping.js"></script>
+    <script src="/static/css/material_detail/validform_v5.3.2_min.js"></script>
+    <script src="/static/css/material_detail/wdatepicker.js"></script>
+    <link href="/static/css/material_detail/WdatePicker.css" rel="stylesheet" type="text/css">
+    <script src="/static/css/material_detail/layer.js"></script>
+    <link rel="stylesheet" href="/static/css/material_detail/layer.css" id="layui_layer_skinlayercss" style="">
+    <script src="/static/css/material_detail/jscommon.js"></script>
+    <script src="/static/css/material_detail/scriptpager.js"></script>
+    <script src="/static/css/material_detail/jquery-ui.min.js"></script>
+    <script>
+        $(function () {
+            $(".top").find("a,img").css({ "vertical-align": "super" });
+        })
+    </script>
+</head>
+
+<body style="background-color: #e8e8e8; margin: 0; padding: 0; font-family: 微软雅黑">
+    <div class="div-c">
+        <input type="hidden" value="{&quot;ConfigTypeTitle&quot;:[{&quot;key&quot;:&quot;ThePreviousSage&quot;,&quot;value&quot;:&quot;\\u4E0A\\u4E00\\u9875&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;CurrentLocation&quot;,&quot;value&quot;:&quot;\\u5F53\\u524D\\u4F4D\\u7F6E\\uFF1A&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;HomePage&quot;,&quot;value&quot;:&quot;\\u9996\\u9875\\u002D\\u003E&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;Address&quot;,&quot;value&quot;:&quot;\\u5730\\u5740\\uFF1A\\u5317\\u4EAC\\u5E02\\u6D77\\u6DC0\\u533A\\u9AD8\\u6881\\u6865\\u659C\\u8857\\u0031\\u0033\\u53F7\\u94A2\\u94C1\\u7814\\u7A76\\u603B\\u9662&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;All&quot;,&quot;value&quot;:&quot;\\u5168\\u90E8&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;AllRightsReserved&quot;,&quot;value&quot;:&quot;\\u0043\\u006F\\u0070\\u0079\\u0072\\u0069\\u0067\\u0068\\u0074\\u0040\\u0032\\u0030\\u0031\\u0036\\u0020\\u7248\\u6743\\u6240\\u6709\\u0020&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;CastlePeakStencil&quot;,&quot;value&quot;:&quot;\\u9752\\u5C71\\u94A2\\u7F51&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;ChinaKair&quot;,&quot;value&quot;:&quot;\\u4E2D\\u56FD\\u94A2\\u7814&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;CloudDetection&quot;,&quot;value&quot;:&quot;\\u4E91\\u68C0\\u6D4B&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;CloudDetectionServiceCase&quot;,&quot;value&quot;:&quot;\\u4E91\\u68C0\\u6D4B\\u670D\\u52A1\\u6848\\u4F8B&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;CustomerServiceWeChat&quot;,&quot;value&quot;:&quot;\\u5BA2\\u670D\\u5FAE\\u4FE1&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;Download&quot;,&quot;value&quot;:&quot;\\u0041\\u0050\\u0050\\u4E0B\\u8F7D&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;Email&quot;,&quot;value&quot;:&quot;\\u90AE\\u7BB1\\uFF1A\\u0061\\u0074\\u0073\\u0074\\u0065\\u0065\\u006C\\u0040\\u0063\\u0069\\u0073\\u0072\\u0069\\u002E\\u0063\\u006F\\u006D\\u002E\\u0063\\u006E&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;Empty&quot;,&quot;value&quot;:&quot;\\u7A7A&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;ExpertAdvice&quot;,&quot;value&quot;:&quot;\\u4E13\\u5BB6\\u54A8\\u8BE2&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;FiveBrother&quot;,&quot;value&quot;:&quot;\\u4E94\\u963F\\u54E5&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;FreeRegistration&quot;,&quot;value&quot;:&quot;\\u514D\\u8D39\\u6CE8\\u518C&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;Hello&quot;,&quot;value&quot;:&quot;\\u60A8\\u597D&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;Hello_PleaseLogIn&quot;,&quot;value&quot;:&quot;\\u60A8\\u597D\\uFF01\\u8BF7\\u767B\\u5F55&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;HelpCenter&quot;,&quot;value&quot;:&quot;\\u5E2E\\u52A9\\u4E2D\\u5FC3&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;HierarchicalSolution&quot;,&quot;value&quot;:&quot;\\u5206\\u7EA7\\u89E3\\u51B3\\u65B9\\u6848&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;Indeterminacy&quot;,&quot;value&quot;:&quot;\\u4E0D\\u786E\\u5B9A&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;IntelligentMatching&quot;,&quot;value&quot;:&quot;\\u667A\\u80FD\\u5339\\u914D&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;MaterialsForTheWizard&quot;,&quot;value&quot;:&quot;\\u6750\\u6599\\u5411\\u5BFC&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;MyData&quot;,&quot;value&quot;:&quot;\\u6211\\u7684\\u6570\\u636E&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;NationalSteelProductQualitySupervisionAndInspectionCenter&quot;,&quot;value&quot;:&quot;\\u56FD\\u5BB6\\u94A2\\u94C1\\u4EA7\\u54C1\\u8D28\\u91CF\\u76D1\\u7763\\u68C0\\u9A8C\\u4E2D\\u5FC3&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;NewsAndInformation&quot;,&quot;value&quot;:&quot;\\u65B0\\u95FB\\u8D44\\u8BAF&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;PlatformIsIntroduced&quot;,&quot;value&quot;:&quot;\\u5E73\\u53F0\\u4ECB\\u7ECD&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;PleaceChoose&quot;,&quot;value&quot;:&quot;\\u8BF7\\u9009\\u62E9&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;PrimroseSteelNet&quot;,&quot;value&quot;:&quot;\\u62A5\\u6625\\u94A2\\u94C1\\u7F51&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;PrivateClouds&quot;,&quot;value&quot;:&quot;\\u79C1\\u6709\\u4E91&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;ProductClassification&quot;,&quot;value&quot;:&quot;\\u4EA7\\u54C1\\u5206\\u7EA7&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;ProductCustomization&quot;,&quot;value&quot;:&quot;\\u4EA7\\u54C1\\u5B9A\\u5236&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;ProductCustomizationServiceCase&quot;,&quot;value&quot;:&quot;\\u4EA7\\u54C1\\u5B9A\\u5236\\u670D\\u52A1\\u6848\\u4F8B&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;ProductCustomizationTransactionProcess&quot;,&quot;value&quot;:&quot;\\u4EA7\\u54C1\\u5B9A\\u5236\\u4EA4\\u6613\\u6D41\\u7A0B&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;RecommendedProducts&quot;,&quot;value&quot;:&quot;\\u63A8\\u8350\\u4EA7\\u54C1&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;Recruitment&quot;,&quot;value&quot;:&quot;\\u4EBA\\u624D\\u62DB\\u8058&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;RegistrationAndLogin&quot;,&quot;value&quot;:&quot;\\u6CE8\\u518C\\u4E0E\\u767B\\u5F55&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;ScanTheCodeToFollowThePublicNumber&quot;,&quot;value&quot;:&quot;\\u626B\\u7801\\u5173\\u6CE8\\u516C\\u4F17\\u53F7&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;SetUpAndMaintainTestPackage&quot;,&quot;value&quot;:&quot;\\u68C0\\u6D4B\\u5305\\u7684\\u5EFA\\u7ACB\\u4E0E\\u7EF4\\u62A4&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;Solution_ServiceCase&quot;,&quot;value&quot;:&quot;\\u89E3\\u51B3\\u65B9\\u6848\\u0026\\u670D\\u52A1\\u6848\\u4F8B&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;SteelSearch&quot;,&quot;value&quot;:&quot;\\u94A2\\u6750\\u641C\\u7D22&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;TheCancellation&quot;,&quot;value&quot;:&quot;\\u6CE8\\u9500&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;TheIndustryElite&quot;,&quot;value&quot;:&quot;\\u884C\\u4E1A\\u7CBE\\u82F1&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;ThePhone&quot;,&quot;value&quot;:&quot;\\u7535\\u8BDD\\uFF1A\\u0030\\u0031\\u0030\\u002D\\u0036\\u0032\\u0031\\u0038\\u0031\\u0036\\u0037\\u0039&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;Unlimited&quot;,&quot;value&quot;:&quot;\\u4E0D\\u9650&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;WeldMaterialSearch&quot;,&quot;value&quot;:&quot;\\u710A\\u6750\\u641C\\u7D22&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;PageBack&quot;,&quot;value&quot;:&quot;\\u5C3E\\u9875&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;PageHomePage&quot;,&quot;value&quot;:&quot;\\u9996\\u9875&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;AccordingTo&quot;,&quot;value&quot;:&quot;\\u663E\\u793A&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;AddACollection&quot;,&quot;value&quot;:&quot;\\u6DFB\\u52A0\\u6536\\u85CF&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;AllEationalAndIndustryStandards&quot;,&quot;value&quot;:&quot;\\u6240\\u6709\\u56FD\\u5BB6\\u4EE5\\u53CA\\u884C\\u4E1A\\u6807\\u51C6&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;AllEnterpriseStandards&quot;,&quot;value&quot;:&quot;\\u6240\\u6709\\u4F01\\u4E1A\\u6807\\u51C6&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;AlreadyCollected&quot;,&quot;value&quot;:&quot;\\u5DF2\\u6536\\u85CF&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;AnotherSuggestion&quot;,&quot;value&quot;:&quot;\\u5EFA\\u8BAE\\u9879&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;AnotherSuggestion1&quot;,&quot;value&quot;:&quot;\\u5EFA\\u8BAE\\u9879&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;ApplicableStandards&quot;,&quot;value&quot;:&quot;\\u9002\\u7528\\u6807\\u51C6&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;Article_pp&quot;,&quot;value&quot;:&quot;\\u6761\\u002F\\u9875&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;ATotalOf&quot;,&quot;value&quot;:&quot;\\u5171&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;BasicMechanicalProperties&quot;,&quot;value&quot;:&quot;\\u57FA\\u672C\\u529B\\u5B66\\u6027\\u80FD&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;BendingAngle&quot;,&quot;value&quot;:&quot;\\u5F2F\\u66F2\\u89D2\\u5EA6&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;BendingDiameter&quot;,&quot;value&quot;:&quot;\\u5F2F\\u66F2\\u76F4\\u5F84&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;BendingThickness&quot;,&quot;value&quot;:&quot;\\u5F2F\\u66F2\\u539A\\u5EA6&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;Brand&quot;,&quot;value&quot;:&quot;\\u724C\\u53F7&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;Brand1&quot;,&quot;value&quot;:&quot;\\u724C\\u53F7&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;BrandManagement&quot;,&quot;value&quot;:&quot;\\u724C\\u53F7\\u7BA1\\u7406&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;CeqInformation&quot;,&quot;value&quot;:&quot;\\u0063\\u0065\\u0071\\u4FE1\\u606F&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;ChemicalComposition&quot;,&quot;value&quot;:&quot;\\u5316\\u5B66\\u6210\\u5206\\u0028\\u0077\\u0074\\u0025\\uFF09&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;ClickToSeeTheDetails&quot;,&quot;value&quot;:&quot;\\u627E\\u5230\\u6210\\u5206\\u63A5\\u8FD1\\u7684\\u6750\\u8D28\\uFF0C\\u70B9\\u51FB\\u67E5\\u770B\\u8BE6\\u7EC6\\u6570\\u636E&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;Collection&quot;,&quot;value&quot;:&quot;\\u6536\\u85CF&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;Collectioned&quot;,&quot;value&quot;:&quot;\\u5DF2\\u6536\\u85CF&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;CommonMaterialDevelopment&quot;,&quot;value&quot;:&quot;\\u5E38\\u89C1\\u7684\\u6750\\u6599\\u7814\\u53D1&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;ComponentRemarks&quot;,&quot;value&quot;:&quot;\\u6210\\u5206\\u5907\\u6CE8&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;ComponentSimilarity&quot;,&quot;value&quot;:&quot;\\u6210\\u5206\\u76F8\\u4F3C\\u5EA6&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;Country&quot;,&quot;value&quot;:&quot;\\u56FD\\u522B&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;Country1&quot;,&quot;value&quot;:&quot;\\u56FD\\u522B&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;Custom&quot;,&quot;value&quot;:&quot;\\u6211\\u8981\\u5B9A\\u5236&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;Details&quot;,&quot;value&quot;:&quot;\\u8BE6\\u60C5&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;DNS&quot;,&quot;value&quot;:&quot;\\u7EDF\\u4E00\\u6570\\u5B57\\u4EE3\\u53F7\\uFF1A&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;Email&quot;,&quot;value&quot;:&quot;\\u90AE\\u7BB1\\uFF1A&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;ErrorCorrectionAdvice&quot;,&quot;value&quot;:&quot;\\u7EA0\\u9519\\u5EFA\\u8BAE&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;ErrorCorrectionTerm&quot;,&quot;value&quot;:&quot;\\u7EA0\\u6B63\\u9879\\uFF1A&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;ExtendedPerformanceData&quot;,&quot;value&quot;:&quot;\\u6269\\u5C55\\u6027\\u80FD\\u6570\\u636E&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;GO&quot;,&quot;value&quot;:&quot;\\u0047\\u004F&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;IngredientsNote&quot;,&quot;value&quot;:&quot;\\u6210\\u5206\\u5907\\u6CE8\\uFF1A&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;Instructions&quot;,&quot;value&quot;:&quot;\\u8BF4\\u660E&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;JumpTo&quot;,&quot;value&quot;:&quot;\\u8DF3\\u8F6C\\u5230&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;MaterialClasses&quot;,&quot;value&quot;:&quot;\\u6750\\u6599\\u7C7B\\u522B&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;MaterialDetails&quot;,&quot;value&quot;:&quot;\\u6750\\u6599\\u8BE6\\u60C5&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;MaterialNo&quot;,&quot;value&quot;:&quot;\\u6750\\u6599\\u53F7\\uFF1A&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;MaterialPerformanceRetrieval&quot;,&quot;value&quot;:&quot;\\u6750\\u6599\\u6027\\u80FD\\u68C0\\u7D22&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;MaterialProperties&quot;,&quot;value&quot;:&quot;\\u6750\\u8D28\\u7279\\u6027&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;MaterialSearch&quot;,&quot;value&quot;:&quot;\\u6750\\u6599\\u641C\\u7D22&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;MaterialsFor&quot;,&quot;value&quot;:&quot;\\u6750\\u6599\\u67E5\\u627E&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;Mechanical&quot;,&quot;value&quot;:&quot;\\u529B\\u5B66\\u6027\\u80FD&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;MechanicalPropertiesOf&quot;,&quot;value&quot;:&quot;\\u529B\\u5B66\\u6027\\u80FD&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;MechanicalPropertyExtension&quot;,&quot;value&quot;:&quot;\\u529B\\u5B66\\u6027\\u80FD\\u6269\\u5C55&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;ModifyThe&quot;,&quot;value&quot;:&quot;\\u4FEE\\u6539&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;More&quot;,&quot;value&quot;:&quot;\\u66F4\\u591A&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;MyAdvice&quot;,&quot;value&quot;:&quot;\\u6211\\u7684\\u5EFA\\u8BAE&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;MyMaterial&quot;,&quot;value&quot;:&quot;\\u6211\\u7684\\u6750\\u6599&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;MyMaterialManagement&quot;,&quot;value&quot;:&quot;\\u6211\\u7684\\u6750\\u6599\\u7BA1\\u7406&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;New&quot;,&quot;value&quot;:&quot;\\u65B0\\u589E&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;NoRecord&quot;,&quot;value&quot;:&quot;\\u6682\\u65E0\\u8BB0\\u5F55&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;NoSearchData&quot;,&quot;value&quot;:&quot;\\u6CA1\\u6709\\u641C\\u7D22\\u5230\\u6570\\u636E&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;Operation&quot;,&quot;value&quot;:&quot;\\u64CD\\u4F5C&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;PackUp&quot;,&quot;value&quot;:&quot;\\u6536\\u8D77&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;PerformanceSpecification&quot;,&quot;value&quot;:&quot;\\u6027\\u80FD\\u8BF4\\u660E&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;PleaseEnterYourSearchCriteria&quot;,&quot;value&quot;:&quot;\\u8BF7\\u8F93\\u5165\\u641C\\u7D22\\u6761\\u4EF6&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;Print&quot;,&quot;value&quot;:&quot;\\u6211\\u8981\\u6253\\u5370&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;Product&quot;,&quot;value&quot;:&quot;\\u4EA7\\u54C1&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;ProductCategory&quot;,&quot;value&quot;:&quot;\\u4EA7\\u54C1\\u7C7B\\u522B&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;PromptInformation&quot;,&quot;value&quot;:&quot;\\u6682\\u65F6\\u6CA1\\u6709\\u9009\\u62E9\\u8FC7\\u6EE4\\u6761\\u4EF6&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;Record&quot;,&quot;value&quot;:&quot;\\u8BB0\\u5F55&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;ReleaseTime&quot;,&quot;value&quot;:&quot;\\u53D1\\u5E03\\u65F6\\u95F4&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;Reset&quot;,&quot;value&quot;:&quot;\\u91CD\\u7F6E&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;Return1&quot;,&quot;value&quot;:&quot;\\u8FD4\\u56DE\\u4E0A\\u4E00\\u7EA7\\u9875\\u9762&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;ShockTemperature&quot;,&quot;value&quot;:&quot;\\u51B2\\u51FB\\u6E29\\u5EA6&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;ShutDown&quot;,&quot;value&quot;:&quot;\\u5173\\u95ED&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;Specifications&quot;,&quot;value&quot;:&quot;\\u89C4\\u683C&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;Standard&quot;,&quot;value&quot;:&quot;\\u6807\\u51C6&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;StandardInformation&quot;,&quot;value&quot;:&quot;\\u6807\\u51C6\\u4FE1\\u606F&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;StandardManagement&quot;,&quot;value&quot;:&quot;\\u6807\\u51C6\\u7BA1\\u7406&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;StandardSystem&quot;,&quot;value&quot;:&quot;\\u6807\\u51C6\\u4F53\\u7CFB&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;State&quot;,&quot;value&quot;:&quot;\\u72B6\\u6001&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;Submit&quot;,&quot;value&quot;:&quot;\\u63D0\\u4EA4&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;SuggestPeople&quot;,&quot;value&quot;:&quot;\\u5EFA\\u8BAE\\u4EBA\\uFF1A&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;TestApplicationData&quot;,&quot;value&quot;:&quot;\\u5B9E\\u9A8C\\u5E94\\u7528\\u6570\\u636E&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;TheBasicInformation&quot;,&quot;value&quot;:&quot;\\u57FA\\u672C\\u4FE1\\u606F&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;TheDeliveryStatus&quot;,&quot;value&quot;:&quot;\\u4EA4\\u8D27\\u72B6\\u6001&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;Thekeyword&quot;,&quot;value&quot;:&quot;\\u5173\\u952E\\u5B57&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;TheNameOfTheStandard&quot;,&quot;value&quot;:&quot;\\u6807\\u51C6\\u540D\\u79F0&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;TheNextPage&quot;,&quot;value&quot;:&quot;\\u4E0B\\u4E00\\u9875&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;ThePhone&quot;,&quot;value&quot;:&quot;\\u7535\\u8BDD\\uFF1A&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;ThePreviousPage&quot;,&quot;value&quot;:&quot;\\u4E0A\\u4E00\\u9875&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;TheProposals&quot;,&quot;value&quot;:&quot;\\u5EFA\\u8BAE\\u5185\\u5BB9\\uFF1A&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;TheProposals1&quot;,&quot;value&quot;:&quot;\\u5EFA\\u8BAE\\u5185\\u5BB9\\uFF1A&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;TheQuery&quot;,&quot;value&quot;:&quot;\\u67E5\\u8BE2&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;ThermodynamicProperties&quot;,&quot;value&quot;:&quot;\\u70ED\\u529B\\u5B66\\u6027\\u8D28&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;TheSelectedConditions&quot;,&quot;value&quot;:&quot;\\u5DF2\\u9009\\u6761\\u4EF6&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;TheSerialNumber&quot;,&quot;value&quot;:&quot;\\u5E8F\\u53F7&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;TheShapeOf&quot;,&quot;value&quot;:&quot;\\u5F62\\u72B6&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;TheStandardCersion&quot;,&quot;value&quot;:&quot;\\u6807\\u51C6\\u7248\\u672C&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;TheStandardYersion&quot;,&quot;value&quot;:&quot;\\u6807\\u51C6\\u7248\\u672C&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;Time&quot;,&quot;value&quot;:&quot;\\u65F6\\u95F4&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;Use&quot;,&quot;value&quot;:&quot;\\u7528\\u9014&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;Use1&quot;,&quot;value&quot;:&quot;\\u7528\\u9014&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;Varieties&quot;,&quot;value&quot;:&quot;\\u54C1\\u79CD&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;Vountry&quot;,&quot;value&quot;:&quot;\\u56FD\\u522B&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;WorkUnits&quot;,&quot;value&quot;:&quot;\\u5DE5\\u4F5C\\u5355\\u4F4D\\uFF1A&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;YourSuggestion&quot;,&quot;value&quot;:&quot;\\u4F60\\u7684\\u5EFA\\u8BAE&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;Brand&quot;,&quot;value&quot;:&quot;\\u724C\\u53F7&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;DetailsOfMyMaterials&quot;,&quot;value&quot;:&quot;\\u6211\\u7684\\u6750\\u6599\\u8BE6\\u60C5&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;IWantToCustomize&quot;,&quot;value&quot;:&quot;\\u6211\\u8981\\u5B9A\\u5236&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;MaterialClasses&quot;,&quot;value&quot;:&quot;\\u6750\\u6599\\u7C7B\\u522B&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;},{&quot;key&quot;:&quot;Standard&quot;,&quot;value&quot;:&quot;\\u6807\\u51C6&quot;,&quot;type&quot;:&quot;ConfigTypeTitle&quot;}],&quot;ConfigTypeDialog&quot;:[{&quot;key&quot;:&quot;AreYouSureAboutTheCancellation&quot;,&quot;value&quot;:&quot;\\u786E\\u5B9A\\u6CE8\\u9500\\u5417\\uFF1F&quot;,&quot;type&quot;:&quot;ConfigTypeDialog&quot;},{&quot;key&quot;:&quot;Cancel&quot;,&quot;value&quot;:&quot;\\u53D6\\u6D88&quot;,&quot;type&quot;:&quot;ConfigTypeDialog&quot;},{&quot;key&quot;:&quot;Determine&quot;,&quot;value&quot;:&quot;\\u786E\\u5B9A&quot;,&quot;type&quot;:&quot;ConfigTypeDialog&quot;},{&quot;key&quot;:&quot;Information&quot;,&quot;value&quot;:&quot;\\u4FE1\\u606F&quot;,&quot;type&quot;:&quot;ConfigTypeDialog&quot;},{&quot;key&quot;:&quot;AndContain&quot;,&quot;value&quot;:&quot;\\u5E76\\u542B&quot;,&quot;type&quot;:&quot;ConfigTypeDialog&quot;},{&quot;key&quot;:&quot;DoNotContain&quot;,&quot;value&quot;:&quot;\\u4E0D\\u542B&quot;,&quot;type&quot;:&quot;ConfigTypeDialog&quot;},{&quot;key&quot;:&quot;OrContain&quot;,&quot;value&quot;:&quot;\\u6216\\u542B&quot;,&quot;type&quot;:&quot;ConfigTypeDialog&quot;}],&quot;ConfigTypeMessage&quot;:[{&quot;key&quot;:&quot;Cancel&quot;,&quot;value&quot;:&quot;\\u53D6\\u6D88&quot;,&quot;type&quot;:&quot;ConfigTypeMessage&quot;},{&quot;key&quot;:&quot;Determine&quot;,&quot;value&quot;:&quot;\\u786E\\u5B9A&quot;,&quot;type&quot;:&quot;ConfigTypeMessage&quot;},{&quot;key&quot;:&quot;Information&quot;,&quot;value&quot;:&quot;\\u4FE1\\u606F&quot;,&quot;type&quot;:&quot;ConfigTypeMessage&quot;},{&quot;key&quot;:&quot;AfterLoggingIn&quot;,&quot;value&quot;:&quot;\\u60A8\\u76EE\\u524D\\u53EA\\u53EF\\u4EE5\\u8BBF\\u95EE\\u641C\\u7D22\\u7ED3\\u679C\\u524D\\u0031\\u0030\\u0030\\u6761\\u6570\\u636E\\uFF0C\\u767B\\u5F55\\u540E\\u53EF\\u67E5\\u770B\\u5168\\u90E8\\u6570\\u636E\\u3002&quot;,&quot;type&quot;:&quot;ConfigTypeMessage&quot;},{&quot;key&quot;:&quot;AfterLoggingIn2&quot;,&quot;value&quot;:&quot;\\u6750\\u6599\\u8BE6\\u60C5\\u672A\\u767B\\u5F55\\u6700\\u591A\\u80FD\\u770B\\u0031\\u0030\\u6761\\u6570\\u636E\\uFF0C\\u767B\\u5F55\\u540E\\u4E0D\\u53D7\\u9650\\u5236&quot;,&quot;type&quot;:&quot;ConfigTypeMessage&quot;},{&quot;key&quot;:&quot;Cancel4&quot;,&quot;value&quot;:&quot;\\u53D6\\u6D88&quot;,&quot;type&quot;:&quot;ConfigTypeMessage&quot;},{&quot;key&quot;:&quot;CannotRepeatCollection&quot;,&quot;value&quot;:&quot;\\u8BE5\\u6570\\u636E\\u5DF2\\u6DFB\\u52A0\\u8FC7\\u6536\\u85CF\\uFF0C\\u4E0D\\u80FD\\u91CD\\u590D\\u6DFB\\u52A0&quot;,&quot;type&quot;:&quot;ConfigTypeMessage&quot;},{&quot;key&quot;:&quot;ConfirmTheInformation&quot;,&quot;value&quot;:&quot;\\u786E\\u5B9A\\u8981\\u5220\\u9664\\u9009\\u4E2D\\u7684\\u5EFA\\u8BAE\\u4FE1\\u606F\\u5417\\uFF1F&quot;,&quot;type&quot;:&quot;ConfigTypeMessage&quot;},{&quot;key&quot;:&quot;Continue&quot;,&quot;value&quot;:&quot;\\u7EE7\\u7EED&quot;,&quot;type&quot;:&quot;ConfigTypeMessage&quot;},{&quot;key&quot;:&quot;Delete&quot;,&quot;value&quot;:&quot;\\u5220\\u9664&quot;,&quot;type&quot;:&quot;ConfigTypeMessage&quot;},{&quot;key&quot;:&quot;Determine1&quot;,&quot;value&quot;:&quot;\\u786E\\u5B9A&quot;,&quot;type&quot;:&quot;ConfigTypeMessage&quot;},{&quot;key&quot;:&quot;Determine2&quot;,&quot;value&quot;:&quot;\\u786E\\u5B9A&quot;,&quot;type&quot;:&quot;ConfigTypeMessage&quot;},{&quot;key&quot;:&quot;Information1&quot;,&quot;value&quot;:&quot;\\u4FE1\\u606F&quot;,&quot;type&quot;:&quot;ConfigTypeMessage&quot;},{&quot;key&quot;:&quot;Information2&quot;,&quot;value&quot;:&quot;\\u4FE1\\u606F&quot;,&quot;type&quot;:&quot;ConfigTypeMessage&quot;},{&quot;key&quot;:&quot;Information3&quot;,&quot;value&quot;:&quot;\\u4FE1\\u606F&quot;,&quot;type&quot;:&quot;ConfigTypeMessage&quot;},{&quot;key&quot;:&quot;ModificationSuccessful&quot;,&quot;value&quot;:&quot;\\u4FEE\\u6539\\u6210\\u529F\\uFF01&quot;,&quot;type&quot;:&quot;ConfigTypeMessage&quot;},{&quot;key&quot;:&quot;PleaseEnterSuggestions&quot;,&quot;value&quot;:&quot;\\u8BF7\\u8F93\\u5165\\u5EFA\\u8BAE\\u5185\\u5BB9&quot;,&quot;type&quot;:&quot;ConfigTypeMessage&quot;},{&quot;key&quot;:&quot;PleaseLogInAndSave&quot;,&quot;value&quot;:&quot;\\u8BF7\\u5148\\u767B\\u5F55\\u518D\\u8FDB\\u884C\\u6536\\u85CF\\uFF01&quot;,&quot;type&quot;:&quot;ConfigTypeMessage&quot;},{&quot;key&quot;:&quot;PromptInformation3&quot;,&quot;value&quot;:&quot;\\u63D0\\u793A\\u4FE1\\u606F&quot;,&quot;type&quot;:&quot;ConfigTypeMessage&quot;},{&quot;key&quot;:&quot;Return&quot;,&quot;value&quot;:&quot;\\u8FD4\\u56DE&quot;,&quot;type&quot;:&quot;ConfigTypeMessage&quot;},{&quot;key&quot;:&quot;SavedSuccessfully&quot;,&quot;value&quot;:&quot;\\u4FDD\\u5B58\\u6210\\u529F\\uFF01&quot;,&quot;type&quot;:&quot;ConfigTypeMessage&quot;},{&quot;key&quot;:&quot;ThereIsNoData&quot;,&quot;value&quot;:&quot;\\u6CA1\\u6709\\u67E5\\u5230\\u76F8\\u5E94\\u6570\\u636E\\uFF0C\\u662F\\u5426\\u8DF3\\u8F6C\\u5230\\u3010\\u4EA7\\u54C1\\u5B9A\\u5236\\u3011\\u754C\\u9762\\uFF1F&quot;,&quot;type&quot;:&quot;ConfigTypeMessage&quot;},{&quot;key&quot;:&quot;ThermodynamicsMG&quot;,&quot;value&quot;:&quot;\\u76EE\\u524D\\u6570\\u636E\\u5E93\\u4EC5\\u652F\\u6301\\u4E8C\\u5143\\u002F\\u4E09\\u5143\\u4F53\\u7CFB\\u7684\\u70ED\\u529B\\u5B66\\u6027\\u8D28\\u56FE\\u8BA1\\u7B97\\uFF0C\\u7CFB\\u7EDF\\u5DF2\\u6839\\u636E\\u724C\\u53F7\\u8BE6\\u60C5\\u667A\\u80FD\\u9009\\u53D6\\u0046\\u0065\\u002D\\u0043\\u002D\\u0053\\u0069\\u4E09\\u5143\\u4F53\\u7CFB\\u5F00\\u5C55\\u8BA1\\u7B97&quot;,&quot;type&quot;:&quot;ConfigTypeMessage&quot;},{&quot;key&quot;:&quot;ToLogIn&quot;,&quot;value&quot;:&quot;\\u53BB\\u767B\\u5F55&quot;,&quot;type&quot;:&quot;ConfigTypeMessage&quot;},{&quot;key&quot;:&quot;VeryImportant&quot;,&quot;value&quot;:&quot;\\u60A8\\u7684\\u5EFA\\u8BAE\\u5F88\\u91CD\\u8981\\uFF0C\\u6211\\u4EEC\\u4F1A\\u5C3D\\u5FEB\\u56DE\\u590D\\u60A8\\u7684\\u5EFA\\u8BAE\\uFF01&quot;,&quot;type&quot;:&quot;ConfigTypeMessage&quot;}],&quot;ConfigTypeRemark&quot;:[],&quot;ConfigTypePlaceHolder&quot;:[{&quot;key&quot;:&quot;PleaseEnterYourSearchCriteria&quot;,&quot;value&quot;:&quot;\\u8BF7\\u8F93\\u5165\\u641C\\u7D22\\u6761\\u4EF6&quot;,&quot;type&quot;:&quot;ConfigTypePlaceHolder&quot;}],&quot;ConfigTypeDialogPlaceHolder&quot;:[]}" id="_languageConfigJsonString">
+        <header>
+            <div>
+                <style>
+                     .logo-font {height: 30px;line-height: 30px;font-size: 18px;font-weight: 600;color: #3e3e3e;vertical-align: top;font-style: oblique;}
+                     .message-count{position:absolute;color:red;top:-20px;left:12px;}
+                </style>
+                <div class="top">
+                    <div style="font-size: 22px; color: #0094ff; float: left; width:220px"><img src="/static/image/hnu_logo.png" alt="湖南大学"></div>
+                    <div class="top-right" style="width:750px">
+                        <i class="top-right-icon top-right-user"></i><span><a href="{% url 'login:login' %}" >您好！请登录</a></span>
+                        <i class="top-right-icon top-right-user"></i><span><a href="{% url 'login:register' %}">免费注册</a></span>
+                        <span><a href="/" >首页</a></span>
+                        <span><a href="{% url 'login:user_center' %}" >个人中心</a></span>
+                        <span><a href="{% url 'login:logout' %}" >退出</a></span>
+                        <span><a href="{% url 'login:upload_file_show' %}" >上传文件</a></span>
+                        <span><a href="{% url 'zr:print_report' %}" >打印报表</a></span>
+                    </div>
+                </div>
+
+                <style>
+                    .daohang a{font-size:14px !important; line-height:26px;}
+                </style>
+                <div id="lightmenu" class="daohang" style="box-shadow: 3px 3px 3px 3px #d8d8d8;z-index:99999"></div>
+            </div>
+        </header>
+        <div class="divcontent">
+            <style>
+                .m-material { position: absolute; width: 120px; height: 60px; display: none; text-align: left; right: 0; top: 10px; background: url('/static/css/material_detail/_bubble.gif') no-repeat; background-size: 100%; padding-left: 20px; padding-top: 12px; }
+                .calc-ele { padding: 20px 10px; }
+            </style>
+            <div style="height: 20px; line-height: 20px; font-size: 13px; width: 100%;margin-top:9px">
+                <a href="{% url 'zr:material_detail' product.name %}">当前位置：</a>
+                <a href="/">首页-&gt;</a>
+                <a href="{% url 'zr:material_detail' product.name %}">材料详情</a>
+            </div>
+            <div class="detail-regist-body">
+                <div class="body-left">
+                    <h1 class="detail-h1-class">{{ product.name }}</h1>
+                </div>
+                <div class="static-infos-list fix">
+                    <div class="detail-title"><p languageattribute="TheBasicInformation">基本信息</p></div>
+                    <table class="table-handling static-wfauto">
+                        <tbody>
+                        <tr class="tr-cwo">
+                            <td languageattribute="Brand">牌号</td>
+                            <td style=" text-align:left">{{ product.name }}</td>
+                        </tr>
+                        <tr class="tr-cwo">
+                            <td languageattribute="Standard">标准</td>
+                            <td style=" text-align:left">{{ product.standard }}</td>
+                        </tr>
+                        <tr class="tr-cwo">
+                            <td languageattribute="MaterialClasses">材料类别</td>
+                            <td style=" text-align:left">{{ product.name }}</td>
+                        </tr>
+                        <tr class="tr-cwo">
+                            <td languageattribute="Product">产品</td>
+                            <td style=" text-align:left">{{ product.name }}</td>
+                        </tr>
+                        <tr class="tr-cwo">
+                            <td languageattribute="Use1">用途</td>
+                            <td style=" text-align:left"><font style="background:yellow;">铁</font>道车辆                        </td>
+                        </tr>
+                        <tr class="tr-cwo">
+                            <td languageattribute="Instructions">说明</td>
+                            <td style=" text-align:left; width:800px">本产品系机车和汽车设备用碳钢铸件。</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="static-infos-list fix">
+                    <div class="detail-title">
+                        <div style="float:left;padding-left:425px;position:relative;"><p languageattribute="ChemicalComposition">化学成分(wt%）</p></div>
+                        <a href="" style="margin-left:65px" class="btn btn-regist-next" id="btnReuturn" languageattribute="MaterialProperties">材质特性</a>
+                        <div class="m-material">
+                            <p languageattribute="CommonMaterialDevelopment">常见的材料研发</p>
+                            <p languageattribute="TestApplicationData">实验应用数据</p>
+                        </div>
+                    </div>
+                    <table class="table-handling static-wfauto">
+                        <thead>
+                        <tr class="th-cow">
+                            <th>C </th>
+                            <th>Si </th>
+                            <th>Mn </th>
+                            <th>P </th>
+                            <th>S </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="tr-cwo">
+                            <td>{{ product.C }}</td>
+                            <td>{{ product.Si }}</td>
+                            <td>{{ product.Mn }}</td>
+                            <td>{{ product.P }}</td>
+                            <td>{{ product.S }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="detail-Remark" style="padding-top:0px;font-size:12px;margin-top:-5px;"><i languageattribute="IngredientsNote">成分备注：</i>最大C每降低0.01，允许最大Mn提高0.04，最大至1.2。</div>
+                <div style="width:1000px;height:20px"></div>
+
+                <div class="static-infos-list fix">
+                    <div class="detail-title"><p languageattribute="BasicMechanicalProperties">基本力学性能</p></div>
+
+                    <table class="table-handling static-wfauto" style="  border-collapse: collapse; border-spacing: 1pt;" id="dt">
+                        <thead><tr class="th-cow">
+                            <th languageattribute="Varieties">品种</th>
+                            <th languageattribute="TheShapeOf">形状</th>
+                            <th languageattribute="TheDeliveryStatus">交货状态</th>
+                            <th languageattribute="Details">详情</th>
+                        </tr></thead>
+                        <tbody><tr class="tr-cwo">
+                            <td rowspan="2">{{ product.name }}</td>
+                            <td rowspan="2">其他</td>
+                            <td>其他</td>
+                            <td>
+                                <table style="border:hidden;width:100%;" align="center">
+                                    <tbody>
+                                    <tr class="tr-cwo">
+                                        <td width="80">Re(MPa)</td>
+                                        <td>≥207</td>
+                                        <td width="50" languageattribute="Instructions">说明</td>
+                                        <td width="150"></td>
+                                    </tr>
+                                    <tr class="tr-cwo">
+                                        <td width="80">Rm(MPa)</td>
+                                        <td>≥414</td>
+                                        <td width="50" languageattribute="Instructions">说明</td>
+                                        <td width="150"></td>
+                                    </tr>
+                                    <tr class="tr-cwo">
+                                        <td width="80">A50(%)</td>
+                                        <td>≥22</td>
+                                        <td width="50" languageattribute="Instructions">说明</td>
+                                        <td width="150">A50.8</td>
+                                    </tr>
+                                    <tr class="tr-cwo">
+                                        <td width="80">Z(%)</td>
+                                        <td>≥30</td>
+                                        <td width="50" languageattribute="Instructions">说明</td>
+                                        <td width="150"></td>
+                                    </tr>
+                                                                                                                                                                
+                                    <tr class="tr-cwo">
+                                        <td width="80">HB</td>
+                                        <td>108～160</td>
+                                        <td width="50" languageattribute="Instructions">说明</td>
+                                        <td width="150"></td>
+                                    </tr>
+                                    <tr class="tr-cwo">
+                                        <td width="80" languageattribute="PerformanceSpecification">性能说明</td>
+                                        <td colspan="3" style="text-align: left">交货状态：铸态</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr class="tr-cwo">
+                            <td style="display: none;">Gr.A-其他</td>
+                            <td style="display: none;">其他</td>
+                            <td>正火,退火</td>
+                            <td>
+                                <table style="border:hidden;width:100%;" align="center">
+                                    <tbody>
+                                    <tr class="tr-cwo">
+                                        <td width="80">Re(MPa)</td>
+                                        <td>≥207</td>
+                                        <td width="50" languageattribute="Instructions">说明</td>
+                                        <td width="150"></td>
+                                    </tr>
+                                    <tr class="tr-cwo">
+                                        <td width="80">Rm(MPa)</td>
+                                        <td>≥414</td>
+                                        <td width="50" languageattribute="Instructions">说明</td>
+                                        <td width="150"></td>
+                                    </tr>
+                                    <tr class="tr-cwo">
+                                        <td width="80">A50(%)</td>
+                                        <td>≥26</td>
+                                        <td width="50" languageattribute="Instructions">说明</td>
+                                        <td width="150">A50.8</td>
+                                    </tr>
+                                    <tr class="tr-cwo">
+                                        <td width="80">Z(%)</td>
+                                        <td>≥38</td>
+                                        <td width="50" languageattribute="Instructions">说明</td>
+                                        <td width="150"></td>
+                                    </tr>
+                                    <tr class="tr-cwo">
+                                        <td width="80">HB</td>
+                                        <td>108～160</td>
+                                        <td width="50" languageattribute="Instructions">说明</td>
+                                        <td width="150"></td>
+                                    </tr>
+                                    <tr class="tr-cwo">
+                                        <td width="80" languageattribute="PerformanceSpecification">性能说明</td>
+                                        <td colspan="3" style="text-align: left">交货状态：退火或正火</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div style="padding-right:20px"></div>
+                </div>
+                <div class="btn-box" style="margin-top:30px; margin-bottom:30px">
+                    <form method="post" action="{% url 'zr:material_detail' product.name %}">
+                        {% csrf_token %}
+                        <input type="text" name="111" value="222" style="display: none">
+                        <button type="submit" class="btn btn-regist-next" style="margin:0 30px">CAE导出</button>
+{#                    <a class="btn btn-regist-next" href="" style="margin:0 30px" languageattribute="Custom">我要定制</a>#}
+
+                        <a class="btn btn-regist-next" href="javascript:void(0);" id="btnPrint" onclick="javascript:window.print()" languageattribute="Print">我要打印</a>
+                        <a class="btn btn-regist-next" href="javascript:void(0);" style="margin-left:30px" onclick="openFnAlert('refuseError')" languageattribute="ErrorCorrectionAdvice">纠错建议</a>
+                        <a class="btn btn-regist-next" href="{% url 'zr:material_similar' product.name %}" style="margin-left:30px">相似材料</a>
+                        <a class="btn btn-regist-next" href="javascript:void(0);" style="margin-left:30px;width:54px" onclick="addMyCollection(this);" languageattribute="Collection">收藏</a>
+                    </form>
+                </div>
+            </div>
+            <div class="fn-alert-filter"></div> <!-- 黑色遮罩 多个弹窗公用 -->
+
+            <!-- 我要纠错 -->
+            <div class="fn-alert-content" style="width: 700px; height: 600px; margin-left: -350px; margin-top: -300px;" id="refuseError">
+                <div class="refuse-reason">
+                    <div class="refuse-title"><h3 class="h3-class" languageattribute="YourSuggestion">你的建议</h3></div>
+                    <div class="reason-main" style=" margin-left:70px">
+                        <div class="resson-box fix">
+                            <p class="p-class" style=" width: 80px" languageattribute="ErrorCorrectionTerm">纠正项：</p>
+                            <div class="remark fix" style=" padding-top:7px;">
+                                <input class="fn-text-A" type="text" style="width: 250px; " id="textSeelName" value="Gr.A">
+                            </div>
+                        </div>
+                        <div class="remark fix">
+                            <p class="p-class" style=" width: 80px" languageattribute="SuggestPeople">建议人：</p>
+                            <input class="fn-text-A" type="text" style="width: 250px; ">
+                        </div>
+                        <div class="remark fix">
+                            <p class="p-class" style=" width: 80px" languageattribute="ThePhone">电话：</p>
+                            <input class="fn-text-A" type="text" style="width: 250px; " id="txtTel">
+                        </div>
+                        <div class="remark fix">
+                            <p class="p-class" style=" width: 80px" languageattribute="Email">邮箱：</p>
+                            <input class="fn-text-A" type="text" style="width: 250px; " id="txtEmail">
+                        </div>
+                        <div class="remark fix">
+                            <p class="p-class" style=" width: 80px" languageattribute="WorkUnits">工作单位：</p>
+                            <input class="fn-text-A" type="text" style="width: 250px; " id="txtUnit">
+                        </div>
+                        <div class="remark fix">
+                            <p class="p-class" style=" width:80px"><strong class="must">* </strong><i languageattribute="TheProposals">建议内容：</i> </p>
+                            <textarea class="fn-textarea-A base-textarea" cols="50" rows="10" id="txtContent"></textarea>
+                        </div>
+                    </div>
+                    <div class="btn-box">
+                        <a class="btn btn-fil-abolish" href="javascript:void(0);" id="btnSure" onclick="SavaUserSuggestion()" languageattribute="Submit">提交</a>
+                        <a class="btn btn-bakmidfy" href="javascript:void(0);" onclick="closeFnAlert('refuseError');" languageattribute="ShutDown">关闭</a>
+                    </div>
+                </div>
+            </div>
+
+            <script type="text/javascript">
+                var _layerIndex = 0;
+                $(function () {
+                    var limit = ''.toUpperCase();
+                    if (limit == "TRUE") {
+                        appAlert(_languageObj.getConfitTypeValue(_languageObj.msg, 'AfterLoggingIn2'), 2000, function () {
+                            window.location.href = "/Login/Index?returnUrl=" + window.location.pathname + window.location.search;
+                        })
+                        return false;
+                    }
+
+                    hideControlInIframe("header,footer,.btn-box");
+                    if (isInIframe()) {
+                        $(".detail-regist-body a[href='/Home/Index']").hide();
+                        $("#btModify1,#btModify").hide();
+                    }
+                    postMessageToIframe();
+                    autoRowSpan(0);
+
+                    setKeywordText();
+
+                    layer.layerAddBtn = function (btnText) {
+                        var layerBtnOutdiv_ = parent.$("#layui-layer" + _layerIndex);
+                        var layerBtnDiv_ = layerBtnOutdiv_.find(".layui-layer-btn");
+                        var button_ = $('<a></a>', {
+                            text: btnText,
+                            "class": "layui-layer-btn0"
+                        });
+                        button_.attr("id", "btnReturn");
+                        button_.click(function () {
+                            layerBtnDiv_ = layerBtnOutdiv_.find(".layui-layer-btn");
+                            var iframe = layerBtnOutdiv_.find("iframe");
+                            $(iframe).attr('src', $(iframe).attr('src'));
+                            layer.layerRemoveBtn(button_);
+                        });
+                        if (layerBtnDiv_.length == 0) {
+                            var s = "<div class=\"layui-layer-btn\"></div>";
+                            layerBtnOutdiv_.append(s);
+                            layerBtnDiv_ = layerBtnOutdiv_.find(".layui-layer-btn");
+                            var iframe = layerBtnOutdiv_.find("iframe");
+                            var oldhigh = $(iframe).height();
+                            $(iframe).height(oldhigh - 50);//调整iframe窗体的大小，以把按钮条露出
+                        }
+                        button_.appendTo(layerBtnDiv_);
+                    }
+
+                    layer.layerRemoveBtn = function (obj) {
+                        $(obj).remove();
+                        var layerBtnOutdiv_ = parent.$("#layui-layer1");
+                        var layerBtnDiv_ = layerBtnOutdiv_.find(".layui-layer-btn");
+                        var iframe = layerBtnOutdiv_.find("iframe");
+                        var oldhigh = $(iframe).height();
+                        //$(iframe).height(oldhigh + 50);//调整iframe窗体的大小，把按钮区域去掉
+                    }
+
+                    $("#btnReuturn").mouseover(function () {
+                        $(".m-material").show();
+                    }).mouseleave(function () {
+                        $(".m-material").hide();
+                    });
+                })
+
+                function layerAddBtn() {
+                    layer.layerAddBtn(_languageObj.getConfitTypeValue(_languageObj.title, 'Return1'), null);
+                }
+
+                //保存纠错功能
+                function SavaUserSuggestion() {
+                    if ($('#txtContent').val() == "") {
+                        layer.alert(_languageObj.getConfitTypeValue(_languageObj.msg, 'PleaseEnterSuggestions'));
+                        return;
+                    }
+                    var object = new Object();
+                    object.SuggestType = "1";
+                    object.TargetID = '703623fd-98a7-45fe-b164-a17beae8d5d7';
+                    object.TargetName = $('#textSeelName').val();
+                    object.Contents = $('#txtContent').val();
+                    object.State = 1;
+                    object.Tel = $('#txtTel').val();
+                    object.Email = $('#txtEmail').val();
+                    object.ComName = $('#txtUnit').val();
+                    object.Unit = $('#txtUnit').val();
+                    var jsondata = JSON.stringify(object);
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/Home/SaveUserSuggestion",
+                        data: {
+                            jsondata: encodeURIComponent(jsondata)
+                        },
+                        dataType: "json",
+                        async: false,
+                        success: function (data) {
+                            layer.confirm(data.Message, {
+                                btn: [_languageObj.getConfitTypeValue(_languageObj.dialogTitle, 'Determine')], //按钮
+                                closeBtn: false
+                            }, function () {
+                                if (data.IsSuccess) {
+                                    $('#txtContent').val('');
+                                    $('#txtUnit').val('');
+                                    closeFnAlert('refuseError');
+                                }
+                                layer.closeAll('dialog');
+
+                            }, function () {
+
+                            });
+
+                        }
+                    });
+                }
+                //按列合并单元格
+                function autoRowSpan(row) {
+                    var tb = $('#dt')[0];
+                    var cols = $('#dt').find('th').length;
+                    for (var s = 0; s < cols; s++) {
+                        if (s == cols - 1 || s == cols - 2) continue;
+                        var lastValue = "";
+                        var value = "";
+                        var pos = 1;
+                        for (var i = row; i < tb.rows.length; i++) {
+                            value = tb.rows[i].cells[s].innerText;
+                            if (lastValue == value) {
+                                tb.rows[i].cells[s].style.display = 'none';
+                                tb.rows[i - pos].cells[s].rowSpan = tb.rows[i - pos].cells[s].rowSpan + 1;
+                                pos++;
+                            } else {
+                                lastValue = value;
+                                pos = 1;
+                            }
+                        }
+                    }
+
+                }
+                function openMatchedShiWuList(steelID) {
+                    layer.open({
+                        type: 2,
+                        title: _languageObj.getConfitTypeValue(_languageObj.title, 'MaterialProperties'),
+                        shadeClose: true,
+                        shade: 0.8,
+                        area: ['786px', '600px'],
+                        content: "../Extension/MatchedShiWuList?steelID=" + steelID//iframe的url
+                    });
+                    _layerIndex++;
+                }
+                function OpenExtension(extendType) {
+                    var steelName = 'Gr.A';
+                    var steelNameID = '703623fd-98a7-45fe-b164-a17beae8d5d7';
+                    parent.layer.open({
+                        type: 2,
+                        title: '',
+                        shadeClose: true,
+                        shade: 0.8,
+                        area: ['886px', '600px'],
+                        content: "../Extension/ExtensionMessage?steelName=" + steelName + "&steelNameID=" + steelNameID + "&extendType=" + extendType
+                    });
+                    _layerIndex++;
+                }
+                //收藏
+                function addMyCollection(obj) {
+                    $.ajax({
+                        type: "POST",
+                        url: "/Home/addMyCollection",
+                        data: {
+                            steelID: "703623fd-98a7-45fe-b164-a17beae8d5d7", substeelid: "a8d9a749-e450-4112-bb15-837b0df1cacd", specid: "32cab543-8869-46b2-b598-fd1cc95f2fac"
+                        },
+                        dataType: "json",
+                        async: false,
+                        success: function (data) {
+                            if (data.IsSuccess) {
+                                $(obj).attr("disabled", "disabled");
+                                $(obj).html(_languageObj.getConfitTypeValue(_languageObj.title, 'Collectioned'));
+                            }
+                            else {
+                                if (data.Message == "1") {
+                                    layer.alert(_languageObj.getConfitTypeValue(_languageObj.msg, 'PleaseLogInAndSave'), {
+                                        title: _languageObj.getConfitTypeValue(_languageObj.msg, 'Information'),
+                                        btn: [_languageObj.getConfitTypeValue(_languageObj.msg, 'Determine1')]
+                                    });
+                                } else if (data.Message == "9") {
+                                    layer.alert(_languageObj.getConfitTypeValue(_languageObj.msg, 'CannotRepeatCollection'), {
+                                        title: _languageObj.getConfitTypeValue(_languageObj.msg, 'Information'),
+                                        btn: [_languageObj.getConfitTypeValue(_languageObj.msg, 'Determine1')]
+                                    });
+                                } else {
+                                    layer.alert(data.Message);
+                                }
+                            }
+                        }
+                    });
+                }
+
+                function getQueryString(name) {
+                    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+                    var r = window.location.search.substr(1).match(reg);
+                    if (r != null) return unescape(decodeURI(r[2])); return null;
+                }
+
+                function setKeywordText() {
+                    var key = getQueryString("ky");
+                    if (key) {
+                        var array = decodeURI(key).split(',');
+                        $.each(array, function () {
+                            var text = this;
+                            $.each($("table tbody tr td"), function () {
+                                if ($(this).find("table,tr,td,span").length == 0) {
+                                    setKeywordTextFont(this, text);
+                                }
+                            });
+                        })
+                        $("table tbody tr td")
+                    }
+                }
+
+                function setKeywordTextFont(el, val) {
+                    var nt = '<font style="background:yellow;">{val}</font>';
+                    var reg = RegExp(val, "gi");
+                    if ($(el).find("a").length > 0) {
+                        $(el).find("a").html($(el).find("a").html().replace(reg, nt.replace("{val}", $(el).find("a").html().match(reg) ? $(el).find("a").html().match(reg)[0] : "")));
+                    } else {
+                        $(el).html($(el).html().replace(reg, nt.replace("{val}", $(el).html().match(reg) ? $(el).html().match(reg)[0] : "")));
+                    }
+                }
+
+                function postMessageToIframe() {
+                    if (isInIframe()) {
+                        var bodyHeight = $("body").height();
+                        window.parent.postMessage(bodyHeight, "https://zhidao.wuage.com/zhishi/pinzhong.html");
+                    }
+                }
+
+                function openCalcElement(id) {
+                    appAjax("/Home/GetSteelCalcElement", { steelid: id }, function (res) {
+                        var txt = "";
+                        $.each(res, function (key, value) {
+                            txt += key + "-";
+                        })
+                        layer.open({
+                            type: 1,
+                            title: '提示',
+                            shadeClose: true,
+                            shade: 0.8,
+                            area: ['400px', '230px'],
+                            content: "<div class='calc-ele'><p>目前数据库仅支持二元/三元体系的热力学性质图计算，系统已根据牌号详情智能选取" + txt.substring(0, txt.length - 1) + "三元体系开展计算</p><br/><br/><p>购买商业版Thermo-Calc软件可计算该牌号全成分相图，详情请联系新材道客服。</p></div>",
+                            btn: ['继续', '返回'],
+                            yes: function (index, layero) {
+                                appAjax("/Home/StartCalcPropertyDiagram", { steelid: id }, function (r) {
+                                    if (r.success) {
+                                        openWindow("/Home/MaterialDetailCalc" + window.location.search + "&calcid=" + r.msg);
+                                    }
+                                    else {
+                                        appAlert("计算失败");
+                                    }
+                                });
+                            },
+                            cancel: function () {
+
+                            }
+                        });
+                        //console.log(res);
+                    });
+                }
+            </script>
+
+            <script src="/static/css/material_detail/affirm-public.js"></script>
+        </div>
+    </div>
+
+    
+
+    
+
+
+
+    <script>
+        $(function () {
+            _languageObj.setPageTitle('CN');
+        })
+        var _hmt = _hmt || [];
+        (function () {
+
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?bff7e1fc5b2ac418f5d9e0c5c7414a11";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+</body>
+</html>

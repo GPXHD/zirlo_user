@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ch">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="jQuery" />
+    <meta name="description" content="" />
+    <title>产品对比</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/compare_material/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="row">
+                <div class="col-md-3 col-xs-12">
+                    <h1 class="logo">
+                        <a href="{% url 'index' %}" title="返回首页">首页</a>
+                    </h1>
+                </div>
+            </div>
+        </header>
+        <div class="row main">
+            <div class="col-md-12">
+                <h2 class="top_title">
+                    <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
+                    <a href="{% url 'zr:compare_material' %}">产品对比</a>
+                </h2>
+                <div class="row pro-contain">
+                    <div class=" pro text-center">
+                        <div class="selectProduct" data-title="实体1" data-id="实体1" data-size="特征1" data-weight="特征2" data-os="特征3" data-processor="特征4" data-battery="特征5">
+                            <a class="btn-floating light-grey addButtonCircular addToCompare">+</a>
+                            <img src="/static/image/翼子板.png" class="imgFill productImg" alt="">
+                            <h4>实体1</h4>
+                        </div>
+                    </div>
+                    <div class=" pro text-center">
+                        <div class="selectProduct" data-title="实体2" data-id="实体2" data-size="特征2" data-weight="特征3" data-os="特征4" data-processor="特征5" data-battery="特征1">
+                            <a class="btn-floating light-grey addButtonCircular addToCompare">+</a>
+                            <img src="/static/image/翼子板.png" class="imgFill productImg" alt="">
+                            <h4>实体2</h4>
+                        </div>
+                    </div>
+                    <div class=" pro text-center">
+                        <div class="selectProduct" data-title="实体3" data-id="实体3" data-size="特征3" data-weight="特征4" data-os="特征5" data-processor="特征1" data-battery="特征2">
+                            <a class="btn-floating light-grey addButtonCircular addToCompare">+</a>
+                            <img src="/static/image/翼子板.png" class="imgFill productImg" alt="">
+                            <h4>实体3</h4>
+                        </div>
+                    </div>
+                    <div class=" pro text-center">
+                        <div class="selectProduct" data-title="实体4" data-id="实体4" data-size="特征4" data-weight="特征5" data-os="特征1" data-processor="特征2" data-battery="特征3">
+                            <a class="btn-floating light-grey addButtonCircular addToCompare">+</a>
+                            <img src="/static/image/翼子板.png" class="imgFill productImg" alt="">
+                            <h4>实体4</h4>
+                        </div>
+                    </div>
+                    <div class=" pro text-center">
+                        <div class="selectProduct" data-title="实体5" data-id="实体5" data-size="特征5" data-weight="特征1" data-os="特征2" data-processor="特征3" data-battery="特征4">
+                            <a class="btn-floating light-grey addButtonCircular addToCompare">+</a>
+                            <img src="/static/image/翼子板.png" class="imgFill productImg" alt="">
+                            <h4>实体5</h4>
+                        </div>
+                    </div>
+                    <div class=" pro text-center">
+                        <div class="selectProduct" data-title="实体6" data-id="实体6" data-size="特征1" data-weight="特征2" data-os="特征3" data-processor="特征4" data-battery="特征5">
+                            <a class="btn-floating light-grey addButtonCircular addToCompare">+</a>
+                            <img src="/static/image/翼子板.png" class="imgFill productImg" alt="">
+                            <h4>实体6</h4>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!--preview panel-->
+        <div class="row">
+            <div class="col-md-12 comparePanle">
+                <div class="row">
+                    <div class="col-md-9">
+                        <h4>对比中的产品</h4>
+                    </div>
+                    <div class="col-md-3">
+                        &nbsp;
+                        <button class="btn btn-default cmprBtn" disabled>开始对比</button>
+                    </div>
+                </div>
+                <div class="comparePan"></div>
+            </div>
+        </div>
+        <!--end of preview panel-->
+
+        <!-- comparision popup-->
+        <div id="id01" class="animate-zoom modal modPos">
+            <div class="modal-title">
+                <a onclick="document.getElementById('id01').style.display='none'" class="modal-closebtn">&times;</a>
+            </div>
+            <div class="row contentPop"></div>
+        </div>
+        <!--end of comparision popup-->
+
+        <footer>
+            <p><a href=""></a></p>
+        </footer>
+    </div>
+    <script src="/static/js/jquery.min.js"></script>
+    <script>
+        (function ($) {
+            var list = [];
+            //添加到对比项
+            $(document).on('click', '.addToCompare', function () {
+                $(".comparePanle").show();
+                $(this).toggleClass("rotateBtn");
+                $(this).parents(".selectProduct").toggleClass("selected");
+                var productID = $(this).parents('.selectProduct').attr('data-title');
+
+                var inArray = $.inArray(productID, list);
+                if (inArray < 0) {
+                    if (list.length > 4) {
+                        alert('最多只能选择5个产品');
+                        $(this).toggleClass("rotateBtn");
+                        $(this).parents(".selectProduct").toggleClass("selected");
+                        return;
+                    }
+
+                    if (list.length < 5) {
+                        list.push(productID);
+                        var displayTitle = $(this).parents('.selectProduct').attr('data-id');
+                        var image = $(this).siblings(".productImg").attr('src');
+                        $(".comparePan").append('<div id="' + productID + '" class="relPos col-md-3 text-center"><a class="selectedItemCloseBtn closebtn">&times</a><img src="' + image + '" alt="image" style="height:100px;"/><p id="' + productID + '" class="ptitle">' + displayTitle + '</p></div>');
+                    }
+                } else {
+                    list.splice($.inArray(productID, list), 1);
+                    var prod = productID.replace(" ", "");
+                    $('#' + prod).remove();
+                    hideComparePanel();
+
+                }
+                if (list.length > 1) {
+                    $(".cmprBtn").addClass("active");
+                    $(".cmprBtn").removeAttr('disabled');
+                } else {
+                    $(".cmprBtn").removeClass("active");
+                    $(".cmprBtn").attr('disabled', '');
+                }
+
+            });
+
+            //点击开始对比，弹出对比层
+            $(document).on('click', '.cmprBtn', function () {
+                if ($(".cmprBtn").hasClass("active")) {
+                    /* this is to print the  features list statically*/
+                    $(".contentPop").append('<div class="col-md-3 compareItemParent relPos">' + '<ul class="product"><li class=" relPos compHeader">产品信息</li><li>产品名称</li><li>产品特征</li><li>产品特征</li><li>产品特征</li><li class="cpu">产品特征</li><li>产品特征</li></ul></div>');
+
+                    for (var i = 0; i < list.length; i++) {
+                        /* this is to add the items to popup which are selected for comparision */
+                        product = $('.selectProduct[data-title="' + list[i] + '"]');
+                        var image = $('[data-title=' + list[i] + ']').find(".productImg").attr('src');
+                        var title = $('[data-title=' + list[i] + ']').attr('data-id');
+                        /*appending to div*/
+                        $(".contentPop").append('<div class="col-md-3 compareItemParent relPos">' + '<ul class="product">' + '<li class="compHeader"><img src="' + image + '" class="compareThumb"></li>' + '<li>' + title + '</li>' + '<li>' + $(product).data('size') + '</li>' + '<li>' + $(product).data('weight') + '</li><li>'+ $(product).data('os') +'</li><li class="cpu">' + $(product).data('processor') + '</li>' + '<li>' + $(product).data('battery') + '</ul>' + '</div>');
+                    }
+                }
+                $(".modPos").show();
+            });
+
+            //点击弹出层的关闭按钮
+            $(document).on('click', '.modal-closebtn', function () {
+                $(".contentPop").empty();
+                $(".comparePan").empty();
+                $(".comparePanle").hide();
+                $(".modPos").hide();
+                $(".selectProduct").removeClass("selected");
+                $(".cmprBtn").attr('disabled', '');
+                list.length = 0;
+                $(".rotateBtn").toggleClass("rotateBtn");
+            });
+
+            //删除对比项
+            $(document).on('click', '.selectedItemCloseBtn', function () {
+                var test = $(this).siblings("p").attr('id');
+                $('[data-title=' + test + ']').find(".addToCompare").click();
+                hideComparePanel();
+            });
+
+            function hideComparePanel() {
+                if (!list.length) {
+                    $(".comparePan").empty();
+                    $(".comparePanle").hide();
+                }
+            }
+        })(jQuery);
+    </script>
+</body>
+</html>
